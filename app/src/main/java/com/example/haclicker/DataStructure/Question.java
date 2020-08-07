@@ -1,22 +1,18 @@
-package com.example.haclicker;
+package com.example.haclicker.DataStructure;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Question {
     private String questionDescription;
     private int questionId;
-    private String choiceA;
-    private String choiceB;
-    private String choiceC;
-    private String choiceD;
-    private String choiceE;
+    private List<String> choices;
+    private List<String> correctAns = new ArrayList<>();
 
-    public Question(String questionDescription, int questionId, String choiceA, String choiceB, String choiceC, String choiceD, String choiceE) {
+    public Question(String questionDescription, int questionId, List<String> choices) {
         this.questionDescription = questionDescription;
         this.questionId = questionId;
-        this.choiceA = choiceA;
-        this.choiceB = choiceB;
-        this.choiceC = choiceC;
-        this.choiceD = choiceD;
-        this.choiceE = choiceE;
+        this.choices = choices;
     }
 
     public String getQuestionDescription() {
@@ -27,23 +23,11 @@ public class Question {
         return questionId;
     }
 
-    public String getChoiceA() {
-        return choiceA;
+    public List<String> getChoices() {
+        return choices;
     }
 
-    public String getChoiceB() {
-        return choiceB;
-    }
+    public List<String> getCorrectAns() { return correctAns; }
 
-    public String getChoiceC() {
-        return choiceC;
-    }
-
-    public String getChoiceD() {
-        return choiceD;
-    }
-
-    public String getChoiceE() {
-        return choiceE;
-    }
+    public void setCorrectAns(List<String> correctAns) { this.correctAns = correctAns; }
 }
