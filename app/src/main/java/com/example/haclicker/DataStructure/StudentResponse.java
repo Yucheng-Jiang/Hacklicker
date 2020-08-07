@@ -1,4 +1,4 @@
-package com.example.haclicker;
+package com.example.haclicker.DataStructure;
 
 import java.util.List;
 
