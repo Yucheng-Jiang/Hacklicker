@@ -4,34 +4,77 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#cce7e8"
     tools:context=".ConsoleScreen">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+    <Button
+        android:id="@+id/logout"
+        android:background="#edb879"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="161dp"
+        android:layout_marginLeft="161dp"
+        android:layout_marginTop="80dp"
+        android:layout_marginEnd="162dp"
+        android:layout_marginRight="162dp"
+        android:layout_marginBottom="342dp"
+        android:text="Logout"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mail" />
 
-        <Button
-            android:id="@+id/logout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Logout"
-            tools:layout_editor_absoluteX="147dp"
-            tools:layout_editor_absoluteY="339dp" />
+    <TextView
+        android:id="@+id/name"
+        android:background="#edb879"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="176dp"
+        android:layout_marginLeft="176dp"
+        android:layout_marginTop="150dp"
+        android:layout_marginEnd="177dp"
+        android:layout_marginRight="177dp"
+        android:layout_marginBottom="71dp"
+        android:text="TextView"
+        app:layout_constraintBottom_toTopOf="@+id/mail"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="TextView"
-            tools:layout_editor_absoluteX="132dp"
-            tools:layout_editor_absoluteY="151dp" />
+    <TextView
+        android:id="@+id/mail"
+        android:background="#edb879"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="176dp"
+        android:layout_marginLeft="176dp"
+        android:layout_marginTop="72dp"
+        android:layout_marginEnd="177dp"
+        android:layout_marginRight="177dp"
+        android:text="TextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/name" />
 
-        <TextView
-            android:id="@+id/mail"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="TextView"
-            tools:layout_editor_absoluteX="134dp"
-            tools:layout_editor_absoluteY="198dp" />
-    </LinearLayout>
+    <ImageButton
+        android:id="@+id/consoleBack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="80dp"
+        android:layout_marginLeft="80dp"
+        android:layout_marginTop="80dp"
+        android:layout_marginEnd="372dp"
+        android:layout_marginRight="372dp"
+        android:layout_marginBottom="700dp"
+        android:background="#edb879"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.815"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.383"
+        app:srcCompat="@drawable/abc_vector_test"
+        tools:visibility="visible" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
