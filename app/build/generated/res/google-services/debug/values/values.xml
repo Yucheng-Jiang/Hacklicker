@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="default_web_client_id" translatable="false">210730370893-4s0l9a7rpkkmsa61cnj15qojoo8j5it9.apps.googleusercontent.com</string>
+    <string name="firebase_database_url" translatable="false">https://haclicker-fcdb5.firebaseio.com</string>
+    <string name="gcm_defaultSenderId" translatable="false">210730370893</string>
+    <string name="google_api_key" translatable="false">AIzaSyDoAYjcpngVqXFxxnvfCKAidsLKtpgt6nE</string>
+    <string name="google_app_id" translatable="false">1:210730370893:android:b3071c6e6c6b0ede101904</string>
+    <string name="google_crash_reporting_api_key" translatable="false">AIzaSyDoAYjcpngVqXFxxnvfCKAidsLKtpgt6nE</string>
+    <string name="google_storage_bucket" translatable="false">haclicker-fcdb5.appspot.com</string>
+    <string name="project_id" translatable="false">haclicker-fcdb5</string>
+</resources>

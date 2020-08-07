@@ -1,0 +1,4 @@
+#Thu Aug 06 21:41:08 EDT 2020
+base.0=C\:\\Users\\steve\\Desktop\\Haclicker\\app\\build\\intermediates\\dex\\debug\\mergeDexDebug\\classes.dex
+path.0=classes.dex
+renamed.0=classes.dex
