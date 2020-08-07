@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "210730370893",
+    "firebase_url": "https://haclicker-fcdb5.firebaseio.com",
+    "project_id": "haclicker-fcdb5",
+    "storage_bucket": "haclicker-fcdb5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:210730370893:android:b3071c6e6c6b0ede101904",
+        "android_client_info": {
+          "package_name": "com.example.haclicker"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "210730370893-npivqrvhthmku39q5ajdmou1q3fjv7b1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.haclicker",
+            "certificate_hash": "f32a348dc8f6515b1caa324307f67f20ec843163"
+          }
+        },
+        {
+          "client_id": "210730370893-4s0l9a7rpkkmsa61cnj15qojoo8j5it9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDoAYjcpngVqXFxxnvfCKAidsLKtpgt6nE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "210730370893-4s0l9a7rpkkmsa61cnj15qojoo8j5it9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
