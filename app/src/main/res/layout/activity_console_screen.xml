@@ -12,8 +12,8 @@
 
         <Button
             android:id="@+id/logout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="114dp"
+            android:layout_height="93dp"
             android:text="Logout"
             tools:layout_editor_absoluteX="147dp"
             tools:layout_editor_absoluteY="339dp" />

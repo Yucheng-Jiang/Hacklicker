@@ -41,5 +41,8 @@ public class ConsoleScreen extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        name.setVisibility(View.VISIBLE);
+        mail.setVisibility(View.VISIBLE);
     }
+
 }
