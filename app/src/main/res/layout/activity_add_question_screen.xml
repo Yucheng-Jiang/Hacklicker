@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#add8e6 ">
+
+    <Button
+        android:id="@+id/button8"
+        android:layout_width="217dp"
+        android:layout_height="87dp"
+        android:textAllCaps="false"
+        android:text="From Json"
+        android:background="@drawable/orangeblue"
+        tools:layout_editor_absoluteX="97dp"
+        tools:layout_editor_absoluteY="395dp"
+        tools:ignore="MissingConstraints" />
+
+    <Button
+        android:id="@+id/button7"
+        android:layout_width="217dp"
+        android:layout_height="87dp"
+        android:textAllCaps="false"
+        android:background="@drawable/orangeblue"
+        android:text="Add manually"
+        tools:layout_editor_absoluteX="97dp"
+        tools:layout_editor_absoluteY="172dp"
+        tools:ignore="MissingConstraints" />
+</androidx.constraintlayout.widget.ConstraintLayout>
