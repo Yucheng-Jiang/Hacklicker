@@ -1,5 +1,4 @@
 package com.example.haclicker;
-import com.example.haclicker.StudentResponse;
 
 public class Student {
 
