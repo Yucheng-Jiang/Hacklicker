@@ -1,66 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#D3D3D3">
+    android:layout_height="match_parent">
 
 
-    <ImageButton
-        android:id="@+id/create_room"
-        android:layout_width="120dp"
-        android:layout_height="120dp"
-        android:background="@drawable/rounded_button"
-        android:scaleType="fitXY"
-        app:srcCompat="@drawable/create_room"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="72dp"
-        tools:layout_editor_absoluteY="204dp" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="#cce7e8">
 
-    <ImageButton
-        android:id="@+id/question_history"
-        android:layout_width="120dp"
-        android:layout_height="120dp"
-        android:background="@drawable/rounded_button"
-        android:scaleType="fitXY"
-        app:srcCompat="@drawable/question_history"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="72dp"
-        tools:layout_editor_absoluteY="427dp" />
+        <ImageButton
+            android:id="@+id/settings"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#D3D3D3"
+            app:srcCompat="@drawable/settings"
+            tools:ignore="MissingConstraints" />
 
-    <ImageButton
-        android:id="@+id/join_room"
-        android:layout_width="120dp"
-        android:layout_height="120dp"
-        android:background="@drawable/rounded_button"
-        android:scaleType="fitXY"
-        app:srcCompat="@drawable/join_room"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="252dp"
-        tools:layout_editor_absoluteY="204dp" />
+        <androidx.gridlayout.widget.GridLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            app:columnCount="2"
+            app:rowCount="2">
 
-    <ImageButton
-        android:id="@+id/export"
-        android:layout_width="120dp"
-        android:layout_height="120dp"
-        android:background="@drawable/rounded_button"
-        android:scaleType="fitXY"
-        app:srcCompat="@drawable/export"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="252dp"
-        tools:layout_editor_absoluteY="427dp" />
+            <ImageButton
+                android:id="@+id/create_room"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:layout_weight="1"
+                android:background="@drawable/rounded_button"
+                android:scaleType="fitXY"
+                app:srcCompat="@drawable/create_room"
+                tools:ignore="MissingConstraints" />
 
-    <ImageButton
-        android:id="@+id/settings"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="#D3D3D3"
-        app:srcCompat="@drawable/settings"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="342dp"
-        tools:layout_editor_absoluteY="16dp" />
+            <ImageButton
+                android:id="@+id/question_history"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:layout_weight="1"
+                android:background="@drawable/rounded_button"
+                android:scaleType="fitXY"
+                app:srcCompat="@drawable/question_history"
+                tools:ignore="MissingConstraints" />
+
+            <ImageButton
+                android:id="@+id/export"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:layout_weight="1"
+                android:background="@drawable/rounded_button"
+                android:scaleType="fitXY"
+                app:srcCompat="@drawable/export"
+                tools:ignore="MissingConstraints" />
+
+            <ImageButton
+                android:id="@+id/join_room"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:layout_weight="1"
+                android:background="@drawable/rounded_button"
+                android:scaleType="fitXY"
+                app:srcCompat="@drawable/join_room"
+                tools:ignore="MissingConstraints" />
+
+        </androidx.gridlayout.widget.GridLayout>
+
+
+    </LinearLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -8,21 +8,20 @@ import android.widget.ImageButton;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class DashBoardScreen extends AppCompatActivity {
+public class MainScreen extends AppCompatActivity {
 
-    ImageButton consoleButton;
-    Button createRoom, joinRoom;
+    ImageButton settings, createRoom, joinRoom;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_dash_board_screen);
+        setContentView(R.layout.activity_main_screen);
 
-        consoleButton = findViewById(R.id.consoleButton);
-        createRoom = findViewById(R.id.createRoom);
-        joinRoom = findViewById(R.id.joinRoom);
+        settings = findViewById(R.id.settings);
+        createRoom = findViewById(R.id.create_room);
+        joinRoom = findViewById(R.id.join_room);
 
-        consoleButton.setOnClickListener(new View.OnClickListener() {
+        settings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), ConsoleScreen.class);

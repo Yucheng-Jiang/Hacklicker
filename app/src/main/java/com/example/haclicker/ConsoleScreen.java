@@ -34,7 +34,7 @@ public class ConsoleScreen extends AppCompatActivity {
         consoleBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), DashBoardScreen.class);
+                Intent intent = new Intent(getApplicationContext(), MainScreen.class);
                 startActivity(intent);
             }
         });
@@ -44,6 +44,7 @@ public class ConsoleScreen extends AppCompatActivity {
             name.setText("Name: " + signInAccount.getDisplayName());
             mail.setText("Email: " + signInAccount.getEmail());
         }
+
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -52,5 +53,6 @@ public class ConsoleScreen extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
     }
 }
