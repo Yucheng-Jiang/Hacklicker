@@ -1454,12 +1454,14 @@ drawable common_google_signin_btn_text_light
 drawable common_google_signin_btn_text_light_focused
 drawable common_google_signin_btn_text_light_normal
 drawable common_google_signin_btn_text_light_normal_background
+drawable create_room
 drawable design_bottom_navigation_item_background
 drawable design_fab_background
 drawable design_ic_visibility
 drawable design_ic_visibility_off
 drawable design_password_eye
 drawable design_snackbar_background
+drawable export
 drawable googleg_disabled_color_18
 drawable googleg_standard_color_18
 drawable ic_launcher_background
@@ -1468,6 +1470,7 @@ drawable ic_mtrl_checked_circle
 drawable ic_mtrl_chip_checked_black
 drawable ic_mtrl_chip_checked_circle
 drawable ic_mtrl_chip_close_circle
+drawable join_room
 drawable material_ic_calendar_black_24dp
 drawable material_ic_clear_black_24dp
 drawable material_ic_edit_black_24dp
@@ -1497,6 +1500,10 @@ drawable notification_template_icon_bg
 drawable notification_template_icon_low_bg
 drawable notification_tile_bg
 drawable notify_panel_notification_icon_bg
+drawable orangeblue
+drawable question_history
+drawable rounded_button
+drawable settings
 drawable test_custom_background
 drawable tooltip_frame_dark
 drawable tooltip_frame_light
@@ -1576,6 +1583,14 @@ id barrier
 id beginning
 id blocking
 id bottom
+id button
+id button2
+id button3
+id button4
+id button5
+id button6
+id button7
+id button8
 id buttonPanel
 id cancel_button
 id center
@@ -1596,12 +1611,11 @@ id clip_vertical
 id collapseActionView
 id confirm_button
 id consoleBack
-id consoleButton
 id container
 id content
 id contentPanel
 id coordinator
-id createRoom
+id create_room
 id custom
 id customPanel
 id cut
@@ -1626,6 +1640,7 @@ id enterAlwaysCollapsed
 id exitUntilCollapsed
 id expand_activities_button
 id expanded_menu
+id export
 id fade
 id fill
 id fill_horizontal
@@ -1653,7 +1668,7 @@ id info
 id invisible
 id italic
 id item_touch_helper_previous_elevation
-id joinRoom
+id join_room
 id labeled
 id largeLabel
 id left
@@ -1719,6 +1734,7 @@ id percent
 id pin
 id progress_circular
 id progress_horizontal
+id question_history
 id radio
 id right
 id right_icon
@@ -1746,6 +1762,7 @@ id search_src_text
 id search_voice_btn
 id select_dialog_listview
 id selected
+id settings
 id shortcut
 id showCustom
 id showHome
@@ -1789,6 +1806,7 @@ id textEnd
 id textSpacerNoButtons
 id textSpacerNoTitle
 id textStart
+id textView
 id text_input_end_icon
 id text_input_start_icon
 id textinput_counter
@@ -1884,9 +1902,12 @@ layout abc_search_dropdown_item_icons_2line
 layout abc_search_view
 layout abc_select_dialog_material
 layout abc_tooltip
+layout activity_add_question_screen
 layout activity_console_screen
-layout activity_dash_board_screen
 layout activity_main
+layout activity_main_screen
+layout activity_student_question_screen
+layout activity_student_screen
 layout custom_dialog
 layout design_bottom_navigation_item
 layout design_bottom_sheet_dialog
