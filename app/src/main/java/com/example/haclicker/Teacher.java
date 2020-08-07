@@ -1,4 +1,6 @@
 package com.example.haclicker;
+import com.example.haclicker.ClassRoom;
+import com.example.haclicker.Question;
 
 public class Teacher {
 
