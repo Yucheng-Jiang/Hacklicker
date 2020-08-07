@@ -56,11 +56,12 @@ public class MainScreen extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 ClassRoom classroom = generateClassroom();
-                //TODO:upload to database
+                Teacher.setClassroom(classroom);
+                Intent intent = new Intent(getApplicationContext(), HostScreen.class);
+                startActivity(intent);
             }
         });
     }
-
     private ClassRoom generateClassroom() {
 
         List<String> allRoomIDs = getAllRooms();

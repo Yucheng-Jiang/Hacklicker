@@ -17,6 +17,8 @@ public class Teacher {
         classroom = setClassRoom;
     }
 
+    public static ClassRoom getClassroom() { return classroom;}
+
     public static void createClassroom() {
 
         FirebaseDatabase db = FirebaseDatabase.getInstance();

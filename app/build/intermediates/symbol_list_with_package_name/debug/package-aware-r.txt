@@ -1634,6 +1634,7 @@ id direct
 id disableHome
 id dropdown_menu
 id edit_query
+id emptyReminder
 id end
 id enterAlways
 id enterAlwaysCollapsed
@@ -1671,6 +1672,7 @@ id item_touch_helper_previous_elevation
 id join_room
 id labeled
 id largeLabel
+id leaveRoom
 id left
 id light
 id line1
@@ -1735,6 +1737,8 @@ id pin
 id progress_circular
 id progress_horizontal
 id question_history
+id question_list
+id question_txt
 id radio
 id right
 id right_icon
@@ -1763,6 +1767,7 @@ id search_voice_btn
 id select_dialog_listview
 id selected
 id settings
+id shareRoom
 id shortcut
 id showCustom
 id showHome
@@ -1904,10 +1909,11 @@ layout abc_select_dialog_material
 layout abc_tooltip
 layout activity_add_question_screen
 layout activity_console_screen
+layout activity_host_screen
 layout activity_main
 layout activity_main_screen
 layout activity_student_question_screen
-layout activity_student_screen
+layout chunk_question
 layout custom_dialog
 layout design_bottom_navigation_item
 layout design_bottom_sheet_dialog
