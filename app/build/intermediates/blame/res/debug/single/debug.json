@@ -76,6 +76,10 @@
         "source": "C:\\Users\\steve\\Desktop\\Haclicker\\app\\build\\generated\\res\\pngs\\debug\\drawable-ldpi\\ic_launcher_background.png"
     },
     {
+        "merged": "C:\\Users\\steve\\Desktop\\Haclicker\\app\\build\\intermediates\\res\\merged\\debug\\layout_activity_dash_board_screen.xml.flat",
+        "source": "C:\\Users\\steve\\Desktop\\Haclicker\\app\\src\\main\\res\\layout\\activity_dash_board_screen.xml"
+    },
+    {
         "merged": "C:\\Users\\steve\\Desktop\\Haclicker\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-anydpi-v26_ic_launcher.xml.flat",
         "source": "C:\\Users\\steve\\Desktop\\Haclicker\\app\\src\\main\\res\\mipmap-anydpi-v26\\ic_launcher.xml"
     },
