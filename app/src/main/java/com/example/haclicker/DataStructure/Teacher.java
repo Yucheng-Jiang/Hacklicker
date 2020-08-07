@@ -1,29 +1,74 @@
 package com.example.haclicker.DataStructure;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 public class Teacher {
 
-    private ClassRoom classroom;
+    private static ClassRoom classroom;
 
-    public Teacher(ClassRoom classroom) {
-        this.classroom = classroom;
-    }
-    public void createClassroom() {
-        //TODO: Create classroom.
+
+    public static void setClassroom(ClassRoom setClassRoom) {
+        classroom = setClassRoom;
     }
 
-    public void addQuestion(Question question) {
-        //TODO: add question to server.
+    public static void createClassroom() {
+
+        FirebaseDatabase db = FirebaseDatabase.getInstance();
+        DatabaseReference ref;
+        ref = db.getReference("ClassRooms").child(classroom.getClassID());
+        ref.setValue(classroom);
     }
 
-    public void deleteQuestion(Question question) {
-        //TODO: delete question from server.
+    public static void addQuestion(final Question question) {
+
+        List<Question> questionList;
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference()
+                .child("ClassRooms")
+                .child(classroom.getClassID())
+                .child("Questions");
+        if (classroom.getQuestions() != null) {
+            questionList = classroom.getQuestions();
+            questionList.add(question);
+        } else {
+            questionList = new ArrayList<Question>(){{add(question);}};
+        }
+        classroom.setQuestions(questionList);
+        ref.setValue(questionList);
     }
 
-    public void sendCorrectAnswer(String answer) {
-        //TODO: send correct answer to server
+    public static void deleteQuestion(Question question) {
+
+        List<Question> questionList = classroom.getQuestions();
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference()
+                .child("ClassRooms")
+                .child(classroom.getClassID())
+                .child("Questions");
+        questionList.remove(question);
+
+        if (questionList.size() == 0 || questionList == null) {
+            ref.setValue(null);
+        }
+        classroom.setQuestions(questionList);
+        ref.child(question.getQuestionId() + "").removeValue();
     }
 
-    public void StopResponse() {
+    public static void sendCorrectAnswer(Question question, String answer) {
+
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference()
+                .child("ClassRooms")
+                .child(classroom.getClassID())
+                .child("Questions")
+                .child(question.getQuestionId() + "");
+        ref.child("answer").setValue(answer);
+    }
+
+    public static void StopResponse() {
         //TODO: stop answering question
     }
 }

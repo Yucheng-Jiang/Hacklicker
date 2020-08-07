@@ -8,6 +8,7 @@ import java.util.Map;
 public class Student {
     FirebaseDatabase db;
     DatabaseReference ref;
+
     public Student(FirebaseDatabase db) {
         this.db = db;
     }
