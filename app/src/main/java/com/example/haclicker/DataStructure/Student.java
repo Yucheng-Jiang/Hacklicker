@@ -21,7 +21,8 @@ public class Student {
 
     //return true if join classroom successful
     public static boolean joinClassroom(String classID) {
-        List<String> allRooms = getAllRooms();
+        List<String> allRooms = getAllRooms();;
+
         for (int i = 0; i < allRooms.size(); i++) {
             if (classID.equals(allRooms.get(i))) {
                 return true;
@@ -61,6 +62,7 @@ public class Student {
 
     public static List<Question> retrieveQuestions(String roomID) {
         final List<Question> questions = new ArrayList<>();
+
         ref = FirebaseDatabase.getInstance().getReference("ClassRooms")
                 .child(roomID).child("Questions");
         ref.addValueEventListener(new ValueEventListener() {
