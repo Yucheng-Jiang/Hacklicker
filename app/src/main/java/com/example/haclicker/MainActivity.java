@@ -52,20 +52,20 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        ClassRoom classroom1 = new ClassRoom("39324", "CS225", "Fat guy", null);
-        ClassRoom classroom2 = new ClassRoom("33942", "CS233", "short guy", null);
-        createClassroom(classroom1);
-        createClassroom(classroom2);
-        List<String> choices = new ArrayList<String>(){{add("A"); add("B"); add("C"); add("D"); add("D"); add("E");}};
-        Question question1 = new Question("fuck?", 0, choices);
-        Question question2 = new Question("dayaaam", 1, choices);
-        addQuestion(question1, classroom1);
-        addQuestion(question2, classroom1);
-        sendCorrectAnswer(question2, "C", classroom1);
-        addQuestion(question1, classroom2);
-        deleteQuestion(question1, classroom1);
-        deleteQuestion(question1, classroom2);
-        //TEST CODE ENDS HERE
+//        ClassRoom classroom1 = new ClassRoom("39324", "CS225", "Fat guy", null);
+//        ClassRoom classroom2 = new ClassRoom("33942", "CS233", "short guy", null);
+//        createClassroom(classroom1);
+//        createClassroom(classroom2);
+//        List<String> choices = new ArrayList<String>(){{add("A"); add("B"); add("C"); add("D"); add("D"); add("E");}};
+//        Question question1 = new Question("fuck?", 0, choices);
+//        Question question2 = new Question("dayaaam", 1, choices);
+//        addQuestion(question1, classroom1);
+//        addQuestion(question2, classroom1);
+//        sendCorrectAnswer(question2, "C", classroom1);
+//        addQuestion(question1, classroom2);
+//        deleteQuestion(question1, classroom1);
+//        deleteQuestion(question1, classroom2);
+//        //TEST CODE ENDS HERE
 
         mAuth = FirebaseAuth.getInstance();
         createRequest();

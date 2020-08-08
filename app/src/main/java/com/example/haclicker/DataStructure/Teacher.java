@@ -61,13 +61,31 @@ public class Teacher {
     }
 
     public static void sendCorrectAnswer(Question question, String answer) {
-
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference()
                 .child("ClassRooms")
                 .child(classroom.getClassID())
                 .child("Questions")
                 .child(question.getQuestionId() + "");
-        ref.child("answer").setValue(answer);
+        List<String> list = question.getCorrectAns();
+        if (list == null) {
+            list = new ArrayList<>();
+        }
+        list.add(answer);
+        ref.child("answer").setValue(list);
+    }
+
+    public static void deleteCorrectAnswer(Question question, String answer) {
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference()
+                .child("ClassRooms")
+                .child(classroom.getClassID())
+                .child("Questions")
+                .child(question.getQuestionId() + "");
+        List<String> list = question.getCorrectAns();
+        if (list == null) {
+            return;
+        }
+        list.remove(answer);
+        ref.child("answer").setValue(list);
     }
 
     public static void StopResponse() {
