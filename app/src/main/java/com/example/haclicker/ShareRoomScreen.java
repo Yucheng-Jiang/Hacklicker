@@ -57,7 +57,7 @@ public class ShareRoomScreen extends AppCompatActivity {
             Bitmap bitMap = Bitmap.createBitmap(QR_CODE_DIMENSION, QR_CODE_DIMENSION, Bitmap.Config.RGB_565);
             for (int x = 0; x < QR_CODE_DIMENSION; x++) {
                 for (int y = 0; y < QR_CODE_DIMENSION; y++) {
-                    bitMap.setPixel(x, y, bitMatrix.get(x, y) ? Color.BLACK : Color.WHITE);
+                    bitMap.setPixel(x, y, bitMatrix.get(x, y) ? Color.BLACK : android.graphics.Color.parseColor("#DAE5ED"));
                 }
             }
             ((ImageView) findViewById(R.id.qr_code_view)).setImageBitmap(bitMap);
