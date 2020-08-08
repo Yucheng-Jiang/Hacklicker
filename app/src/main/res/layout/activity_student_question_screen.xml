@@ -51,7 +51,7 @@
             <ScrollView
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="30">
+                android:layout_weight="70">
 
                 <LinearLayout
                     android:id="@+id/question_list"
@@ -62,57 +62,31 @@
                 </LinearLayout>
             </ScrollView>
 
-            <com.github.mikephil.charting.charts.BarChart
-                android:id="@+id/resultBarChart"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="40"
-                android:background="#DAE5ED">
-
-            </com.github.mikephil.charting.charts.BarChart>
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="10"
-                android:background="#DAE5ED"
                 android:orientation="horizontal"
                 android:weightSum="100">
 
                 <Space
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="5" />
-
-                <TextView
-                    android:id="@+id/test"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="bottom"
-                    android:layout_weight="40"
-                    android:background="@drawable/orangeblue"
-                    android:gravity="center|center_horizontal"
-                    android:text="TextView"
-                    android:textSize="18sp" />
-
-                <Space
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="10" />
+                    android:layout_weight="20" />
 
                 <Button
                     android:id="@+id/sendAnswer"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_gravity="bottom"
-                    android:layout_weight="40"
+                    android:layout_weight="60"
                     android:background="@drawable/orangeblue"
-                    android:text="Start" />
+                    android:text="Send Answer" />
 
                 <Space
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="5" />
+                    android:layout_weight="20" />
             </LinearLayout>
         </LinearLayout>
 
