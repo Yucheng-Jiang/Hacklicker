@@ -28,6 +28,8 @@
         <activity android:name="com.example.haclicker.ShareRoomScreen" />
         <activity android:name="com.example.haclicker.HostQuestionScreen" />
         <activity android:name="com.example.haclicker.HostScreen" />
+        <activity android:name="com.example.haclicker.AddQuestionScreen" />
+        <activity android:name="com.example.haclicker.ManualAddQuestionScreen" />
         <activity android:name="com.example.haclicker.MainScreen" />
         <activity android:name="com.example.haclicker.ConsoleScreen" />
         <activity android:name="com.example.haclicker.MainActivity" >

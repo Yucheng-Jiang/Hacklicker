@@ -10,6 +10,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:gravity="center|center_horizontal"
         android:orientation="vertical">
 
         <Button
@@ -20,6 +21,11 @@
             android:text="From Json"
             android:textAllCaps="false"
             tools:ignore="MissingConstraints" />
+
+        <Space
+            android:layout_width="1dp"
+            android:layout_height="100dp" />
+
 
         <Button
             android:id="@+id/manualAddBtn"
