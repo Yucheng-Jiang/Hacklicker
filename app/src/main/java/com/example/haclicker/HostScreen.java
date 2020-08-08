@@ -66,6 +66,7 @@ public class HostScreen extends AppCompatActivity {
             LinearLayout questionList = findViewById(R.id.question_list);
             questionList.removeAllViews();
 
+            questions.clear();
             questions.addAll(Teacher.getQuestionsToAdd());
             for (final Question question : questions) {
                 View questionChunk = getLayoutInflater().inflate(R.layout.chunk_question,
