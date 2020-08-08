@@ -28,7 +28,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="70"
-                android:background="#edb879" />
+                android:background="@drawable/orangeblue" />
 
             <Space
                 android:layout_width="0dp"

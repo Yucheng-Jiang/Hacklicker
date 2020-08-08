@@ -38,7 +38,7 @@ import java.util.List;
 import java.util.Map;
 
 public class HostQuestionScreen extends AppCompatActivity {
-    TextView questionTxt, emptyReminder, test;
+    TextView questionTxt, test;
     Button controlBtn;
     BarChart resultBarChart;
     int id;
@@ -48,7 +48,6 @@ public class HostQuestionScreen extends AppCompatActivity {
         setContentView(R.layout.activity_host_question_screen);
 
         questionTxt = findViewById(R.id.question_txt);
-        emptyReminder = findViewById(R.id.emptyReminder);
         controlBtn = findViewById(R.id.controlBtn);
         test = findViewById(R.id.test);
         resultBarChart = findViewById(R.id.resultBarChart);
@@ -64,7 +63,6 @@ public class HostQuestionScreen extends AppCompatActivity {
                 // populate answer options
                 List<String> choices = question.getChoices();
                 if (choices != null && choices.size() != 0) {
-                    emptyReminder.setVisibility(View.INVISIBLE);
                     LinearLayout questionList = findViewById(R.id.question_list);
                     questionList.removeAllViews();
                     // create a button to each choice
@@ -93,9 +91,6 @@ public class HostQuestionScreen extends AppCompatActivity {
 
                         questionList.addView(questionChunk);
                     }
-                } else {
-                    emptyReminder.setText("There's no question added.");
-                    emptyReminder.setVisibility(View.VISIBLE);
                 }
             }
 
