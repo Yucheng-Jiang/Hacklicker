@@ -53,7 +53,7 @@ public class HostQuestionScreen extends AppCompatActivity {
         emptyReminder = findViewById(R.id.emptyReminder);
         controlBtn = findViewById(R.id.controlBtn);
         test = findViewById(R.id.test);
-        //resultBarChart = findViewById(R.id.resultBarChart);
+        resultBarChart = findViewById(R.id.resultBarChart);
 
         Intent intent = getIntent();
         id = intent.getIntExtra("Id", 0);
