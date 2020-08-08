@@ -4,39 +4,54 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#cce7e8"
     tools:context=".HostQuestionScreen">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="fill"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:weightSum="100">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="vertical">
+            android:layout_height="0dp"
+            android:layout_weight="100"
+            android:orientation="vertical"
+            android:weightSum="100">
 
-            <TextView
-                android:id="@+id/question_txt"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/orangeblue"
-                tools:ignore="MissingConstraints"
-                tools:layout_editor_absoluteX="69dp"
-                tools:layout_editor_absoluteY="70dp" />
+                android:layout_height="0dp"
+                android:layout_weight="20"
+                android:orientation="horizontal"
+                android:weightSum="100">
 
-            <TextView
-                android:id="@+id/emptyReminder"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="TextView" />
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="15" />
+
+                <TextView
+                    android:id="@+id/question_txt"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="70"
+                    android:background="@drawable/orangeblue" />
+
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="15" />
+            </LinearLayout>
+
 
             <ScrollView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1">
+                android:layout_height="0dp"
+                android:layout_weight="30">
 
                 <LinearLayout
                     android:id="@+id/question_list"
@@ -46,54 +61,59 @@
 
                 </LinearLayout>
             </ScrollView>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="vertical">
 
             <com.github.mikephil.charting.charts.BarChart
                 android:id="@+id/resultBarChart"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1">
+                android:layout_height="0dp"
+                android:layout_weight="40"
+                android:background="#DAE5ED">
 
             </com.github.mikephil.charting.charts.BarChart>
 
-            <TextView
-                android:id="@+id/test"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="TextView" />
-
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:orientation="horizontal">
+                android:layout_height="0dp"
+                android:layout_weight="10"
+                android:background="#DAE5ED"
+                android:orientation="horizontal"
+                android:weightSum="100">
 
                 <Space
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"/>
+                    android:layout_weight="5" />
+
+                <TextView
+                    android:id="@+id/test"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="bottom"
+                    android:layout_weight="40"
+                    android:background="@drawable/orangeblue"
+                    android:gravity="center|center_horizontal"
+                    android:text="TextView"
+                    android:textSize="18sp" />
+
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="10" />
 
                 <Button
                     android:id="@+id/controlBtn"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
                     android:layout_gravity="bottom"
-                    android:layout_weight="1"
+                    android:layout_weight="40"
+                    android:background="@drawable/orangeblue"
                     android:text="Start" />
 
                 <Space
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"/>
+                    android:layout_weight="5" />
             </LinearLayout>
-
         </LinearLayout>
 
     </LinearLayout>
