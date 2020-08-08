@@ -1570,6 +1570,8 @@ id action_text
 id actions
 id activity_chooser_view_content
 id add
+id addOption
+id addQuestion
 id adjust_height
 id adjust_width
 id alertTitle
@@ -1583,14 +1585,6 @@ id barrier
 id beginning
 id blocking
 id bottom
-id button
-id button2
-id button3
-id button4
-id button5
-id button6
-id button7
-id button8
 id buttonPanel
 id cancel_button
 id center
@@ -1616,6 +1610,7 @@ id content
 id contentPanel
 id controlBtn
 id coordinator
+id createQuestion
 id create_room
 id custom
 id customPanel
@@ -1671,6 +1666,7 @@ id invisible
 id italic
 id item_touch_helper_previous_elevation
 id join_room
+id jsonAddBtn
 id labeled
 id largeLabel
 id leaveRoom
@@ -1682,6 +1678,7 @@ id listMode
 id list_item
 id logout
 id mail
+id manualAddBtn
 id masked
 id message
 id middle
@@ -1725,6 +1722,8 @@ id notification_main_column
 id notification_main_column_container
 id off
 id on
+id optionList
+id optionTxt
 id outline
 id packed
 id parallax
@@ -1737,6 +1736,7 @@ id percent
 id pin
 id progress_circular
 id progress_horizontal
+id questionDescribe
 id question_history
 id question_list
 id question_txt
@@ -1754,6 +1754,7 @@ id scroll
 id scrollIndicatorDown
 id scrollIndicatorUp
 id scrollView
+id scrollView2
 id scrollable
 id search_badge
 id search_bar
@@ -1813,7 +1814,6 @@ id textEnd
 id textSpacerNoButtons
 id textSpacerNoTitle
 id textStart
-id textView
 id text_input_end_icon
 id text_input_start_icon
 id textinput_counter
@@ -1915,7 +1915,8 @@ layout activity_host_question_screen
 layout activity_host_screen
 layout activity_main
 layout activity_main_screen
-layout activity_student_question_screen
+layout activity_manual_add_question_screen
+layout chunk_option
 layout chunk_question
 layout custom_dialog
 layout design_bottom_navigation_item

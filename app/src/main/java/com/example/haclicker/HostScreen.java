@@ -22,7 +22,7 @@ import java.util.List;
 
 public class HostScreen extends AppCompatActivity {
     List<Question> questions;
-    ImageButton shareRoom, exitRoom;
+    ImageButton shareRoom, exitRoom, addQuestion;
     TextView emptyReminder;
 
     @Override
@@ -33,12 +33,20 @@ public class HostScreen extends AppCompatActivity {
         shareRoom = findViewById(R.id.shareRoom);
         exitRoom = findViewById(R.id.leaveRoom);
         emptyReminder = findViewById(R.id.emptyReminder);
+        addQuestion = findViewById(R.id.addQuestion);
         // exit room button set on click listener
         exitRoom.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //TODO: store data and delete cloud data
                 Intent intent = new Intent(getApplicationContext(), MainScreen.class);
+                startActivity(intent);
+            }
+        });
+        addQuestion.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), AddQuestionScreen.class);
                 startActivity(intent);
             }
         });
@@ -81,9 +89,6 @@ public class HostScreen extends AppCompatActivity {
             emptyReminder.setText("There's no question added.");
             emptyReminder.setVisibility(View.VISIBLE);
         }
-
-
-
 
     }
 }

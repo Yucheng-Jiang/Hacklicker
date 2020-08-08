@@ -1,4 +1,4 @@
-#Fri Aug 07 23:32:36 EDT 2020
-base.0=/Users/david-jiang/AndroidStudioProjects/haclicker/app/build/intermediates/dex/debug/mergeDexDebug/classes.dex
+#Sat Aug 08 00:48:20 EDT 2020
+base.0=C\:\\Users\\steve\\Desktop\\Haclicker\\app\\build\\intermediates\\dex\\debug\\mergeDexDebug\\classes.dex
 path.0=classes.dex
 renamed.0=classes.dex
