@@ -40,7 +40,7 @@
                 android:layout_weight="70"
                 android:background="@drawable/orangeblue"
                 android:gravity="center"
-                android:textSize="30sp"
+                android:textSize="24sp"
                 tools:ignore="MissingConstraints" />
 
             <Space

@@ -96,6 +96,10 @@
         "source": "C:\\Users\\steve\\Desktop\\Haclicker\\app\\src\\main\\res\\drawable\\export.png"
     },
     {
+        "merged": "C:\\Users\\steve\\Desktop\\Haclicker\\app\\build\\intermediates\\res\\merged\\debug\\layout_activity_student_screen.xml.flat",
+        "source": "C:\\Users\\steve\\Desktop\\Haclicker\\app\\src\\main\\res\\layout\\activity_student_screen.xml"
+    },
+    {
         "merged": "C:\\Users\\steve\\Desktop\\Haclicker\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi_ic_launcher_background.png.flat",
         "source": "C:\\Users\\steve\\Desktop\\Haclicker\\app\\build\\generated\\res\\pngs\\debug\\drawable-xxhdpi\\ic_launcher_background.png"
     },

@@ -1,23 +1,18 @@
 package com.example.haclicker;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
-import android.media.Image;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.example.haclicker.DataStructure.Question;
 import com.example.haclicker.DataStructure.Teacher;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class HostScreen extends AppCompatActivity {
@@ -33,7 +28,7 @@ public class HostScreen extends AppCompatActivity {
         shareRoom = findViewById(R.id.shareRoom);
         exitRoom = findViewById(R.id.leaveRoom);
         emptyReminder = findViewById(R.id.emptyReminder);
-        addQuestion = findViewById(R.id.addQuestion);
+        addQuestion = findViewById(R.id.makePost);
         // exit room button set on click listener
         exitRoom.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -55,6 +50,7 @@ public class HostScreen extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), ShareRoomScreen.class);
+                intent.putExtra("Id", Teacher.getClassroom().getClassID());
                 startActivity(intent);
             }
         });

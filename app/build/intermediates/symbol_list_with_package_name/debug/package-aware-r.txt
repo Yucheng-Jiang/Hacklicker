@@ -1572,7 +1572,6 @@ id actions
 id activity_chooser_view_content
 id add
 id addOption
-id addQuestion
 id adjust_height
 id adjust_width
 id alertTitle
@@ -1683,6 +1682,7 @@ id listMode
 id list_item
 id logout
 id mail
+id makePost
 id manualAddBtn
 id masked
 id message
@@ -1929,6 +1929,7 @@ layout activity_main
 layout activity_main_screen
 layout activity_manual_add_question_screen
 layout activity_share_room_screen
+layout activity_student_screen
 layout chunk_option
 layout chunk_question
 layout custom_dialog

@@ -25,6 +25,7 @@
         android:supportsRtl="true"
         android:testOnly="true"
         android:theme="@style/AppTheme" >
+        <activity android:name="com.example.haclicker.StudentScreen" />
         <activity android:name="com.example.haclicker.JoinRoomScreen" />
         <activity android:name="com.example.haclicker.ShareRoomScreen" />
         <activity android:name="com.example.haclicker.HostQuestionScreen" />
