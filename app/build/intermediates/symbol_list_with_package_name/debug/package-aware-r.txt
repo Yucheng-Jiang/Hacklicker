@@ -1604,6 +1604,7 @@ id clear_text
 id clip_horizontal
 id clip_vertical
 id collapseActionView
+id confirmJoinBtn
 id confirm_button
 id consoleBack
 id container
@@ -1648,6 +1649,7 @@ id fitToContents
 id fixed
 id floating
 id forever
+id galleryQrBtn
 id ghost_view
 id ghost_view_holder
 id gone
@@ -1663,6 +1665,8 @@ id icon_only
 id ifRoom
 id image
 id info
+id inputRoomId
+id invalidIdTxt
 id invisible
 id italic
 id item_touch_helper_previous_elevation
@@ -1755,6 +1759,7 @@ id row_index_key
 id save_non_transition_alpha
 id save_overlay_view
 id scale
+id scanQrBtn
 id screen
 id scroll
 id scrollIndicatorDown
@@ -1919,6 +1924,7 @@ layout activity_add_question_screen
 layout activity_console_screen
 layout activity_host_question_screen
 layout activity_host_screen
+layout activity_join_room_screen
 layout activity_main
 layout activity_main_screen
 layout activity_manual_add_question_screen

@@ -70,6 +70,14 @@ public class MainScreen extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        joinRoom.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), JoinRoomScreen.class);
+                startActivity(intent);
+            }
+        });
     }
     private ClassRoom generateClassroom() {
 
