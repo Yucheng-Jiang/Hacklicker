@@ -19,8 +19,7 @@
             android:layout_centerInParent="true"
             android:background="#edb879"
             android:ellipsize="end"
-            android:gravity="center|center_horizontal"
-            android:maxLines="3" />
+            android:gravity="center|center_horizontal" />
 
         <Space
             android:layout_width="1dp"
