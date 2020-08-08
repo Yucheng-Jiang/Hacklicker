@@ -15,6 +15,17 @@ import com.example.haclicker.DataStructure.Question;
 import com.example.haclicker.DataStructure.Student;
 import com.example.haclicker.DataStructure.StudentResponse;
 import com.example.haclicker.DataStructure.Teacher;
+import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.components.AxisBase;
+import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.data.BarData;
+import com.github.mikephil.charting.data.BarDataSet;
+import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.formatter.IAxisValueFormatter;
+import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
+import com.github.mikephil.charting.formatter.ValueFormatter;
+import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
+import com.github.mikephil.charting.utils.ColorTemplate;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -26,10 +37,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import java.util.Set;
 
 public class HostQuestionScreen extends AppCompatActivity {
     TextView questionTxt, emptyReminder, test;
     Button controlBtn;
+    BarChart resultBarChart;
     int id;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +53,7 @@ public class HostQuestionScreen extends AppCompatActivity {
         emptyReminder = findViewById(R.id.emptyReminder);
         controlBtn = findViewById(R.id.controlBtn);
         test = findViewById(R.id.test);
+        //resultBarChart = findViewById(R.id.resultBarChart);
 
         Intent intent = getIntent();
         id = intent.getIntExtra("Id", 0);
@@ -94,10 +108,39 @@ public class HostQuestionScreen extends AppCompatActivity {
             public void onClick(View view) {
                 if (controlBtn.getText().equals("Start")) {
                     controlBtn.setText("Stop");
+                    resultBarChart.setVisibility(View.INVISIBLE);
                 } else {
                     controlBtn.setText("Start");
-                    //show stats
-                    Map<String, Integer>result = showResult();
+                    //fetch result from server
+                    //Map<String, Integer> result = showResult();
+                    Map<String, Integer> result = new HashMap<>();
+                    result.put("A", 10);
+                    result.put("B", 50);
+                    result.put("C", 35);
+                    result.put("D", 40);
+                    //draw result bar chart
+                    resultBarChart.setVisibility(View.VISIBLE);
+                    resultBarChart.setDrawBarShadow(false);
+                    resultBarChart.setDrawValueAboveBar(true);
+                    resultBarChart.setMaxVisibleValueCount(50);
+                    resultBarChart.setPinchZoom(false);
+                    resultBarChart.setDrawGridBackground(true);
+
+                    //set bar chart entry
+                    ArrayList<BarEntry> resultEntries = new ArrayList<>();
+                    String[] horizontalAxisSet = new String[result.size()];
+                    int i = 0;
+                    for (String entry : result.keySet()) {
+                        resultEntries.add(new BarEntry(result.get(entry), i));
+                        horizontalAxisSet[i] = entry;
+                        i++;
+                    }
+                    BarDataSet barDataSet = new BarDataSet(resultEntries, "Number of Student");
+                    barDataSet.setColors(ColorTemplate.COLORFUL_COLORS);
+                    BarData data = new BarData(barDataSet);
+                    resultBarChart.setData(data);
+                    XAxis xAxis = resultBarChart.getXAxis();
+                    xAxis.setValueFormatter(new MyXAxisValueFormatter(horizontalAxisSet));
                 }
             }
         });
@@ -171,5 +214,18 @@ public class HostQuestionScreen extends AppCompatActivity {
             }
         });
         return result;
+    }
+
+    public class MyXAxisValueFormatter extends ValueFormatter implements IAxisValueFormatter {
+
+        private String[] mValues;
+
+        public MyXAxisValueFormatter(String[] values) {
+            this.mValues = values;
+        }
+        @Override
+        public String getFormattedValue(float value, AxisBase axis) {
+            return mValues[(int) value];
+        }
     }
 }
