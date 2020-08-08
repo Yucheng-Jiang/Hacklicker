@@ -41,7 +41,7 @@ public class Teacher {
             questionList = new ArrayList<Question>(){{add(question);}};
         }
         classroom.setQuestions(questionList);
-        ref.setValue(questionList);
+        ref.child(question.getQuestionId() + "").setValue(question);
     }
 
     public static void deleteQuestion(Question question) {
