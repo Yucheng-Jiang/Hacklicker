@@ -2,6 +2,7 @@ package com.example.haclicker;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
@@ -12,6 +13,7 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.example.haclicker.DataStructure.Student;
+import com.example.haclicker.DataStructure.StudentResponse;
 
 public class JoinRoomScreen extends AppCompatActivity {
 
@@ -38,6 +40,9 @@ public class JoinRoomScreen extends AppCompatActivity {
                 String id = inputRoomId.getText().toString();
                 if (Student.joinClassroom(id)) {
                     // TODO: start new activity here
+                    Intent intent = new Intent(getApplicationContext(), StudentScreen.class);
+                    intent.putExtra("Id", id);
+                    startActivity(intent);
                 } else {
                     // Code below are cited from
                     // https://stackoverflow.com/questions/22194761/hide-textview-after-some-time-in-android

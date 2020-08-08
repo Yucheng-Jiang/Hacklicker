@@ -11,24 +11,25 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.haclicker.DataStructure.Question;
+import com.example.haclicker.DataStructure.Student;
 import com.example.haclicker.DataStructure.Teacher;
 
 import java.util.List;
 
-public class HostScreen extends AppCompatActivity {
+public class StudentScreen extends AppCompatActivity {
     List<Question> questions;
-    ImageButton shareRoom, exitRoom, addQuestion;
-    TextView emptyReminder;
-
+    ImageButton exitRoom, shareRoom, makePost;
+    String id;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_host_screen);
+        Intent intent = getIntent();
+        id = intent.getStringExtra("Id");
         // add image buttons
-        shareRoom = findViewById(R.id.shareRoom);
         exitRoom = findViewById(R.id.leaveRoom);
-        emptyReminder = findViewById(R.id.emptyReminder);
-        addQuestion = findViewById(R.id.makePost);
+        shareRoom = findViewById(R.id.shareRoom);
+        makePost = findViewById(R.id.makePost);
         // exit room button set on click listener
         exitRoom.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -38,19 +39,11 @@ public class HostScreen extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        addQuestion.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), AddQuestionScreen.class);
-                startActivity(intent);
-            }
-        });
-        // share room button set on click listener
+
         shareRoom.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), ShareRoomScreen.class);
-                intent.putExtra("Id", Teacher.getClassroom().getClassID());
                 startActivity(intent);
             }
         });
@@ -60,9 +53,8 @@ public class HostScreen extends AppCompatActivity {
     }
 
     private void upDateUI() {
-        questions = Teacher.getClassroom().getQuestions();
+        questions = Student.retrieveQuestions(id);
         if (questions != null) {
-            emptyReminder.setVisibility(View.INVISIBLE);
             LinearLayout questionList = findViewById(R.id.question_list);
             questionList.removeAllViews();
 
@@ -83,9 +75,6 @@ public class HostScreen extends AppCompatActivity {
 
                 questionList.addView(questionChunk);
             }
-        } else {
-            emptyReminder.setText("There's no question added.");
-            emptyReminder.setVisibility(View.VISIBLE);
         }
 
     }

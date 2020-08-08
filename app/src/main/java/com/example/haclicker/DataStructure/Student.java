@@ -18,6 +18,7 @@ public class Student {
     static FirebaseDatabase db = FirebaseDatabase.getInstance();
     static DatabaseReference ref;
 
+
     //return true if join classroom successful
     public static boolean joinClassroom(String classID) {
         List<String> allRooms = getAllRooms();
