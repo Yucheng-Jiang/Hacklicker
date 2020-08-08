@@ -9,68 +9,139 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="#cce7e8"
         android:orientation="vertical"
-        android:background="#cce7e8">
+        android:weightSum="100">
 
         <ImageButton
             android:id="@+id/settings"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="#D3D3D3"
+            android:layout_height="0dp"
+            android:layout_gravity="right"
+            android:layout_weight="10"
+
             app:srcCompat="@drawable/settings"
+            android:background="@drawable/rounded_button"
             tools:ignore="MissingConstraints" />
 
-        <androidx.gridlayout.widget.GridLayout
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="10"/>
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            app:columnCount="2"
-            app:rowCount="2">
+            android:layout_height="0dp"
+            android:layout_weight="70"
+            android:orientation="vertical"
+            android:weightSum="100">
 
-            <ImageButton
-                android:id="@+id/create_room"
-                android:layout_width="120dp"
-                android:layout_height="120dp"
-                android:layout_weight="1"
-                android:background="@drawable/rounded_button"
-                android:scaleType="fitXY"
-                app:srcCompat="@drawable/create_room"
-                tools:ignore="MissingConstraints" />
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="10" />
 
-            <ImageButton
-                android:id="@+id/question_history"
-                android:layout_width="120dp"
-                android:layout_height="120dp"
-                android:layout_weight="1"
-                android:background="@drawable/rounded_button"
-                android:scaleType="fitXY"
-                app:srcCompat="@drawable/question_history"
-                tools:ignore="MissingConstraints" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="25"
+                android:orientation="horizontal">
 
-            <ImageButton
-                android:id="@+id/export"
-                android:layout_width="120dp"
-                android:layout_height="120dp"
-                android:layout_weight="1"
-                android:background="@drawable/rounded_button"
-                android:scaleType="fitXY"
-                app:srcCompat="@drawable/export"
-                tools:ignore="MissingConstraints" />
+                <Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="10" />
 
-            <ImageButton
-                android:id="@+id/join_room"
-                android:layout_width="120dp"
-                android:layout_height="120dp"
-                android:layout_weight="1"
-                android:background="@drawable/rounded_button"
-                android:scaleType="fitXY"
-                app:srcCompat="@drawable/join_room"
-                tools:ignore="MissingConstraints" />
+                <ImageButton
+                    android:id="@+id/create_room"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="30"
+                    android:background="@drawable/rounded_button"
+                    app:srcCompat="@drawable/create_room"
+                    tools:ignore="MissingConstraints" />
 
-        </androidx.gridlayout.widget.GridLayout>
+                <Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="20" />
+
+                <ImageButton
+                    android:id="@+id/join_room"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="30"
+                    android:background="@drawable/rounded_button"
+                    app:srcCompat="@drawable/join_room"
+                    tools:ignore="MissingConstraints" />
+
+                <Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="10" />
+            </LinearLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="15" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="25"
+                android:orientation="horizontal"
+                android:weightSum="100">
+
+                <Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="10" />
+
+                <ImageButton
+                    android:id="@+id/question_history"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="30"
+                    android:background="@drawable/rounded_button"
+                    app:srcCompat="@drawable/question_history"
+                    tools:ignore="MissingConstraints" />
 
 
+                <Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="20" />
+
+                <ImageButton
+                    android:id="@+id/export"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="30"
+                    android:background="@drawable/rounded_button"
+                    app:srcCompat="@drawable/export"
+                    tools:ignore="MissingConstraints" />
+
+                <Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="10" />
+            </LinearLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="15" />
+        </LinearLayout>
+
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="10" />
     </LinearLayout>
+
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
