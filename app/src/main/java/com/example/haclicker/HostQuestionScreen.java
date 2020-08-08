@@ -101,10 +101,17 @@ public class HostQuestionScreen extends AppCompatActivity {
                 if (controlBtn.getText().equals("Start")) {
                     controlBtn.setText("Stop");
                     resultBarChart.setVisibility(View.INVISIBLE);
+                    Teacher.addQuestion();
                 } else {
                     controlBtn.setText("Start");
                     //fetch result from server
                     Map<String, Integer> result = showResult();
+//                    Map<String, Integer> result = new HashMap<>();
+//                    result.put("A", 10);
+//                    result.put("B", 50);
+//                    result.put("C", 35);
+//                    result.put("D", 40);
+//                    result.put("E", 55);
                     //draw result bar chart
                     resultBarChart.setVisibility(View.VISIBLE);
                     resultBarChart.setDrawBarShadow(false);
@@ -128,7 +135,7 @@ public class HostQuestionScreen extends AppCompatActivity {
                     barDataSet.setColors(ColorTemplate.COLORFUL_COLORS);
                     BarData data = new BarData(barDataSet);
                     resultBarChart.setData(data);
-                    resultBarChart.animateXY(3000, 3000);
+                    resultBarChart.animateXY(1500, 1500);
                     XAxis xAxis = resultBarChart.getXAxis();
                     xAxis.setValueFormatter(new MyXAxisValueFormatter(horizontalAxisSet));
                 }

@@ -11,6 +11,7 @@ import java.util.Map;
 public class Teacher {
 
     private static ClassRoom classroom;
+    private static List<Question> questionsToAdd;
 
 
     public static void setClassroom(ClassRoom setClassRoom) {
@@ -32,23 +33,25 @@ public class Teacher {
 
     /**
      * Add a new question to server.
-     * @param question question to add
      */
-    public static void addQuestion(final Question question) {
+    public static void addQuestion() {
 
-        List<Question> questionList;
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference()
-                .child("ClassRooms")
-                .child(classroom.getClassID())
-                .child("Questions");
-        if (classroom.getQuestions() != null) {
-            questionList = classroom.getQuestions();
-            questionList.add(question);
-        } else {
-            questionList = new ArrayList<Question>(){{add(question);}};
+        List<Question> questionList = new ArrayList<>();
+        for (final Question question : questionsToAdd) {
+
+            DatabaseReference ref = FirebaseDatabase.getInstance().getReference()
+                    .child("ClassRooms")
+                    .child(classroom.getClassID())
+                    .child("Questions");
+            if (classroom.getQuestions() != null) {
+                questionList = classroom.getQuestions();
+            } else {
+                questionList.add(question);
+            }
+            ref.child(question.getQuestionId() + "").setValue(question);
         }
         classroom.setQuestions(questionList);
-        ref.child(question.getQuestionId() + "").setValue(question);
+        questionsToAdd.clear();
     }
 
     /**
@@ -112,5 +115,16 @@ public class Teacher {
 
     public static void StopResponse() {
         //TODO: stop answering question
+    }
+
+    public static void addQuestionToQueue(Question question) {
+        if (questionsToAdd == null) {
+            questionsToAdd = new ArrayList<>();
+        }
+        questionsToAdd.add(question);
+    }
+
+    public static List<Question> getQuestionsToAdd() {
+        return questionsToAdd;
     }
 }
