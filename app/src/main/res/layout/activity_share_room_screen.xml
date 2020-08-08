@@ -12,65 +12,101 @@
         android:layout_height="match_parent"
         android:gravity="center_horizontal"
         android:orientation="vertical"
+        android:weightSum="100"
         tools:layout_editor_absoluteX="-28dp"
         tools:layout_editor_absoluteY="-88dp">
 
         <Space
-            android:layout_width="1dp"
-            android:layout_height="50dp" />
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="5" />
 
-        <TextView
-            android:id="@+id/roomIdDisplay"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="94dp"
-            android:background="@drawable/orangeblue"
-            android:gravity="center"
-            android:textSize="30sp"
-            tools:ignore="MissingConstraints" />
+            android:layout_height="0dp"
+            android:layout_weight="15"
+            android:orientation="horizontal"
+            android:weightSum="100">
+
+            <Space
+                android:layout_width="1dp"
+                android:layout_height="15dp"
+                android:layout_weight="15" />
+
+            <TextView
+                android:id="@+id/roomIdDisplay"
+                android:layout_width="0dp"
+                android:layout_height="94dp"
+                android:layout_weight="70"
+                android:background="@drawable/orangeblue"
+                android:gravity="center"
+                android:textSize="30sp"
+                tools:ignore="MissingConstraints" />
+
+            <Space
+                android:layout_width="1dp"
+                android:layout_height="15dp"
+                android:layout_weight="15" />
+        </LinearLayout>
 
         <Space
             android:layout_width="1dp"
-            android:layout_height="15dp" />
+            android:layout_height="15dp"
+            android:layout_weight="5" />
 
         <ImageView
             android:id="@+id/qr_code_view"
-            android:layout_width="254dp"
-            android:layout_height="256dp"
+            android:layout_width="256dp"
+            android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:layout_gravity="center_horizontal"
+            android:layout_weight="35"
             android:background="#DAE5ED" />
 
         <Space
             android:layout_width="1dp"
-            android:layout_height="30dp" />
+            android:layout_height="30dp"
+            android:layout_weight="10" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
-            android:orientation="horizontal">
+            android:layout_weight="20"
+            android:orientation="horizontal"
+            android:weightSum="100">
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="10" />
 
             <Button
                 android:id="@+id/qr_code_save"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_weight="35"
                 android:background="@drawable/orangeblue"
                 android:text="Save Image" />
 
             <Space
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"/>
+                android:layout_weight="10" />
 
 
             <Button
                 android:id="@+id/qr_code_copy"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_weight="35"
                 android:background="@drawable/orangeblue"
                 android:text="Copy Room ID" />
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="10" />
         </LinearLayout>
 
     </LinearLayout>
