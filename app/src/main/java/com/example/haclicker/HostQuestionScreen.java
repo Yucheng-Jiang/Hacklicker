@@ -14,9 +14,10 @@ import com.example.haclicker.DataStructure.Question;
 import com.example.haclicker.DataStructure.Teacher;
 
 import java.util.List;
+import java.util.Random;
 
 public class HostQuestionScreen extends AppCompatActivity {
-    TextView questionTxt, emptyReminder;
+    TextView questionTxt, emptyReminder, test;
     Button controlBtn;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,10 +27,11 @@ public class HostQuestionScreen extends AppCompatActivity {
         questionTxt = findViewById(R.id.question_txt);
         emptyReminder = findViewById(R.id.emptyReminder);
         controlBtn = findViewById(R.id.controlBtn);
+        test = findViewById(R.id.test);
 
         Intent intent = getIntent();
         int id = intent.getIntExtra("Id", 0);
-
+        // display question and choices
         List<Question> questions = Teacher.getClassroom().getQuestions();
         for (final Question question : questions) {
             // set question description
@@ -42,7 +44,7 @@ public class HostQuestionScreen extends AppCompatActivity {
                 emptyReminder.setVisibility(View.INVISIBLE);
                 LinearLayout questionList = findViewById(R.id.question_list);
                 questionList.removeAllViews();
-
+                // create a button to each choice
                 for (String choice : choices) {
                     View questionChunk = getLayoutInflater().inflate(R.layout.chunk_question,
                             questionList, false);
@@ -73,7 +75,7 @@ public class HostQuestionScreen extends AppCompatActivity {
                 emptyReminder.setVisibility(View.VISIBLE);
             }
         }
-
+        // control button logic
         controlBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -84,5 +86,32 @@ public class HostQuestionScreen extends AppCompatActivity {
                 }
             }
         });
+
+        final Thread thread = new Thread() {
+            @Override
+            public void run() {
+                try {
+                    while (!isInterrupted()) {
+                        Thread.sleep(1000);
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                updateUI();
+                                // update TextView here!
+                            }
+                        });
+                    }
+                } catch (InterruptedException e) {
+                }
+            }
+        };
+
+        thread.start();
     }
+
+    private void updateUI() {
+        // TODO: calculate how many student vote here
+        test.setText("xxx " + "students voted");
+    }
+
 }
