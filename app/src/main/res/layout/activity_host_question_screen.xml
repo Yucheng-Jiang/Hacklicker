@@ -15,7 +15,10 @@
             android:id="@+id/question_txt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="TextView" />
+            android:background="@drawable/orangeblue"
+            tools:layout_editor_absoluteX="69dp"
+            tools:layout_editor_absoluteY="70dp"
+            tools:ignore="MissingConstraints" />
 
         <TextView
             android:id="@+id/emptyReminder"
