@@ -14,6 +14,8 @@
         <activity android:name=".ShareRoomScreen"></activity>
         <activity android:name=".HostQuestionScreen" />
         <activity android:name=".HostScreen" />
+        <activity android:name=".AddQuestionScreen" />
+        <activity android:name=".ManualAddQuestionScreen" />
         <activity android:name=".MainScreen" />
         <activity android:name=".ConsoleScreen" />
         <activity android:name=".MainActivity">
