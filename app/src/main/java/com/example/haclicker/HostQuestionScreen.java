@@ -77,12 +77,11 @@ public class HostQuestionScreen extends AppCompatActivity {
                                 if (controlBtn.getText().equals("Start")) {
                                     if (((ColorDrawable) questionTxt.getBackground()).getColor() ==
                                             android.graphics.Color.parseColor("#99ff99")) {
-                                        questionTxt.setBackgroundColor(android.graphics.Color.parseColor("#edb879"));
+                                        questionTxt.setBackgroundColor(android.graphics.Color.parseColor("#fed8b1"));
                                         Teacher.deleteCorrectAnswer(question, questionTxt.getText().toString());
                                     } else {
                                         questionTxt.setBackgroundColor(android.graphics.Color.parseColor("#99ff99"));
                                         Teacher.sendCorrectAnswer(question, questionTxt.getText().toString());
-
                                     }
                                 }
                                 // TODO: when stop button is activated, the correct answer should be the one clicked
