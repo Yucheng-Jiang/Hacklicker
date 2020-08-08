@@ -38,7 +38,7 @@
             android:layout_height="256dp"
             android:layout_centerInParent="true"
             android:layout_gravity="center_horizontal"
-            tools:srcCompat="@drawable/qr_code_emtpy" />
+            android:background="#DAE5ED" />
 
         <Space
             android:layout_width="1dp"
