@@ -2,6 +2,8 @@ package com.example.haclicker;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.ContextWrapper;
 import android.graphics.Bitmap;
@@ -9,6 +11,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -26,21 +29,49 @@ import java.io.IOException;
 public class ShareRoomScreen extends AppCompatActivity {
 
     TextView roomIdDisplay;
+    Button copyIdBtn, saveQrBtn;
+    String id;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_share_room_screen);
 
+        copyIdBtn = findViewById(R.id.qr_code_copy);
+        saveQrBtn = findViewById(R.id.qr_code_save);
+        id = getIntent().getStringExtra("Id");
         final Bitmap QRCodeBitmap = renderQRCode();
-        findViewById(R.id.qr_code_save).setOnClickListener(new View.OnClickListener() {
+        saveQrBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 saveQRCode(QRCodeBitmap);
             }
         });
 
+        findViewById(R.id.qr_code_copy).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String str = "Join Haclicker room: " + id;
+                ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+                ClipData clip = ClipData.newPlainText("", str);
+                clipboard.setPrimaryClip(clip);
+
+                // Code below are cited from
+                // https://stackoverflow.com/questions/22194761/hide-textview-after-some-time-in-android
+                copyIdBtn.setText("ID COPIED");
+                copyIdBtn.setTextColor(Color.GREEN);
+                copyIdBtn.postDelayed(new Runnable() {
+                    public void run() {
+                        copyIdBtn.setTextColor(Color.BLACK);
+                        copyIdBtn.setText("COPY ROOM ID");
+                    }
+                }, 1500);
+                // citation ends here
+
+            }
+        });
+
         roomIdDisplay = findViewById(R.id.roomIdDisplay);
-        roomIdDisplay.setText("ROOM ID: " + Teacher.getClassroom().getClassID());
+        roomIdDisplay.setText("ROOM ID: " + id);
 
 
 
@@ -48,12 +79,11 @@ public class ShareRoomScreen extends AppCompatActivity {
 
     // Referenced from https://stackoverflow.com/questions/8800919/how-to-generate-a-qr-code-for-an-android-application
     private Bitmap renderQRCode() {
-        String classID = Teacher.getClassroom().getClassID();
 
         int QR_CODE_DIMENSION = 512;
         QRCodeWriter writer = new QRCodeWriter();
         try {
-            BitMatrix bitMatrix = writer.encode(classID, BarcodeFormat.QR_CODE, QR_CODE_DIMENSION, QR_CODE_DIMENSION);
+            BitMatrix bitMatrix = writer.encode(id, BarcodeFormat.QR_CODE, QR_CODE_DIMENSION, QR_CODE_DIMENSION);
             Bitmap bitMap = Bitmap.createBitmap(QR_CODE_DIMENSION, QR_CODE_DIMENSION, Bitmap.Config.RGB_565);
             for (int x = 0; x < QR_CODE_DIMENSION; x++) {
                 for (int y = 0; y < QR_CODE_DIMENSION; y++) {
