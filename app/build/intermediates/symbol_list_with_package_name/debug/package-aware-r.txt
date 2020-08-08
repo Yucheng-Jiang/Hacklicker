@@ -1501,6 +1501,7 @@ drawable notification_template_icon_low_bg
 drawable notification_tile_bg
 drawable notify_panel_notification_icon_bg
 drawable orangeblue
+drawable qr_code_emtpy
 drawable question_history
 drawable rounded_button
 drawable settings
@@ -1736,6 +1737,9 @@ id percent
 id pin
 id progress_circular
 id progress_horizontal
+id qr_code_copy
+id qr_code_save
+id qr_code_view
 id questionDescribe
 id question_history
 id question_list
@@ -1745,6 +1749,7 @@ id resultBarChart
 id right
 id right_icon
 id right_side
+id roomIdDisplay
 id rounded
 id row_index_key
 id save_non_transition_alpha
@@ -1917,6 +1922,7 @@ layout activity_host_screen
 layout activity_main
 layout activity_main_screen
 layout activity_manual_add_question_screen
+layout activity_share_room_screen
 layout chunk_option
 layout chunk_question
 layout custom_dialog

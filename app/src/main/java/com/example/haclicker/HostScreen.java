@@ -54,7 +54,8 @@ public class HostScreen extends AppCompatActivity {
         shareRoom.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // TODO: share room code
+                Intent intent = new Intent(getApplicationContext(), ShareRoomScreen.class);
+                startActivity(intent);
             }
         });
         // update UI
