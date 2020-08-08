@@ -12,8 +12,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.haclicker.DataStructure.Question;
-import com.example.haclicker.DataStructure.Student;
-import com.example.haclicker.DataStructure.StudentResponse;
 import com.example.haclicker.DataStructure.Teacher;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.AxisBase;
@@ -22,9 +20,7 @@ import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.formatter.IAxisValueFormatter;
-import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.github.mikephil.charting.formatter.ValueFormatter;
-import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
 import com.github.mikephil.charting.utils.ColorTemplate;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -41,7 +37,7 @@ public class HostQuestionScreen extends AppCompatActivity {
     TextView questionTxt, test;
     Button controlBtn;
     BarChart resultBarChart;
-    int id;
+    int curQuestionID;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,12 +49,12 @@ public class HostQuestionScreen extends AppCompatActivity {
         resultBarChart = findViewById(R.id.resultBarChart);
 
         Intent intent = getIntent();
-        id = intent.getIntExtra("Id", 0);
+        curQuestionID = intent.getIntExtra("Id", 0);
         // display question and choices
         List<Question> questions = Teacher.getClassroom().getQuestions();
         for (final Question question : questions) {
             // set question description
-            if (question.getQuestionId() == id) {
+            if (question.getQuestionId() == curQuestionID) {
                 questionTxt.setText(question.getQuestionDescription());
                 // populate answer options
                 List<String> choices = question.getChoices();
@@ -102,7 +98,7 @@ public class HostQuestionScreen extends AppCompatActivity {
                 if (controlBtn.getText().equals("Start")) {
                     controlBtn.setText("Stop");
                     resultBarChart.setVisibility(View.INVISIBLE);
-                    Teacher.addQuestion();
+                    Teacher.addQuestion(curQuestionID);
                 } else {
                     controlBtn.setText("Start");
                     //fetch result from server
@@ -170,7 +166,7 @@ public class HostQuestionScreen extends AppCompatActivity {
         DatabaseReference ref = FirebaseDatabase.getInstance()
                 .getReference("ClassRooms")
                 .child(Teacher.getClassroom().getClassID())
-                .child("StudentResponse").child(id + "");
+                .child("StudentResponse").child(curQuestionID + "");
 
         ref.addValueEventListener(new ValueEventListener() {
             @Override
@@ -191,7 +187,7 @@ public class HostQuestionScreen extends AppCompatActivity {
         DatabaseReference ref = FirebaseDatabase.getInstance()
                 .getReference("ClassRooms")
                 .child(Teacher.getClassroom().getClassID())
-                .child("StudentResponse").child(id + "");
+                .child("StudentResponse").child(curQuestionID + "");
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
