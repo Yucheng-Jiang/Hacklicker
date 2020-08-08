@@ -58,7 +58,9 @@ public class StudentScreen extends AppCompatActivity {
             LinearLayout questionList = findViewById(R.id.question_list);
             questionList.removeAllViews();
 
-            questions.addAll(Teacher.getQuestionsToAdd());
+            if (Teacher.getQuestionsToAdd() != null) {
+                questions.addAll(Teacher.getQuestionsToAdd());
+            }
             for (final Question question : questions) {
                 View questionChunk = getLayoutInflater().inflate(R.layout.chunk_question,
                         questionList, false);
