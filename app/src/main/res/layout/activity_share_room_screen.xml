@@ -4,29 +4,75 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#cce7e8"
     tools:context=".ShareRoomScreen">
 
-    <ImageView
-        android:id="@+id/qr_code_view"
-        android:layout_width="256dp"
-        android:layout_height="256dp"
-        android:layout_marginStart="76dp"
-        android:layout_marginLeft="76dp"
-        android:layout_marginTop="236dp"
-        android:contentDescription="Dummy picture for QR code"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:srcCompat="@drawable/QR_Code_Emtpy" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        tools:layout_editor_absoluteX="-28dp"
+        tools:layout_editor_absoluteY="-88dp">
 
-    <Button
-        android:id="@+id/qr_code_copy"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Button" />
+        <Space
+            android:layout_width="1dp"
+            android:layout_height="50dp" />
 
-    <Button
-        android:id="@+id/qr_code_save"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Button" />
+        <TextView
+            android:id="@+id/roomIdDisplay"
+            android:layout_width="match_parent"
+            android:layout_height="94dp"
+            android:background="@drawable/orangeblue"
+            android:gravity="center"
+            android:textSize="30sp"
+            tools:ignore="MissingConstraints" />
+
+        <Space
+            android:layout_width="1dp"
+            android:layout_height="15dp" />
+
+        <ImageView
+            android:id="@+id/qr_code_view"
+            android:layout_width="254dp"
+            android:layout_height="256dp"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center_horizontal"
+            tools:srcCompat="@drawable/qr_code_emtpy" />
+
+        <Space
+            android:layout_width="1dp"
+            android:layout_height="30dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/qr_code_save"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="#edb879"
+                android:text="Save Image" />
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"/>
+
+
+            <Button
+                android:id="@+id/qr_code_copy"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="#edb879"
+                android:text="Copy Room ID" />
+        </LinearLayout>
+
+    </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

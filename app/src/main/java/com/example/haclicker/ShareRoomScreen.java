@@ -7,8 +7,10 @@ import android.content.ContextWrapper;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.haclicker.DataStructure.Teacher;
 
@@ -23,10 +25,13 @@ import java.io.IOException;
 
 public class ShareRoomScreen extends AppCompatActivity {
 
+    TextView roomIdDisplay;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        final Bitmap QRCodeBitmap = renderQRCode();
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_share_room_screen);
 
+        final Bitmap QRCodeBitmap = renderQRCode();
         findViewById(R.id.qr_code_save).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -34,10 +39,11 @@ public class ShareRoomScreen extends AppCompatActivity {
             }
         });
 
-        // TODO: Implement copy QR code
+        roomIdDisplay = findViewById(R.id.roomIdDisplay);
+        roomIdDisplay.setText("ROOM ID: " + Teacher.getClassroom().getClassID());
 
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_share_room_screen);
+
+
     }
 
     // Referenced from https://stackoverflow.com/questions/8800919/how-to-generate-a-qr-code-for-an-android-application
@@ -64,24 +70,27 @@ public class ShareRoomScreen extends AppCompatActivity {
 
     // Referenced from: https://stackoverflow.com/questions/17674634/saving-and-reading-bitmaps-images-from-internal-memory-in-android
     private void saveQRCode(Bitmap bitmap) {
-        ContextWrapper cw = new ContextWrapper(getApplicationContext());
-        File directory = cw.getDir("saved_qr_codes", Context.MODE_PRIVATE);
-        File mypath=new File(directory, Teacher.getClassroom().getClassID() + ".jpg");
-
-        FileOutputStream fos = null;
-        try {
-            fos = new FileOutputStream(mypath);
-            // Use the compress method on the BitMap object to write image to the OutputStream
-            bitmap.compress(Bitmap.CompressFormat.PNG, 100, fos);
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                fos.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
+        MediaStore.Images.Media.insertImage(getContentResolver(), bitmap,
+                Teacher.getClassroom().getClassID() + ".jpg" ,
+                "haclicker qr code");
+//        ContextWrapper cw = new ContextWrapper(getApplicationContext());
+//        File directory = cw.getDir("saved_qr_codes", Context.MODE_PRIVATE);
+//        File mypath=new File(directory, Teacher.getClassroom().getClassID() + ".jpg");
+//
+//        FileOutputStream fos = null;
+//        try {
+//            fos = new FileOutputStream(mypath);
+//            // Use the compress method on the BitMap object to write image to the OutputStream
+//            bitmap.compress(Bitmap.CompressFormat.PNG, 100, fos);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        } finally {
+//            try {
+//                fos.close();
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//        }
     }
 
 }
