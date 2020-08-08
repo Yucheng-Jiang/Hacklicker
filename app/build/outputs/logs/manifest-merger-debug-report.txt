@@ -11,6 +11,7 @@ MERGED from [com.google.firebase:firebase-auth:19.3.2] C:\Users\steve\.gradle\ca
 MERGED from [com.google.android.gms:play-services-auth:18.1.0] C:\Users\steve\.gradle\caches\transforms-2\files-2.1\bc0e002cee3c62e9d228887e35f0b209\jetified-play-services-auth-18.1.0\AndroidManifest.xml:17:1-40:12
 MERGED from [androidx.gridlayout:gridlayout:1.0.0] C:\Users\steve\.gradle\caches\transforms-2\files-2.1\f6c8a96fb2f2e11664f3eee94c8b08ff\gridlayout-1.0.0\AndroidManifest.xml:17:1-22:12
 MERGED from [com.google.firebase:firebase-database:19.3.1] C:\Users\steve\.gradle\caches\transforms-2\files-2.1\227f78203b0b12a1d5db88f7e5b8d4d8\jetified-firebase-database-19.3.1\AndroidManifest.xml:15:1-38:12
+MERGED from [com.github.PhilJay:MPAndroidChart:v3.1.0] C:\Users\steve\.gradle\caches\transforms-2\files-2.1\5c19e7c5ed2f0b0ba95271d7704a5fcb\jetified-MPAndroidChart-v3.1.0\AndroidManifest.xml:2:1-20:12
 MERGED from [com.google.firebase:firebase-auth-interop:19.0.0] C:\Users\steve\.gradle\caches\transforms-2\files-2.1\002708d22968cd54df02d5dfedd6cae2\jetified-firebase-auth-interop-19.0.0\AndroidManifest.xml:2:1-10:12
 MERGED from [com.google.android.gms:play-services-auth-api-phone:17.0.0] C:\Users\steve\.gradle\caches\transforms-2\files-2.1\4bd111c56cbfef19d0a73d50a80a2fee\jetified-play-services-auth-api-phone-17.0.0\AndroidManifest.xml:2:1-7:12
 MERGED from [com.google.android.gms:play-services-auth-base:17.0.0] C:\Users\steve\.gradle\caches\transforms-2\files-2.1\dc0e7793c1b91268fe823d74f68c633f\jetified-play-services-auth-base-17.0.0\AndroidManifest.xml:2:1-7:12
@@ -172,6 +173,8 @@ MERGED from [androidx.gridlayout:gridlayout:1.0.0] C:\Users\steve\.gradle\caches
 MERGED from [androidx.gridlayout:gridlayout:1.0.0] C:\Users\steve\.gradle\caches\transforms-2\files-2.1\f6c8a96fb2f2e11664f3eee94c8b08ff\gridlayout-1.0.0\AndroidManifest.xml:20:5-44
 MERGED from [com.google.firebase:firebase-database:19.3.1] C:\Users\steve\.gradle\caches\transforms-2\files-2.1\227f78203b0b12a1d5db88f7e5b8d4d8\jetified-firebase-database-19.3.1\AndroidManifest.xml:19:5-21:41
 MERGED from [com.google.firebase:firebase-database:19.3.1] C:\Users\steve\.gradle\caches\transforms-2\files-2.1\227f78203b0b12a1d5db88f7e5b8d4d8\jetified-firebase-database-19.3.1\AndroidManifest.xml:19:5-21:41
+MERGED from [com.github.PhilJay:MPAndroidChart:v3.1.0] C:\Users\steve\.gradle\caches\transforms-2\files-2.1\5c19e7c5ed2f0b0ba95271d7704a5fcb\jetified-MPAndroidChart-v3.1.0\AndroidManifest.xml:16:5-18:41
+MERGED from [com.github.PhilJay:MPAndroidChart:v3.1.0] C:\Users\steve\.gradle\caches\transforms-2\files-2.1\5c19e7c5ed2f0b0ba95271d7704a5fcb\jetified-MPAndroidChart-v3.1.0\AndroidManifest.xml:16:5-18:41
 MERGED from [com.google.firebase:firebase-auth-interop:19.0.0] C:\Users\steve\.gradle\caches\transforms-2\files-2.1\002708d22968cd54df02d5dfedd6cae2\jetified-firebase-auth-interop-19.0.0\AndroidManifest.xml:5:5-44
 MERGED from [com.google.firebase:firebase-auth-interop:19.0.0] C:\Users\steve\.gradle\caches\transforms-2\files-2.1\002708d22968cd54df02d5dfedd6cae2\jetified-firebase-auth-interop-19.0.0\AndroidManifest.xml:5:5-44
 MERGED from [com.google.android.gms:play-services-auth-api-phone:17.0.0] C:\Users\steve\.gradle\caches\transforms-2\files-2.1\4bd111c56cbfef19d0a73d50a80a2fee\jetified-play-services-auth-api-phone-17.0.0\AndroidManifest.xml:5:5-44

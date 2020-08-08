@@ -1741,6 +1741,7 @@ id question_history
 id question_list
 id question_txt
 id radio
+id resultBarChart
 id right
 id right_icon
 id right_side
