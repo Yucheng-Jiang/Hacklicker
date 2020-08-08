@@ -1,4 +1,4 @@
-package com.example.haclicker.DataStructure;
+package com.example.haclicker;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -9,6 +9,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 
+import com.example.haclicker.DataStructure.Question;
+import com.example.haclicker.DataStructure.Teacher;
 import com.example.haclicker.HostScreen;
 import com.example.haclicker.R;
 

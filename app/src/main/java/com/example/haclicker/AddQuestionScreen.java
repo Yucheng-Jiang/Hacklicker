@@ -7,8 +7,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-import com.example.haclicker.DataStructure.ManualAddQuestionScreen;
-
 public class AddQuestionScreen extends AppCompatActivity {
     Button manualAddBtn, jsonAddBtn;
 
