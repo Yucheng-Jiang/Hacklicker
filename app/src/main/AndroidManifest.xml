@@ -11,8 +11,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".AddQuestionScreen"></activity>
-        <activity android:name=".DataStructure.ManualAddQuestionScreen" />
+        <activity android:name=".ShareRoomScreen"></activity>
         <activity android:name=".HostQuestionScreen" />
         <activity android:name=".HostScreen" />
         <activity android:name=".MainScreen" />
