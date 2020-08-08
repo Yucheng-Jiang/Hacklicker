@@ -150,9 +150,13 @@ public class Teacher {
         return questionsToAdd;
     }
 
+    /**
+     * Export all student response as a csv file.
+     * @throws IOException exception
+     */
     @RequiresApi(api = Build.VERSION_CODES.O)
-    public static void exportResultAsCSV() throws IOException {
-        List<StudentResponse> allStudentResponse = retrieveAllResponse();
+    public static void exportResultAsCSV(List<StudentResponse> allStudentResponse) throws IOException {
+
         try (
             BufferedWriter writer = Files.newBufferedWriter(Paths.get(EXPORT_CSV_FILE_PATH));
             CSVPrinter csvPrinter = new CSVPrinter(writer,
@@ -187,18 +191,19 @@ public class Teacher {
      * Retrieve all student response of a certain class.
      * @return list of student response
      */
-    private static List<StudentResponse> retrieveAllResponse() {
+    private static void retrieveAllResponse() {
 
-        final List<StudentResponse> allStudentResponse = new ArrayList<>();
         FirebaseDatabase db = FirebaseDatabase.getInstance();
         //~ClassRooms/classID/StudentResponse
         DatabaseReference ref = db.getReference("ClassRooms")
                 .child(Teacher.getClassroom().getClassID())
                 .child("StudentResponse");
         ref.addValueEventListener(new ValueEventListener() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
+                List<StudentResponse> allStudentResponse = new ArrayList<>();
                 //~ClassRooms/classID/StudentResponse/questionID
                 for (DataSnapshot singleQuestion : snapshot.getChildren()) {
                     //~ClassRooms/classID/StudentResponse/questionID/StuName
@@ -218,6 +223,11 @@ public class Teacher {
                                 stuEmail, answers, questionID, timeStamp));
                     }
                 }
+                try {
+                    exportResultAsCSV(allStudentResponse);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
 
             @Override
@@ -225,7 +235,6 @@ public class Teacher {
 
             }
         });
-        return allStudentResponse;
     }
 
     public void setExportCSVPath(String relativePath) {
