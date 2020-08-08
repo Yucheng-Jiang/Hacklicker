@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.haclicker.DataStructure.ClassRoom;
+import com.example.haclicker.DataStructure.Question;
 import com.example.haclicker.DataStructure.Teacher;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -57,6 +58,13 @@ public class MainScreen extends AppCompatActivity {
             public void onClick(View view) {
                 ClassRoom classroom = generateClassroom();
                 Teacher.setClassroom(classroom);
+                Teacher.createClassroom();
+                List<String> list = new ArrayList<String>() {{
+                    add("Choice A");
+                    add("Choice B");
+                    add("Choice C");
+                }};
+                Teacher.addQuestion(new Question("test message. You see you one day day, look what look.", 11, list));
                 Intent intent = new Intent(getApplicationContext(), HostScreen.class);
                 startActivity(intent);
             }
@@ -69,7 +77,7 @@ public class MainScreen extends AppCompatActivity {
         while (true) {
             StringBuilder id = new StringBuilder();
             for (int i = 0; i < ID_LENGTH; i++) {
-                id.append(random.nextInt());
+                id.append(random.nextInt(10));
             }
             if (!allRoomIDs.contains(id.toString())) {
                 return new ClassRoom(id.toString(), id.toString(), username, null);
@@ -90,6 +98,9 @@ public class MainScreen extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot ID : snapshot.getChildren()) {
+                    if (ID.child("classID").getValue() == null) {
+                        System.out.println("fucker");
+                    }
                     allRoomIDS.add(ID.child("classID").getValue().toString());
                 }
             }

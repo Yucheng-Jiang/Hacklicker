@@ -21,7 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class HostScreen extends AppCompatActivity {
-    List<Question> questionList = new ArrayList<>();
+    List<Question> questions;
     ImageButton shareRoom, exitRoom;
     TextView emptyReminder;
 
@@ -55,21 +55,27 @@ public class HostScreen extends AppCompatActivity {
     }
 
     private void upDateUI() {
-        questionList = Teacher.getClassroom().getQuestions();
-        if (questionList != null) {
+        questions = Teacher.getClassroom().getQuestions();
+        if (questions != null) {
             emptyReminder.setVisibility(View.INVISIBLE);
-            LinearLayout playersList = findViewById(R.id.question_list);
-            playersList.removeAllViews();
+            LinearLayout questionList = findViewById(R.id.question_list);
+            questionList.removeAllViews();
 
-            for (int i = 0; i < questionList.size(); i++) {
-                Question question = questionList.get(i);
-
+            for (final Question question : questions) {
                 View questionChunk = getLayoutInflater().inflate(R.layout.chunk_question,
-                        playersList, false);
-                TextView questionTxt = questionChunk.findViewById(R.id.question_txt);
+                        questionList, false);
+                Button questionTxt = questionChunk.findViewById(R.id.question_txt);
                 questionTxt.setText(question.getQuestionDescription());
+                questionTxt.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent(getApplicationContext(), HostQuestionScreen.class);
+                        intent.putExtra("Id", question.getQuestionId());
+                        startActivity(intent);
+                    }
+                });
 
-                playersList.addView(questionChunk);
+                questionList.addView(questionChunk);
             }
         } else {
             emptyReminder.setText("There's no question added.");

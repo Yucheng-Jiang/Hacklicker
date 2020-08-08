@@ -1614,6 +1614,7 @@ id consoleBack
 id container
 id content
 id contentPanel
+id controlBtn
 id coordinator
 id create_room
 id custom
@@ -1909,6 +1910,7 @@ layout abc_select_dialog_material
 layout abc_tooltip
 layout activity_add_question_screen
 layout activity_console_screen
+layout activity_host_question_screen
 layout activity_host_screen
 layout activity_main
 layout activity_main_screen

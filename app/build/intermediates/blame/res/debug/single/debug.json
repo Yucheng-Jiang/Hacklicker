@@ -12,12 +12,12 @@
         "source": "C:\\Users\\steve\\Desktop\\Haclicker\\app\\src\\main\\res\\drawable\\join_room.png"
     },
     {
-        "merged": "C:\\Users\\steve\\Desktop\\Haclicker\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xxhdpi_ic_launcher.png.flat",
-        "source": "C:\\Users\\steve\\Desktop\\Haclicker\\app\\src\\main\\res\\mipmap-xxhdpi\\ic_launcher.png"
-    },
-    {
         "merged": "C:\\Users\\steve\\Desktop\\Haclicker\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-hdpi_ic_launcher_round.png.flat",
         "source": "C:\\Users\\steve\\Desktop\\Haclicker\\app\\src\\main\\res\\mipmap-hdpi\\ic_launcher_round.png"
+    },
+    {
+        "merged": "C:\\Users\\steve\\Desktop\\Haclicker\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xxhdpi_ic_launcher.png.flat",
+        "source": "C:\\Users\\steve\\Desktop\\Haclicker\\app\\src\\main\\res\\mipmap-xxhdpi\\ic_launcher.png"
     },
     {
         "merged": "C:\\Users\\steve\\Desktop\\Haclicker\\app\\build\\intermediates\\res\\merged\\debug\\drawable_settings.png.flat",
@@ -106,6 +106,10 @@
     {
         "merged": "C:\\Users\\steve\\Desktop\\Haclicker\\app\\build\\intermediates\\res\\merged\\debug\\layout_activity_add_question_screen.xml.flat",
         "source": "C:\\Users\\steve\\Desktop\\Haclicker\\app\\src\\main\\res\\layout\\activity_add_question_screen.xml"
+    },
+    {
+        "merged": "C:\\Users\\steve\\Desktop\\Haclicker\\app\\build\\intermediates\\res\\merged\\debug\\layout_activity_host_question_screen.xml.flat",
+        "source": "C:\\Users\\steve\\Desktop\\Haclicker\\app\\src\\main\\res\\layout\\activity_host_question_screen.xml"
     },
     {
         "merged": "C:\\Users\\steve\\Desktop\\Haclicker\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi_ic_launcher_background.png.flat",
