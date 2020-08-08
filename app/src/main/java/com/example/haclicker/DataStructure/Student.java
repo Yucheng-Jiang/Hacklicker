@@ -1,8 +1,17 @@
 package com.example.haclicker.DataStructure;
+import androidx.annotation.NonNull;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 public class Student {
@@ -11,6 +20,17 @@ public class Student {
 
     public Student(FirebaseDatabase db) {
         this.db = db;
+    }
+
+    //return true if join classroom successful
+    public boolean joinClassroom(String classID) {
+        List<String> allRooms = getAllRooms();
+        for (int i = 0; i < allRooms.size(); i++) {
+            if (classID.equals(allRooms.get(i))) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
@@ -40,5 +60,56 @@ public class Student {
         Map<String, Object> childUpdates = new HashMap<>();
         childUpdates.put("/" + studentResponse.getStudentName() + "/", studentResponse);
         ref.updateChildren(childUpdates);
+    }
+
+    public List<Question> retrieveQuestions(String roomID) {
+        final List<Question> questions = new ArrayList<>();
+        ref = FirebaseDatabase.getInstance().getReference("ClassRooms").child(roomID).child("Questions");
+        ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot question : snapshot.getChildren()) {
+                    List<String> choices = new ArrayList<>();
+                    for (long i = 0; i < question.child("choices").getChildrenCount(); i++) {
+                        choices.add(question.child("choices").child(i + "").getValue().toString());
+                    }
+                    String id = question.child("questionId").getValue().toString();
+                    String description = question.child("questionDescription").getValue().toString();
+                    questions.add(new Question(description, Integer.parseInt(id), choices));
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+        return questions;
+    }
+
+    /**
+     * Check data base for all roomIDs to prevent duplicate ID.
+     * @return all roomIDs
+     */
+    private List<String> getAllRooms() {
+
+        final List<String> allRoomIDS = new ArrayList<>();
+        DatabaseReference reference = FirebaseDatabase.getInstance()
+                .getReference("ClassRooms");
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot ID : snapshot.getChildren()) {
+                    allRoomIDS.add(ID.child("classID").getValue().toString());
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        return allRoomIDS;
     }
 }
