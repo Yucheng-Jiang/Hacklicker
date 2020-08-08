@@ -19,13 +19,13 @@ import java.util.List;
 public class StudentScreen extends AppCompatActivity {
     List<Question> questions;
     ImageButton exitRoom, shareRoom, makePost;
-    String id;
+    String classId;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_host_screen);
         Intent intent = getIntent();
-        id = intent.getStringExtra("Id");
+        classId = intent.getStringExtra("Id");
         // add image buttons
         exitRoom = findViewById(R.id.leaveRoom);
         shareRoom = findViewById(R.id.shareRoom);
@@ -53,7 +53,7 @@ public class StudentScreen extends AppCompatActivity {
     }
 
     private void upDateUI() {
-        questions = Student.retrieveQuestions(id);
+        questions = Student.retrieveQuestions(classId);
         if (questions != null) {
             LinearLayout questionList = findViewById(R.id.question_list);
             questionList.removeAllViews();
@@ -70,7 +70,8 @@ public class StudentScreen extends AppCompatActivity {
                     @Override
                     public void onClick(View view) {
                         Intent intent = new Intent(getApplicationContext(), HostQuestionScreen.class);
-                        intent.putExtra("Id", question.getQuestionId());
+                        intent.putExtra("questionId", question.getQuestionId());
+                        intent.putExtra("classId", classId);
                         startActivity(intent);
                     }
                 });

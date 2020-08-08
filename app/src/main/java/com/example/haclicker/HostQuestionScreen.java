@@ -44,7 +44,7 @@ public class HostQuestionScreen extends AppCompatActivity {
         setContentView(R.layout.activity_host_question_screen);
 
         questionTxt = findViewById(R.id.question_txt);
-        controlBtn = findViewById(R.id.controlBtn);
+        controlBtn = findViewById(R.id.sendAnswer);
         test = findViewById(R.id.test);
         resultBarChart = findViewById(R.id.resultBarChart);
 
