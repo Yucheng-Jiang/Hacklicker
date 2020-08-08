@@ -1609,7 +1609,6 @@ id consoleBack
 id container
 id content
 id contentPanel
-id controlBtn
 id coordinator
 id createQuestion
 id create_room
@@ -1779,6 +1778,7 @@ id search_src_text
 id search_voice_btn
 id select_dialog_listview
 id selected
+id sendAnswer
 id settings
 id shareRoom
 id shortcut
@@ -1929,6 +1929,7 @@ layout activity_main
 layout activity_main_screen
 layout activity_manual_add_question_screen
 layout activity_share_room_screen
+layout activity_student_question_screen
 layout activity_student_screen
 layout chunk_option
 layout chunk_question

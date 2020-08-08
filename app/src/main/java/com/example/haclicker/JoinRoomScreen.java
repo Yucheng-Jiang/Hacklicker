@@ -49,34 +49,34 @@ public class JoinRoomScreen extends AppCompatActivity {
                 final String id = inputRoomId.getText().toString();
 
                 final List<String> allRoomIDS = new ArrayList<>();
-                DatabaseReference reference = FirebaseDatabase.getInstance()
-                        .getReference("ClassRooms");
+                    DatabaseReference reference = FirebaseDatabase.getInstance()
+                            .getReference("ClassRooms");
                 reference.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        for (DataSnapshot ID : snapshot.getChildren()) {
-                            allRoomIDS.add(ID.child("classID").getValue().toString());
-                        }
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            for (DataSnapshot ID : snapshot.getChildren()) {
+                                allRoomIDS.add(ID.child("classID").getValue().toString());
+                            }
 
-                        if (allRoomIDS.contains(id)) {
-                            // TODO: start new activity here
-                            Intent intent = new Intent(getApplicationContext(), StudentScreen.class);
-                            intent.putExtra("Id", id);
-                            startActivity(intent);
-                        } else {
-                            // Code below are cited from
-                            // https://stackoverflow.com/questions/22194761/hide-textview-after-some-time-in-android
-                            confirmJoinBtn.setText("INVALID ID");
-                            confirmJoinBtn.setTextColor(Color.RED);
-                            invalidIdTxt.postDelayed(new Runnable() {
-                                public void run() {
-                                    confirmJoinBtn.setTextColor(Color.BLACK);
-                                    confirmJoinBtn.setText("JOIN ROOM");
-                                }
-                            }, 1500);
-                            // citation ends here
+                            if (allRoomIDS.contains(id)) {
+                                // TODO: start new activity here
+                                Intent intent = new Intent(getApplicationContext(), StudentScreen.class);
+                                intent.putExtra("Id", id);
+                                startActivity(intent);
+                            } else {
+                                // Code below are cited from
+                                // https://stackoverflow.com/questions/22194761/hide-textview-after-some-time-in-android
+                                confirmJoinBtn.setText("INVALID ID");
+                                confirmJoinBtn.setTextColor(Color.RED);
+                                invalidIdTxt.postDelayed(new Runnable() {
+                                    public void run() {
+                                        confirmJoinBtn.setTextColor(Color.BLACK);
+                                        confirmJoinBtn.setText("JOIN ROOM");
+                                    }
+                                }, 1500);
+                                // citation ends here
+                            }
                         }
-                    }
 
                     @Override
                     public void onCancelled(@NonNull DatabaseError error) {
