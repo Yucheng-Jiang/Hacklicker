@@ -15,15 +15,11 @@ import java.util.List;
 import java.util.Map;
 
 public class Student {
-    FirebaseDatabase db;
-    DatabaseReference ref;
-
-    public Student(FirebaseDatabase db) {
-        this.db = db;
-    }
+    static FirebaseDatabase db = FirebaseDatabase.getInstance();
+    static DatabaseReference ref;
 
     //return true if join classroom successful
-    public boolean joinClassroom(String classID) {
+    public static boolean joinClassroom(String classID) {
         List<String> allRooms = getAllRooms();
         for (int i = 0; i < allRooms.size(); i++) {
             if (classID.equals(allRooms.get(i))) {
@@ -38,7 +34,7 @@ public class Student {
      * @param studentResponse student answer.
      * @param classRoomID classroom code.
      */
-    public void sendResponse(StudentResponse studentResponse, String classRoomID) {
+    public static void sendResponse(StudentResponse studentResponse, String classRoomID) {
 
         //set server endpoint
         ref = db.getReference("ClassRooms").child(classRoomID).child("StudentResponse")
@@ -53,7 +49,7 @@ public class Student {
      * Send newly chosen answer to server.
      * @param studentResponse newly chosen answer
      */
-    public void updateStudentResponse(StudentResponse studentResponse, String classRoomID) {
+    public static void updateStudentResponse(StudentResponse studentResponse, String classRoomID) {
 
         ref = db.getReference("ClassRooms").child(classRoomID).child("StudentResponse")
                 .child(studentResponse.getQuestionID() + "");
@@ -62,7 +58,7 @@ public class Student {
         ref.updateChildren(childUpdates);
     }
 
-    public List<Question> retrieveQuestions(String roomID) {
+    public static List<Question> retrieveQuestions(String roomID) {
         final List<Question> questions = new ArrayList<>();
         ref = FirebaseDatabase.getInstance().getReference("ClassRooms")
                 .child(roomID).child("Questions");
@@ -92,7 +88,7 @@ public class Student {
      * Check data base for all roomIDs to prevent duplicate ID.
      * @return all roomIDs
      */
-    private List<String> getAllRooms() {
+    private static List<String> getAllRooms() {
 
         final List<String> allRoomIDS = new ArrayList<>();
         DatabaseReference reference = FirebaseDatabase.getInstance()
