@@ -19,7 +19,6 @@
             android:layout_height="0dp"
             android:layout_gravity="right"
             android:layout_weight="10"
-
             app:srcCompat="@drawable/settings"
             android:background="@drawable/rounded_button"
             tools:ignore="MissingConstraints" />
