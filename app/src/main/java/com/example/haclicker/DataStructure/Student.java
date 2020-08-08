@@ -64,7 +64,8 @@ public class Student {
 
     public List<Question> retrieveQuestions(String roomID) {
         final List<Question> questions = new ArrayList<>();
-        ref = FirebaseDatabase.getInstance().getReference("ClassRooms").child(roomID).child("Questions");
+        ref = FirebaseDatabase.getInstance().getReference("ClassRooms")
+                .child(roomID).child("Questions");
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {

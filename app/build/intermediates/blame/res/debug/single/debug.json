@@ -1,27 +1,27 @@
 [
     {
-        "merged": "/Users/david-jiang/AndroidStudioProjects/haclicker/app/build/intermediates/res/merged/debug/drawable_rounded_button.xml.flat",
-        "source": "/Users/david-jiang/AndroidStudioProjects/haclicker/app/src/main/res/drawable/rounded_button.xml"
+        "merged": "/Users/david-jiang/AndroidStudioProjects/haclicker/app/build/intermediates/res/merged/debug/drawable_create_room.png.flat",
+        "source": "/Users/david-jiang/AndroidStudioProjects/haclicker/app/src/main/res/drawable/create_room.png"
     },
     {
         "merged": "/Users/david-jiang/AndroidStudioProjects/haclicker/app/build/intermediates/res/merged/debug/drawable-mdpi_ic_launcher_background.png.flat",
         "source": "/Users/david-jiang/AndroidStudioProjects/haclicker/app/build/generated/res/pngs/debug/drawable-mdpi/ic_launcher_background.png"
     },
     {
-        "merged": "/Users/david-jiang/AndroidStudioProjects/haclicker/app/build/intermediates/res/merged/debug/drawable_create_room.png.flat",
-        "source": "/Users/david-jiang/AndroidStudioProjects/haclicker/app/src/main/res/drawable/create_room.png"
+        "merged": "/Users/david-jiang/AndroidStudioProjects/haclicker/app/build/intermediates/res/merged/debug/drawable_rounded_button.xml.flat",
+        "source": "/Users/david-jiang/AndroidStudioProjects/haclicker/app/src/main/res/drawable/rounded_button.xml"
     },
     {
-        "merged": "/Users/david-jiang/AndroidStudioProjects/haclicker/app/build/intermediates/res/merged/debug/drawable-hdpi_ic_launcher_background.png.flat",
-        "source": "/Users/david-jiang/AndroidStudioProjects/haclicker/app/build/generated/res/pngs/debug/drawable-hdpi/ic_launcher_background.png"
+        "merged": "/Users/david-jiang/AndroidStudioProjects/haclicker/app/build/intermediates/res/merged/debug/mipmap-xxxhdpi_ic_launcher_round.png.flat",
+        "source": "/Users/david-jiang/AndroidStudioProjects/haclicker/app/src/main/res/mipmap-xxxhdpi/ic_launcher_round.png"
     },
     {
         "merged": "/Users/david-jiang/AndroidStudioProjects/haclicker/app/build/intermediates/res/merged/debug/layout_chunk_question.xml.flat",
         "source": "/Users/david-jiang/AndroidStudioProjects/haclicker/app/src/main/res/layout/chunk_question.xml"
     },
     {
-        "merged": "/Users/david-jiang/AndroidStudioProjects/haclicker/app/build/intermediates/res/merged/debug/mipmap-xxxhdpi_ic_launcher_round.png.flat",
-        "source": "/Users/david-jiang/AndroidStudioProjects/haclicker/app/src/main/res/mipmap-xxxhdpi/ic_launcher_round.png"
+        "merged": "/Users/david-jiang/AndroidStudioProjects/haclicker/app/build/intermediates/res/merged/debug/drawable-hdpi_ic_launcher_background.png.flat",
+        "source": "/Users/david-jiang/AndroidStudioProjects/haclicker/app/build/generated/res/pngs/debug/drawable-hdpi/ic_launcher_background.png"
     },
     {
         "merged": "/Users/david-jiang/AndroidStudioProjects/haclicker/app/build/intermediates/res/merged/debug/drawable_orangeblue.xml.flat",

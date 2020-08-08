@@ -19,6 +19,9 @@ public class Teacher {
 
     public static ClassRoom getClassroom() { return classroom;}
 
+    /**
+     * Send the newly created classroom to server.
+     */
     public static void createClassroom() {
 
         FirebaseDatabase db = FirebaseDatabase.getInstance();
@@ -27,6 +30,10 @@ public class Teacher {
         ref.setValue(classroom);
     }
 
+    /**
+     * Add a new question to server.
+     * @param question question to add
+     */
     public static void addQuestion(final Question question) {
 
         List<Question> questionList;
@@ -44,6 +51,10 @@ public class Teacher {
         ref.child(question.getQuestionId() + "").setValue(question);
     }
 
+    /**
+     * Delete a question from server.
+     * @param question question to delete
+     */
     public static void deleteQuestion(Question question) {
 
         List<Question> questionList = classroom.getQuestions();
@@ -60,6 +71,11 @@ public class Teacher {
         ref.child(question.getQuestionId() + "").removeValue();
     }
 
+    /**
+     * Send correct answer for a question to server.
+     * @param question target question
+     * @param answer correct answer to target question
+     */
     public static void sendCorrectAnswer(Question question, String answer) {
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference()
                 .child("ClassRooms")
@@ -74,6 +90,12 @@ public class Teacher {
         ref.child("answer").setValue(list);
     }
 
+    /**
+     * Delete correct answer from server in case teacher mistakenly
+     * chosen a wrong answer as right answer.
+     * @param question target question
+     * @param answer wrong answer to delete
+     */
     public static void deleteCorrectAnswer(Question question, String answer) {
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference()
                 .child("ClassRooms")
