@@ -55,7 +55,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:background="#edb879"
+                android:background="@drawable/orangeblue"
                 android:text="Save Image" />
 
             <Space
@@ -69,7 +69,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:background="#edb879"
+                android:background="@drawable/orangeblue"
                 android:text="Copy Room ID" />
         </LinearLayout>
 
