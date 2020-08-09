@@ -104,13 +104,13 @@ public class StudentQuestionScreen extends AppCompatActivity {
             LinearLayout questionList = findViewById(R.id.question_list);
             questionList.removeAllViews();
 
-            // if don't have correct answer, restore previous answer
             for (int i = 0; i < choices.size(); i++) {
                 String choice = choices.get(i);
+                final char index =(char) (((int) 'A') + i);
                 View questionChunk = getLayoutInflater().inflate(R.layout.chunk_question,
                         questionList, false);
                 final Button questionTxt = questionChunk.findViewById(R.id.question_txt);
-                String strAnswer =Character.toString ((char) (((int) 'A') + i));
+                String strAnswer =Character.toString (index);
                 if (correctAns.contains(strAnswer)) {
                     // mark correct as green
                     questionTxt.setBackgroundColor(android.graphics.Color.parseColor("#99ff99"));
