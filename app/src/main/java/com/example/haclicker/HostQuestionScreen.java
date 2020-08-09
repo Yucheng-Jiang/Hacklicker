@@ -105,40 +105,14 @@ public class HostQuestionScreen extends AppCompatActivity {
                     Teacher.addQuestion(curQuestionID);
                 } else {
                     controlBtn.setText("Start");
-                    //fetch result from server
-                    Map<String, Integer> result = showResult();
+                    //fetch and show result from server
+                    showResult();
 //                    Map<String, Integer> result = new HashMap<>();
 //                    result.put("A", 10);
 //                    result.put("B", 50);
 //                    result.put("C", 35);
 //                    result.put("D", 40);
 //                    result.put("E", 55);
-                    //draw result bar chart
-                    resultBarChart.setVisibility(View.VISIBLE);
-                    resultBarChart.setDrawBarShadow(false);
-                    resultBarChart.setDrawValueAboveBar(true);
-                    resultBarChart.setMaxVisibleValueCount(50);
-                    resultBarChart.setPinchZoom(false);
-                    resultBarChart.setDrawGridBackground(true);
-
-                    //set bar chart entry
-                    ArrayList<BarEntry> resultEntries = new ArrayList<>();
-                    String[] horizontalAxisSet = new String[result.size()];
-                    String label = "";
-                    int i = 0;
-                    for (String entry : result.keySet()) {
-                        resultEntries.add(new BarEntry(i, result.get(entry)));
-                        horizontalAxisSet[i] = entry;
-                        label = label + entry + ",";
-                        i++;
-                    }
-                    BarDataSet barDataSet = new BarDataSet(resultEntries, label);
-                    barDataSet.setColors(ColorTemplate.COLORFUL_COLORS);
-                    BarData data = new BarData(barDataSet);
-                    resultBarChart.setData(data);
-                    resultBarChart.animateXY(1500, 1500);
-                    XAxis xAxis = resultBarChart.getXAxis();
-                    xAxis.setValueFormatter(new MyXAxisValueFormatter(horizontalAxisSet));
                 }
             }
         });
@@ -185,9 +159,9 @@ public class HostQuestionScreen extends AppCompatActivity {
         });
     }
 
-    private Map<String, Integer> showResult() {
+    private void showResult() {
 
-        final Map<String, Integer> result = new HashMap<>();
+
         DatabaseReference ref = FirebaseDatabase.getInstance()
                 .getReference("ClassRooms")
                 .child(Teacher.getClassroom().getClassID())
@@ -195,6 +169,7 @@ public class HostQuestionScreen extends AppCompatActivity {
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                Map<String, Integer> result = new HashMap<>();
                 for (DataSnapshot singleResponse : snapshot.getChildren()) {
                     for (DataSnapshot singleAnswer : singleResponse.child("answer").getChildren()) {
                         if (!result.containsKey(singleAnswer.toString())) {
@@ -204,6 +179,32 @@ public class HostQuestionScreen extends AppCompatActivity {
                         }
                     }
                 }
+                //draw result bar chart
+                resultBarChart.setVisibility(View.VISIBLE);
+                resultBarChart.setDrawBarShadow(false);
+                resultBarChart.setDrawValueAboveBar(true);
+                resultBarChart.setMaxVisibleValueCount(50);
+                resultBarChart.setPinchZoom(false);
+                resultBarChart.setDrawGridBackground(true);
+
+                //set bar chart entry
+                ArrayList<BarEntry> resultEntries = new ArrayList<>();
+                String[] horizontalAxisSet = new String[result.size()];
+                String label = "";
+                int i = 0;
+                for (String entry : result.keySet()) {
+                    resultEntries.add(new BarEntry(i, result.get(entry)));
+                    horizontalAxisSet[i] = entry;
+                    label = label + entry + ",";
+                    i++;
+                }
+                BarDataSet barDataSet = new BarDataSet(resultEntries, label);
+                barDataSet.setColors(ColorTemplate.COLORFUL_COLORS);
+                BarData data = new BarData(barDataSet);
+                resultBarChart.setData(data);
+                resultBarChart.animateXY(1500, 1500);
+                XAxis xAxis = resultBarChart.getXAxis();
+                xAxis.setValueFormatter(new MyXAxisValueFormatter(horizontalAxisSet));
             }
 
             @Override
@@ -211,7 +212,6 @@ public class HostQuestionScreen extends AppCompatActivity {
 
             }
         });
-        return result;
     }
 
     public class MyXAxisValueFormatter extends ValueFormatter implements IAxisValueFormatter {

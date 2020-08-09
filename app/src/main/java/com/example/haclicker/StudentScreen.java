@@ -1,13 +1,11 @@
 package com.example.haclicker;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.text.BoringLayout;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -17,7 +15,6 @@ import android.widget.TextView;
 import com.example.haclicker.DataStructure.Question;
 import com.example.haclicker.DataStructure.Student;
 import com.example.haclicker.DataStructure.Teacher;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -71,12 +68,32 @@ public class StudentScreen extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        // update UI
-        upDateUI();
 
+        updateUI();
+        // update Question
+        final Thread thread = new Thread() {
+            @Override
+            public void run() {
+                try {
+                    while (!isInterrupted()) {
+                        Thread.sleep(1000);
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                updateQuestion();
+                                // update TextView here!
+                            }
+                        });
+                    }
+                } catch (InterruptedException e) {
+                }
+            }
+        };
+
+        thread.start();
     }
 
-    private void upDateUI() {
+    private void updateQuestion() {
 
         //questions = Student.retrieveQuestions(classID);
 
@@ -157,8 +174,7 @@ public class StudentScreen extends AppCompatActivity {
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (run[0]) {
-                    List<Question> questions = new ArrayList<>();
+                List<Question> questions = new ArrayList<>();
                     for (DataSnapshot singleQuestion : snapshot.getChildren()) {
                         List<String> choices = new ArrayList<>();
                         for (long i = 0; i < singleQuestion.child("choices").getChildrenCount(); i++) {
@@ -168,41 +184,10 @@ public class StudentScreen extends AppCompatActivity {
                         String description = singleQuestion.child("questionDescription").getValue().toString();
                         questions.add(new Question(description, Integer.parseInt(id), choices));
                     }
-
-                    if (questions != null) {
-                        emptyReminder.setVisibility(View.INVISIBLE);
-                        LinearLayout questionList = findViewById(R.id.question_list);
-                        questionList.removeAllViews();
-
-                        for (final Question question : questions) {
-                            View questionChunk = getLayoutInflater().inflate(R.layout.chunk_question,
-                                    questionList, false);
-                            Button questionTxt = questionChunk.findViewById(R.id.question_txt);
-                            List<String> myHistory = Student.getMyAnswerHistory(question.getQuestionId());
-                            if (myHistory != null && myHistory.size() != 0) {
-                                questionTxt.setBackgroundColor(android.graphics.Color.parseColor("#fed8b1"));
-                            } else {
-                                questionTxt.setBackgroundColor(Color.GRAY);
-                            }
-                            questionTxt.setText(question.getQuestionDescription());
-                            questionTxt.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View view) {
-                                    Intent intent = new Intent(getApplicationContext(), HostQuestionScreen.class);
-                                    intent.putExtra("Id", question.getQuestionId());
-                                    startActivity(intent);
-                                    run[0] = false;
-                                    finish();
-                                }
-                            });
-
-                            questionList.addView(questionChunk);
-                        }
-                    } else {
-                        emptyReminder.setText("There's no question added.");
-                        emptyReminder.setVisibility(View.VISIBLE);
+                    if (!questions.equals(Student.getQuestionList())) {
+                        Student.setQuestionList(questions);
+                        updateUI();
                     }
-                }
             }
 
             @Override
@@ -210,5 +195,44 @@ public class StudentScreen extends AppCompatActivity {
 
             }
         });
+    }
+
+    private void updateUI() {
+
+        List<Question> questions = Student.getQuestionList();
+        if (questions != null) {
+            emptyReminder.setVisibility(View.INVISIBLE);
+            LinearLayout questionList = findViewById(R.id.question_list);
+            questionList.removeAllViews();
+
+            for (final Question question : questions) {
+                View questionChunk = getLayoutInflater().inflate(R.layout.chunk_question,
+                        questionList, false);
+                Button questionTxt = questionChunk.findViewById(R.id.question_txt);
+                List<String> myHistory = Student.getMyAnswerHistory(question.getQuestionId());
+                if (myHistory != null && myHistory.size() != 0) {
+                    questionTxt.setBackgroundColor(android.graphics.Color.parseColor("#fed8b1"));
+                } else {
+                    questionTxt.setBackgroundColor(Color.GRAY);
+                }
+                questionTxt.setText(question.getQuestionDescription());
+                questionTxt.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent(getApplicationContext(), StudentQuestionScreen.class);
+                        intent.putExtra("ClassID", classID);
+                        intent.putExtra("QuestionID", question.getQuestionId());
+                        startActivity(intent);
+                        run[0] = false;
+                        finish();
+                    }
+                });
+
+                questionList.addView(questionChunk);
+            }
+        } else {
+            emptyReminder.setText("There's no question added.");
+            emptyReminder.setVisibility(View.VISIBLE);
+        }
     }
 }
