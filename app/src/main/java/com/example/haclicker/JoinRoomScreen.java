@@ -40,6 +40,7 @@ public class JoinRoomScreen extends AppCompatActivity {
     ImageButton scanQrBtn, galleryQrBtn;
     EditText inputRoomId;
     TextView invalidIdTxt;
+    Intent intent;
 
     private static final int RC_SCAN = 1;
     private static final int RC_PICK = 2;
@@ -54,6 +55,7 @@ public class JoinRoomScreen extends AppCompatActivity {
         galleryQrBtn = findViewById(R.id.galleryQrBtn);
         inputRoomId = findViewById(R.id.inputRoomId);
         invalidIdTxt = findViewById(R.id.invalidIdTxt);
+        intent = getIntent();
 
         scanQrBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,7 +70,6 @@ public class JoinRoomScreen extends AppCompatActivity {
         galleryQrBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // TODO: read qr from gallery
                 Intent pickPhoto = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                 startActivityForResult(pickPhoto , RC_PICK);
                 String result = ""; // store result here
@@ -116,20 +117,22 @@ public class JoinRoomScreen extends AppCompatActivity {
 
                     }
                 });
-
-
             }
         });
+
+        if (intent.hasExtra("classId")) {
+            inputRoomId.setText(intent.getStringExtra("classId"));
+            confirmJoinBtn.performClick();
+        }
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        String classID;
+        String classID = null;
         switch (requestCode) {
             case RC_SCAN:
                 classID = data.getStringExtra("classID");
-                // TODO: Do something with class ID
                 break;
             case RC_PICK:
                 Uri selectedImage = data.getData();
@@ -155,9 +158,12 @@ public class JoinRoomScreen extends AppCompatActivity {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                // TODO: Do something with class ID
                 break;
         }
+        Intent intent = new Intent(getApplicationContext(), JoinRoomScreen.class);
+        intent.putExtra("classId", classID);
+        finish();
+        startActivity(intent);
     }
 
 }

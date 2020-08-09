@@ -4,10 +4,13 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -63,26 +66,34 @@ public class StudentScreen extends AppCompatActivity {
         });
 
         upDateUI();
-        final Thread thread = new Thread() {
-            @Override
-            public void run() {
-                try {
-                    while (!isInterrupted()) {
-                        Thread.sleep(2000);
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                upDateUI();
-                                // update TextView here!
-                            }
-                        });
-                    }
-                } catch (InterruptedException e) {
-                }
-            }
-        };
+//        final Thread thread = new Thread() {
+//            @Override
+//            public void run() {
+//                try {
+//                    while (!isInterrupted()) {
+//                        Thread.sleep(2000);
+//                        runOnUiThread(new Runnable() {
+//                            @Override
+//                            public void run() {
+//                                upDateUI();
+//                                // update TextView here!
+//                            }
+//                        });
+//                    }
+//                } catch (InterruptedException e) {
+//                }
+//            }
+//        };
+//
+//        thread.start();
+    }
 
-        thread.start();
+    @SuppressLint("LongLogTag")
+    @Override
+    public void onStart() {
+        super.onStart();
+        Log.i("Tracking Activity Started", this.getLocalClassName());
+
     }
 
     private void upDateUI() {
@@ -142,4 +153,5 @@ public class StudentScreen extends AppCompatActivity {
             }
         });
     }
+
 }
