@@ -30,6 +30,7 @@ public class JoinRoomScreen extends AppCompatActivity {
     ImageButton scanQrBtn, galleryQrBtn;
     EditText inputRoomId;
     TextView invalidIdTxt;
+    Intent intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +42,8 @@ public class JoinRoomScreen extends AppCompatActivity {
         galleryQrBtn = findViewById(R.id.galleryQrBtn);
         inputRoomId = findViewById(R.id.inputRoomId);
         invalidIdTxt = findViewById(R.id.invalidIdTxt);
+        intent = getIntent();
+
 
         scanQrBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -101,10 +104,13 @@ public class JoinRoomScreen extends AppCompatActivity {
 
                     }
                 });
-
-
             }
         });
+
+        if (intent.hasExtra("classId")) {
+            inputRoomId.setText(intent.getStringExtra("classId"));
+            confirmJoinBtn.performClick();
+        }
     }
 
 }
