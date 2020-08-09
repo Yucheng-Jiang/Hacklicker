@@ -76,7 +76,8 @@ public class Student {
     public static void sendResponse(StudentResponse studentResponse, String classRoomID) {
 
         //set server endpoint
-        ref = db.getReference("ClassRooms").child(classRoomID).child("StudentResponse")
+        ref = FirebaseDatabase.getInstance().getReference("ClassRooms").child(classRoomID)
+                .child("StudentResponse")
                 .child(studentResponse.getQuestionID() + "")
                 .child(studentResponse.getStudentName());
 
@@ -148,5 +149,32 @@ public class Student {
         });
 
         return allRoomIDS;
+    }
+
+    public static Map<Integer, List<String>> getQuestionAnswer() {
+        return questionAnswer;
+    }
+
+    public static void retrieveCorAns(final int Qid, String classID) {
+        DatabaseReference ref = FirebaseDatabase.getInstance()
+                .getReference("ClassRooms").child(classID)
+                .child("Questions").child(Qid + "").child("answer");
+        ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                List<String> answers = new ArrayList<>();
+                snapshot.getValue(answers.getClass());
+                for (Question question : questionList) {
+                    if (question.getQuestionId() == Qid) {
+                        question.setCorrectAns(answers);
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 }
