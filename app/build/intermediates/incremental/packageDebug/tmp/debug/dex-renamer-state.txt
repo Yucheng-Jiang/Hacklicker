@@ -1,4 +1,4 @@
-#Sat Aug 08 21:31:24 EDT 2020
-base.0=C\:\\Users\\steve\\Desktop\\Haclicker\\app\\build\\intermediates\\dex\\debug\\mergeDexDebug\\classes.dex
+#Sun Aug 09 10:37:55 CST 2020
+base.0=/Users/pyjiang/Documents/hack_this/haclicker/app/build/intermediates/dex/debug/mergeDexDebug/classes.dex
 path.0=classes.dex
 renamed.0=classes.dex
