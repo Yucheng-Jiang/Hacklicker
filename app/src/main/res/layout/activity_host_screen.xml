@@ -10,8 +10,7 @@
     <TextView
         android:id="@+id/emptyReminder"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="TextView" />
+        android:layout_height="wrap_content" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -52,8 +51,8 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="bottom|left"
                 android:layout_weight="26"
-                android:background="@drawable/orangeblue"
-                app:srcCompat="@android:drawable/ic_menu_share" />
+                android:background="@null"
+                app:srcCompat="@drawable/share" />
 
             <Space
                 android:layout_width="0dp"
@@ -66,8 +65,8 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="bottom"
                 android:layout_weight="26"
-                android:background="@drawable/orangeblue"
-                app:srcCompat="@android:drawable/ic_menu_add" />
+                android:background="@null"
+                app:srcCompat="@drawable/add" />
 
             <Space
                 android:layout_width="0dp"
@@ -80,8 +79,8 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="bottom|right"
                 android:layout_weight="28"
-                android:background="@drawable/orangeblue"
-                app:srcCompat="@android:drawable/ic_lock_power_off" />
+                android:background="@null"
+                app:srcCompat="@drawable/signout" />
 
             <Space
                 android:layout_width="0dp"

@@ -20,7 +20,7 @@
             android:layout_gravity="right"
             android:layout_weight="10"
             app:srcCompat="@drawable/settings"
-            android:background="@drawable/orangeblue"
+            android:background="@null"
             tools:ignore="MissingConstraints" />
 
         <Space
@@ -56,7 +56,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="30"
-                    android:background="@drawable/orangeblue"
+                    android:background="@null"
                     app:srcCompat="@drawable/create_room"
                     tools:ignore="MissingConstraints" />
 
@@ -70,7 +70,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="30"
-                    android:background="@drawable/orangeblue"
+                    android:background="@null"
                     app:srcCompat="@drawable/join_room"
                     tools:ignore="MissingConstraints" />
 
@@ -102,8 +102,8 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="30"
-                    android:background="@drawable/orangeblue"
                     app:srcCompat="@drawable/question_history"
+                    android:background="@null"
                     tools:ignore="MissingConstraints" />
 
 
@@ -117,7 +117,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="30"
-                    android:background="@drawable/orangeblue"
+                    android:background="@null"
                     app:srcCompat="@drawable/export"
                     tools:ignore="MissingConstraints" />
 
