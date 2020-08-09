@@ -6,8 +6,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -44,7 +46,7 @@ public class ScanScreen extends AppCompatActivity implements ZXingScannerView.Re
     @Override
     public void handleResult(Result result) {
         String classID = result.getText();
-        // TODO: Do something with the scanned result
+        setResult(Activity.RESULT_OK, new Intent().putExtra("classID", classID));
     }
 
     public void onRequestPermissionResult(int requestCode, String[] permission, int[] grantResults) {
