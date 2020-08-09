@@ -22,6 +22,17 @@ public class Student {
     static List<Question> questionList = new ArrayList<>();
     static Map<Integer, List<String>> questionAnswer = new HashMap<>();
 
+    public static void clearHistory() {
+        questionList.clear();
+        questionAnswer.clear();
+    }
+
+    public static List<String> getMyAnswerHistory(int questionId) {
+        if (questionAnswer.containsKey(questionId)) {
+            return questionAnswer.get(questionId);
+        }
+        return null;
+    }
     public static void updateQuestionList(List<Question> questions) {
         questionList = questions;
     }
