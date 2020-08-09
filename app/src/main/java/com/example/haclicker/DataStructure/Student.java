@@ -189,6 +189,9 @@ public class Student {
     }
 
     public static void setCorrectAns(List<String> ans, int Qid) {
-        questionList.get(Qid).setCorrectAns(ans);
+        for (Question question : questionList) {
+            if (question.getQuestionId() == Qid)
+                question.setCorrectAns(ans);
+        }
     }
 }
