@@ -1434,6 +1434,7 @@ drawable abc_textfield_search_activated_mtrl_alpha
 drawable abc_textfield_search_default_mtrl_alpha
 drawable abc_textfield_search_material
 drawable abc_vector_test
+drawable add
 drawable avd_hide_password
 drawable avd_show_password
 drawable btn_checkbox_checked_mtrl
@@ -1444,6 +1445,7 @@ drawable btn_radio_off_mtrl
 drawable btn_radio_off_to_on_mtrl_animation
 drawable btn_radio_on_mtrl
 drawable btn_radio_on_to_off_mtrl_animation
+drawable camera
 drawable common_full_open_on_phone
 drawable common_google_signin_btn_icon_dark
 drawable common_google_signin_btn_icon_dark_focused
@@ -1471,6 +1473,7 @@ drawable design_ic_visibility_off
 drawable design_password_eye
 drawable design_snackbar_background
 drawable export
+drawable gallery
 drawable googleg_disabled_color_18
 drawable googleg_standard_color_18
 drawable ic_launcher_background
@@ -1514,6 +1517,8 @@ drawable qr_code_emtpy
 drawable question_history
 drawable rounded_button
 drawable settings
+drawable share
+drawable signout
 drawable test_custom_background
 drawable tooltip_frame_dark
 drawable tooltip_frame_light
@@ -1946,7 +1951,6 @@ layout activity_main_screen
 layout activity_manual_add_question_screen
 layout activity_scan_screen
 layout activity_share_room_screen
-layout activity_student_question_screen
 layout activity_student_screen
 layout chunk_option
 layout chunk_question

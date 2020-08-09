@@ -12,6 +12,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.haclicker.DataStructure.Question;
+import com.example.haclicker.DataStructure.Student;
+import com.example.haclicker.DataStructure.StudentResponse;
 import com.example.haclicker.DataStructure.Teacher;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.AxisBase;
