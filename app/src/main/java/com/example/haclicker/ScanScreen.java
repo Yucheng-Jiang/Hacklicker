@@ -47,6 +47,7 @@ public class ScanScreen extends AppCompatActivity implements ZXingScannerView.Re
     public void handleResult(Result result) {
         String classID = result.getText();
         setResult(Activity.RESULT_OK, new Intent().putExtra("classID", classID));
+        finish();
     }
 
     public void onRequestPermissionResult(int requestCode, String[] permission, int[] grantResults) {
