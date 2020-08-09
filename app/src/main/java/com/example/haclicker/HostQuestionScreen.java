@@ -62,10 +62,12 @@ public class HostQuestionScreen extends AppCompatActivity {
                     LinearLayout questionList = findViewById(R.id.question_list);
                     questionList.removeAllViews();
                     // create a button to each choice
-                    for (String choice : choices) {
+                    for (int i = 0; i < choices.size(); i++) {
+                        String choice = choices.get(i);
                         View questionChunk = getLayoutInflater().inflate(R.layout.chunk_question,
                                 questionList, false);
                         final Button questionTxt = questionChunk.findViewById(R.id.question_txt);
+                        final String index =Character.toString((char) (((int) 'A') + i));
                         questionTxt.setText(choice);
                         questionTxt.setOnClickListener(new View.OnClickListener() {
                             @Override
@@ -74,10 +76,10 @@ public class HostQuestionScreen extends AppCompatActivity {
                                     if (((ColorDrawable) questionTxt.getBackground()).getColor() ==
                                             android.graphics.Color.parseColor("#99ff99")) {
                                         questionTxt.setBackgroundColor(android.graphics.Color.parseColor("#fed8b1"));
-                                        Teacher.deleteCorrectAnswer(question, questionTxt.getText().toString());
+                                        Teacher.deleteCorrectAnswer(question, index);
                                     } else {
                                         questionTxt.setBackgroundColor(android.graphics.Color.parseColor("#99ff99"));
-                                        Teacher.sendCorrectAnswer(question, questionTxt.getText().toString());
+                                        Teacher.sendCorrectAnswer(question, index);
                                     }
                                 }
                                 // TODO: when stop button is activated, the correct answer should be the one clicked
