@@ -103,24 +103,18 @@ public class ShareRoomScreen extends AppCompatActivity {
         MediaStore.Images.Media.insertImage(getContentResolver(), bitmap,
                 Teacher.getClassroom().getClassID() + ".jpg" ,
                 "haclicker qr code");
-//        ContextWrapper cw = new ContextWrapper(getApplicationContext());
-//        File directory = cw.getDir("saved_qr_codes", Context.MODE_PRIVATE);
-//        File mypath=new File(directory, Teacher.getClassroom().getClassID() + ".jpg");
-//
-//        FileOutputStream fos = null;
-//        try {
-//            fos = new FileOutputStream(mypath);
-//            // Use the compress method on the BitMap object to write image to the OutputStream
-//            bitmap.compress(Bitmap.CompressFormat.PNG, 100, fos);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        } finally {
-//            try {
-//                fos.close();
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-//        }
+
+        // Code below are cited from
+        // https://stackoverflow.com/questions/22194761/hide-textview-after-some-time-in-android
+        copyIdBtn.setText("IMAGE SAVED");
+        copyIdBtn.setTextColor(Color.GREEN);
+        copyIdBtn.postDelayed(new Runnable() {
+            public void run() {
+                copyIdBtn.setTextColor(Color.BLACK);
+                copyIdBtn.setText("SAVE IMAGE");
+            }
+        }, 1500);
+        // citation ends here
     }
 
 }
