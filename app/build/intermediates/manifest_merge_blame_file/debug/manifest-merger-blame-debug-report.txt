@@ -39,7 +39,7 @@
 26        android:theme="@style/AppTheme" >
 26-->C:\Users\steve\Desktop\Haclicker\app\src\main\AndroidManifest.xml:13:9-40
 27        <activity android:name="com.example.haclicker.StudentQuestionScreen" />
-27-->C:\Users\steve\Desktop\Haclicker\app\src\main\AndroidManifest.xml:14:9-68
+27-->C:\Users\steve\Desktop\Haclicker\app\src\main\AndroidManifest.xml:14:9-59
 27-->C:\Users\steve\Desktop\Haclicker\app\src\main\AndroidManifest.xml:14:19-56
 28        <activity android:name="com.example.haclicker.StudentScreen" />
 28-->C:\Users\steve\Desktop\Haclicker\app\src\main\AndroidManifest.xml:15:9-51

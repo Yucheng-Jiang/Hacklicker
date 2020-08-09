@@ -11,7 +11,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".StudentQuestionScreen"></activity>
+        <activity android:name=".StudentQuestionScreen" />
         <activity android:name=".StudentScreen" />
         <activity android:name=".JoinRoomScreen" />
         <activity android:name=".ShareRoomScreen" />

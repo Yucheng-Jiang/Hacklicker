@@ -118,7 +118,7 @@ MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.0] C:\Users\st
 	android:theme
 		ADDED from C:\Users\steve\Desktop\Haclicker\app\src\main\AndroidManifest.xml:13:9-40
 activity#com.example.haclicker.StudentQuestionScreen
-ADDED from C:\Users\steve\Desktop\Haclicker\app\src\main\AndroidManifest.xml:14:9-68
+ADDED from C:\Users\steve\Desktop\Haclicker\app\src\main\AndroidManifest.xml:14:9-59
 	android:name
 		ADDED from C:\Users\steve\Desktop\Haclicker\app\src\main\AndroidManifest.xml:14:19-56
 activity#com.example.haclicker.StudentScreen
