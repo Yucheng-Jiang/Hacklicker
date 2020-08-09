@@ -46,6 +46,7 @@ public class StudentScreen extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //TODO: store data and delete cloud data
+                Student.clearHistory();
                 Intent intent = new Intent(getApplicationContext(), MainScreen.class);
                 startActivity(intent);
             }

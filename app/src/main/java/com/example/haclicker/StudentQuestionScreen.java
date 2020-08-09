@@ -53,37 +53,73 @@ public class StudentQuestionScreen extends AppCompatActivity {
         Intent intent = getIntent();
         questionId = intent.getIntExtra("questionId", 0);
         classId = intent.getStringExtra("classId");
+        // get my answer history
+        if (Student.getMyAnswerHistory(questionId) != null) {
+            answers = Student.getMyAnswerHistory(questionId);
+        }
         // display question and choices
-        Question question = Student.getQuestionById(questionId);
+        final Question question = Student.getQuestionById(questionId);
         questionTxt.setText(question.getQuestionDescription());
         // populate answer options
+        List<String> correctAns = question.getCorrectAns();
         List<String> choices = question.getChoices();
-        if (choices != null && choices.size() != 0) {
+        // already have correct answer
+        if (correctAns == null || correctAns.size() == 0) {
             LinearLayout questionList = findViewById(R.id.question_list);
-            questionList.removeAllViews();
-            // create a button to each choice
             for (int i = 0; i < choices.size(); i++) {
                 String choice = choices.get(i);
                 View questionChunk = getLayoutInflater().inflate(R.layout.chunk_question,
                         questionList, false);
                 final Button questionTxt = questionChunk.findViewById(R.id.question_txt);
+                final char index =(char) (((int) 'A') + i);
+                if (answers.contains(Character.toString(index))) {
+                    questionTxt.setBackgroundColor(android.graphics.Color.parseColor("#fed8b1"));
+                } else {
+                    questionTxt.setBackgroundColor(Color.GRAY);
+                }
                 questionTxt.setText(choice);
                 questionTxt.setId(i);
                 questionTxt.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        if (((ColorDrawable) questionTxt.getBackground()).getColor() ==
-                                android.graphics.Color.parseColor("#99ff99")) {
+                        String thisAnswerIndex = Character.toString(index);
+                        if (((ColorDrawable) questionTxt.getBackground()).getColor() == Color.GRAY) {
                             questionTxt.setBackgroundColor(android.graphics.Color.parseColor("#fed8b1"));
-                            answers.remove(questionTxt.getId());
+                            System.out.println(thisAnswerIndex);
+                            answers.add(thisAnswerIndex);
+                            sendAnswer.setText("Send");
+                            sendAnswer.setTextColor(Color.BLACK);
                         } else {
-                            questionTxt.setBackgroundColor(android.graphics.Color.parseColor("#99ff99"));
-                            answers.add(questionTxt.getId() + "");
+                            questionTxt.setBackgroundColor(Color.GRAY);
+                            answers.remove(thisAnswerIndex);
+                            sendAnswer.setText("Send");
+                            sendAnswer.setTextColor(Color.BLACK);
                         }
-                        // TODO: when stop button is activated, the correct answer should be the one clicked
                     }
                 });
 
+                questionList.addView(questionChunk);
+            }
+        } else {
+            LinearLayout questionList = findViewById(R.id.question_list);
+            questionList.removeAllViews();
+
+            // if don't have correct answer, restore previous answer
+            for (int i = 0; i < choices.size(); i++) {
+                String choice = choices.get(i);
+                View questionChunk = getLayoutInflater().inflate(R.layout.chunk_question,
+                        questionList, false);
+                final Button questionTxt = questionChunk.findViewById(R.id.question_txt);
+                String strAnswer =Character.toString ((char) (((int) 'A') + i));
+                if (correctAns.contains(strAnswer)) {
+                    // mark correct as green
+                    questionTxt.setBackgroundColor(android.graphics.Color.parseColor("#99ff99"));
+                } else if (answers.contains(strAnswer)) {
+                    questionTxt.setBackgroundColor(Color.RED);
+                } else {
+                    questionTxt.setBackgroundColor(Color.GRAY);
+                }
+                questionTxt.setText(choice);
                 questionList.addView(questionChunk);
             }
         }
