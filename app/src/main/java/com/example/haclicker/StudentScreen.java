@@ -5,6 +5,7 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
@@ -112,6 +113,12 @@ public class StudentScreen extends AppCompatActivity {
                         View questionChunk = getLayoutInflater().inflate(R.layout.chunk_question,
                                 questionList, false);
                         Button questionTxt = questionChunk.findViewById(R.id.question_txt);
+                        if (Student.getMyAnswerHistory(question.getQuestionId()) == null
+                         || Student.getMyAnswerHistory(question.getQuestionId()).size() == 0) {
+                            questionTxt.setBackgroundColor(Color.GRAY);
+                        } else {
+                            questionTxt.setBackgroundColor(android.graphics.Color.parseColor("#fed8b1"));
+                        }
                         questionTxt.setText(question.getQuestionDescription());
                         questionTxt.setOnClickListener(new View.OnClickListener() {
                             @Override

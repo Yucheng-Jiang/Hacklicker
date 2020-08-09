@@ -68,6 +68,7 @@ public class MainScreen extends AppCompatActivity {
                 Teacher.addQuestionToQueue(new Question("test message. You see you one day day, look what look.", 11, list));
                 Teacher.addQuestion(11);
                 Intent intent = new Intent(getApplicationContext(), HostScreen.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
             }
         });
