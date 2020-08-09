@@ -45,7 +45,8 @@ public class JoinRoomScreen extends AppCompatActivity {
         scanQrBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // TODO: scan qr from camera
+                Intent intent = new Intent(getApplicationContext(), ScanScreen.class);
+                startActivity(intent);
                 String result = ""; // store result here
                 inputRoomId.setText(result);
             }
