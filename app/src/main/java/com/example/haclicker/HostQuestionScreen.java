@@ -173,9 +173,9 @@ public class HostQuestionScreen extends AppCompatActivity {
                 for (DataSnapshot singleResponse : snapshot.getChildren()) {
                     for (DataSnapshot singleAnswer : singleResponse.child("answer").getChildren()) {
                         if (!result.containsKey(singleAnswer.toString())) {
-                            result.put(singleAnswer.toString(), 1);
+                            result.put(singleAnswer.getValue().toString(), 1);
                         } else {
-                            result.put(singleAnswer.toString(), result.get(singleAnswer.toString()) + 1);
+                            result.put(singleAnswer.getValue().toString(), result.get(singleAnswer.toString()) + 1);
                         }
                     }
                 }
@@ -202,7 +202,7 @@ public class HostQuestionScreen extends AppCompatActivity {
                 barDataSet.setColors(ColorTemplate.COLORFUL_COLORS);
                 BarData data = new BarData(barDataSet);
                 resultBarChart.setData(data);
-                resultBarChart.animateXY(1500, 1500);
+                resultBarChart.animateXY(500, 500);
                 XAxis xAxis = resultBarChart.getXAxis();
                 xAxis.setValueFormatter(new MyXAxisValueFormatter(horizontalAxisSet));
             }
