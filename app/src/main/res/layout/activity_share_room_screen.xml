@@ -31,22 +31,22 @@
             <Space
                 android:layout_width="1dp"
                 android:layout_height="15dp"
-                android:layout_weight="15" />
+                android:layout_weight="10" />
 
             <TextView
                 android:id="@+id/roomIdDisplay"
                 android:layout_width="0dp"
                 android:layout_height="94dp"
-                android:layout_weight="70"
+                android:layout_weight="80"
                 android:background="@drawable/orangeblue"
-                android:gravity="center"
+                android:gravity="center|top"
                 android:textSize="24sp"
                 tools:ignore="MissingConstraints" />
 
             <Space
                 android:layout_width="1dp"
                 android:layout_height="15dp"
-                android:layout_weight="15" />
+                android:layout_weight="10" />
         </LinearLayout>
 
         <Space
