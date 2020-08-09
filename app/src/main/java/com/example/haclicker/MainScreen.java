@@ -109,9 +109,7 @@ public class MainScreen extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot ID : snapshot.getChildren()) {
-                    if (ID.child("classID").getValue() == null) {
-                        System.out.println("fucker");
-                    }
+                    System.out.println(ID.child("classID").getValue().toString());
                     allRoomIDS.add(ID.child("classID").getValue().toString());
                 }
             }

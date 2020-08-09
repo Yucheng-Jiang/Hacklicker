@@ -1,9 +1,4 @@
-<<<<<<< HEAD
-#Sun Aug 09 10:37:55 CST 2020
-base.0=/Users/pyjiang/Documents/hack_this/haclicker/app/build/intermediates/dex/debug/mergeDexDebug/classes.dex
-=======
-#Sat Aug 08 23:52:12 EDT 2020
+#Sun Aug 09 10:09:17 EDT 2020
 base.0=C\:\\Users\\steve\\Desktop\\Haclicker\\app\\build\\intermediates\\dex\\debug\\mergeDexDebug\\classes.dex
->>>>>>> e626a964bc45fba21b95d7c0f07664348b96f654
 path.0=classes.dex
 renamed.0=classes.dex
