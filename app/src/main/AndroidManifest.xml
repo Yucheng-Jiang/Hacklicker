@@ -3,6 +3,11 @@
     package="com.example.haclicker">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_MEDIA_LOCATION" />
+    <uses-permission android:name="android.permission.CAMERA" />
+
+    <uses-feature android:name="android.hardware.camera" />
+    <uses-feature android:name="android.hardware.camera.autofocus" />
 
     <application
         android:allowBackup="true"
@@ -11,7 +16,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".StudentQuestionScreen"></activity>
+        <activity android:name=".ScanScreen"></activity>
+        <activity android:name=".StudentQuestionScreen" />
         <activity android:name=".StudentScreen" />
         <activity android:name=".JoinRoomScreen" />
         <activity android:name=".ShareRoomScreen" />
