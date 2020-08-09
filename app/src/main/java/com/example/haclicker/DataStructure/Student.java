@@ -33,6 +33,7 @@ public class Student {
         }
         return null;
     }
+
     public static void updateQuestionList(List<Question> questions) {
         questionList = questions;
     }
@@ -176,5 +177,18 @@ public class Student {
 
             }
         });
+    }
+
+    public static List<Question> getQuestionList() {
+        return questionList;
+    }
+
+    public static void setQuestionList(List<Question> questions) {
+        questionList.clear();
+        questionList.addAll(questions);
+    }
+
+    public static void setCorrectAns(List<String> ans, int Qid) {
+        questionList.get(Qid).setCorrectAns(ans);
     }
 }

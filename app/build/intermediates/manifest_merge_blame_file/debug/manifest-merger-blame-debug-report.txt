@@ -51,15 +51,15 @@
 30        android:testOnly="true"
 31        android:theme="@style/AppTheme" >
 31-->/Users/david-jiang/AndroidStudioProjects/haclicker/app/src/main/AndroidManifest.xml:18:9-40
-32        <activity android:name="com.example.haclicker.StudentScreen" />
-32-->/Users/david-jiang/AndroidStudioProjects/haclicker/app/src/main/AndroidManifest.xml:19:9-60
-32-->/Users/david-jiang/AndroidStudioProjects/haclicker/app/src/main/AndroidManifest.xml:19:19-48
-33        <activity android:name="com.example.haclicker.ScanScreen" />
-33-->/Users/david-jiang/AndroidStudioProjects/haclicker/app/src/main/AndroidManifest.xml:20:9-48
-33-->/Users/david-jiang/AndroidStudioProjects/haclicker/app/src/main/AndroidManifest.xml:20:19-45
-34        <activity android:name="com.example.haclicker.StudentQuestionScreen" />
-34-->/Users/david-jiang/AndroidStudioProjects/haclicker/app/src/main/AndroidManifest.xml:21:9-59
-34-->/Users/david-jiang/AndroidStudioProjects/haclicker/app/src/main/AndroidManifest.xml:21:19-56
+32        <activity android:name="com.example.haclicker.StudentQuestionScreen" />
+32-->/Users/david-jiang/AndroidStudioProjects/haclicker/app/src/main/AndroidManifest.xml:19:9-68
+32-->/Users/david-jiang/AndroidStudioProjects/haclicker/app/src/main/AndroidManifest.xml:19:19-56
+33        <activity android:name="com.example.haclicker.StudentScreen" />
+33-->/Users/david-jiang/AndroidStudioProjects/haclicker/app/src/main/AndroidManifest.xml:20:9-51
+33-->/Users/david-jiang/AndroidStudioProjects/haclicker/app/src/main/AndroidManifest.xml:20:19-48
+34        <activity android:name="com.example.haclicker.ScanScreen" />
+34-->/Users/david-jiang/AndroidStudioProjects/haclicker/app/src/main/AndroidManifest.xml:21:9-48
+34-->/Users/david-jiang/AndroidStudioProjects/haclicker/app/src/main/AndroidManifest.xml:21:19-45
 35        <activity android:name="com.example.haclicker.JoinRoomScreen" />
 35-->/Users/david-jiang/AndroidStudioProjects/haclicker/app/src/main/AndroidManifest.xml:22:9-52
 35-->/Users/david-jiang/AndroidStudioProjects/haclicker/app/src/main/AndroidManifest.xml:22:19-49

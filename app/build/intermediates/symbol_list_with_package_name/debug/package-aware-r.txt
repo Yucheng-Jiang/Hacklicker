@@ -1951,6 +1951,7 @@ layout activity_main_screen
 layout activity_manual_add_question_screen
 layout activity_scan_screen
 layout activity_share_room_screen
+layout activity_student_question_screen
 layout activity_student_screen
 layout chunk_option
 layout chunk_question

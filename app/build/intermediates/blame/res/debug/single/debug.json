@@ -56,6 +56,10 @@
         "source": "/Users/david-jiang/AndroidStudioProjects/haclicker/app/src/main/res/mipmap-xhdpi/ic_launcher.png"
     },
     {
+        "merged": "/Users/david-jiang/AndroidStudioProjects/haclicker/app/build/intermediates/res/merged/debug/layout_activity_student_question_screen.xml.flat",
+        "source": "/Users/david-jiang/AndroidStudioProjects/haclicker/app/src/main/res/layout/activity_student_question_screen.xml"
+    },
+    {
         "merged": "/Users/david-jiang/AndroidStudioProjects/haclicker/app/build/intermediates/res/merged/debug/mipmap-xxhdpi_ic_launcher.png.flat",
         "source": "/Users/david-jiang/AndroidStudioProjects/haclicker/app/src/main/res/mipmap-xxhdpi/ic_launcher.png"
     },

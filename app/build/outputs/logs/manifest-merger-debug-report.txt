@@ -141,18 +141,18 @@ MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.0] /Users/davi
 		ADDED from /Users/david-jiang/AndroidStudioProjects/haclicker/app/src/main/AndroidManifest.xml:13:9-35
 	android:theme
 		ADDED from /Users/david-jiang/AndroidStudioProjects/haclicker/app/src/main/AndroidManifest.xml:18:9-40
-activity#com.example.haclicker.StudentScreen
-ADDED from /Users/david-jiang/AndroidStudioProjects/haclicker/app/src/main/AndroidManifest.xml:19:9-60
-	android:name
-		ADDED from /Users/david-jiang/AndroidStudioProjects/haclicker/app/src/main/AndroidManifest.xml:19:19-48
-activity#com.example.haclicker.ScanScreen
-ADDED from /Users/david-jiang/AndroidStudioProjects/haclicker/app/src/main/AndroidManifest.xml:20:9-48
-	android:name
-		ADDED from /Users/david-jiang/AndroidStudioProjects/haclicker/app/src/main/AndroidManifest.xml:20:19-45
 activity#com.example.haclicker.StudentQuestionScreen
-ADDED from /Users/david-jiang/AndroidStudioProjects/haclicker/app/src/main/AndroidManifest.xml:21:9-59
+ADDED from /Users/david-jiang/AndroidStudioProjects/haclicker/app/src/main/AndroidManifest.xml:19:9-68
 	android:name
-		ADDED from /Users/david-jiang/AndroidStudioProjects/haclicker/app/src/main/AndroidManifest.xml:21:19-56
+		ADDED from /Users/david-jiang/AndroidStudioProjects/haclicker/app/src/main/AndroidManifest.xml:19:19-56
+activity#com.example.haclicker.StudentScreen
+ADDED from /Users/david-jiang/AndroidStudioProjects/haclicker/app/src/main/AndroidManifest.xml:20:9-51
+	android:name
+		ADDED from /Users/david-jiang/AndroidStudioProjects/haclicker/app/src/main/AndroidManifest.xml:20:19-48
+activity#com.example.haclicker.ScanScreen
+ADDED from /Users/david-jiang/AndroidStudioProjects/haclicker/app/src/main/AndroidManifest.xml:21:9-48
+	android:name
+		ADDED from /Users/david-jiang/AndroidStudioProjects/haclicker/app/src/main/AndroidManifest.xml:21:19-45
 activity#com.example.haclicker.JoinRoomScreen
 ADDED from /Users/david-jiang/AndroidStudioProjects/haclicker/app/src/main/AndroidManifest.xml:22:9-52
 	android:name
