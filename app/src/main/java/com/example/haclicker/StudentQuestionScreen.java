@@ -1,10 +1,13 @@
 package com.example.haclicker;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -42,64 +45,59 @@ public class StudentQuestionScreen extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_host_question_screen);
+        setContentView(R.layout.activity_student_question_screen);
 
         questionTxt = findViewById(R.id.question_txt);
         sendAnswer = findViewById(R.id.sendAnswer);
 
         Intent intent = getIntent();
-        questionId = intent.getIntExtra("Id", 0);
+        questionId = intent.getIntExtra("questionId", 0);
         classId = intent.getStringExtra("classId");
         // display question and choices
-        final List<Question> questions = Teacher.getClassroom().getQuestions();
-        for (final Question question : questions) {
-            // set question description
-            if (question.getQuestionId() == questionId) {
-                questionTxt.setText(question.getQuestionDescription());
-                // populate answer options
-                List<String> choices = question.getChoices();
-                if (choices != null && choices.size() != 0) {
-                    LinearLayout questionList = findViewById(R.id.question_list);
-                    questionList.removeAllViews();
-                    // create a button to each choice
-                    for (int i = 0; i < choices.size(); i++) {
-                        String choice = choices.get(i);
-                        View questionChunk = getLayoutInflater().inflate(R.layout.chunk_question,
-                                questionList, false);
-                        final Button questionTxt = questionChunk.findViewById(R.id.question_txt);
-                        questionTxt.setText(choice);
-                        questionTxt.setId(i);
-                        questionTxt.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                if (((ColorDrawable) questionTxt.getBackground()).getColor() ==
-                                        android.graphics.Color.parseColor("#99ff99")) {
-                                    questionTxt.setBackgroundColor(android.graphics.Color.parseColor("#fed8b1"));
-                                    Teacher.deleteCorrectAnswer(question, questionTxt.getText().toString());
-                                    answers.remove(questionTxt.getId());
-                                } else {
-                                    questionTxt.setBackgroundColor(android.graphics.Color.parseColor("#99ff99"));
-                                    Teacher.sendCorrectAnswer(question, questionTxt.getText().toString());
-                                    answers.add(questionTxt.getId() + "");
-                                }
-                                // TODO: when stop button is activated, the correct answer should be the one clicked
-                            }
-                        });
-
-                        questionList.addView(questionChunk);
+        Question question = Student.getQuestionById(questionId);
+        questionTxt.setText(question.getQuestionDescription());
+        // populate answer options
+        List<String> choices = question.getChoices();
+        if (choices != null && choices.size() != 0) {
+            LinearLayout questionList = findViewById(R.id.question_list);
+            questionList.removeAllViews();
+            // create a button to each choice
+            for (int i = 0; i < choices.size(); i++) {
+                String choice = choices.get(i);
+                View questionChunk = getLayoutInflater().inflate(R.layout.chunk_question,
+                        questionList, false);
+                final Button questionTxt = questionChunk.findViewById(R.id.question_txt);
+                questionTxt.setText(choice);
+                questionTxt.setId(i);
+                questionTxt.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if (((ColorDrawable) questionTxt.getBackground()).getColor() ==
+                                android.graphics.Color.parseColor("#99ff99")) {
+                            questionTxt.setBackgroundColor(android.graphics.Color.parseColor("#fed8b1"));
+                            answers.remove(questionTxt.getId());
+                        } else {
+                            questionTxt.setBackgroundColor(android.graphics.Color.parseColor("#99ff99"));
+                            answers.add(questionTxt.getId() + "");
+                        }
+                        // TODO: when stop button is activated, the correct answer should be the one clicked
                     }
-                }
-                break;
-            }
+                });
 
+                questionList.addView(questionChunk);
+            }
         }
 
         sendAnswer.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onClick(View view) {
                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                 Student.sendResponse(new StudentResponse(user.getDisplayName(), user.getEmail(), answers, questionId, System.currentTimeMillis()), classId);
-            }
+                Student.updateQuestionAnswer(questionId, answers);
+                sendAnswer.setText("Already sent!");
+                sendAnswer.setTextColor(Color.GREEN);
+        }
         });
     }
 }

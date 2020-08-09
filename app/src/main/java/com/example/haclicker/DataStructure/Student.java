@@ -1,5 +1,9 @@
 package com.example.haclicker.DataStructure;
+import android.os.Build;
+import android.util.Pair;
+
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -15,6 +19,30 @@ import java.util.Map;
 public class Student {
     static FirebaseDatabase db = FirebaseDatabase.getInstance();
     static DatabaseReference ref;
+    static List<Question> questionList = new ArrayList<>();
+    static Map<Integer, List<String>> questionAnswer = new HashMap<>();
+
+    public static void updateQuestionList(List<Question> questions) {
+        questionList = questions;
+    }
+
+    public static Question getQuestionById(int id) {
+        for (Question question : questionList) {
+            if (question.getQuestionId() == id) {
+                return question;
+            }
+        }
+        return null;
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    public static void updateQuestionAnswer(int questionId, List<String> answers) {
+        if (questionAnswer.containsKey(questionId)) {
+            questionAnswer.replace(questionId, answers);
+        } else {
+            questionAnswer.put(questionId, answers);
+        }
+    }
 
 
     //return true if join classroom successful

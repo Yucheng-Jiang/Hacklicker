@@ -7,17 +7,19 @@
     tools:context=".HostScreen"
     android:background="#cce7e8">
 
-    <TextView
-        android:id="@+id/emptyReminder"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="TextView" />
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:weightSum="100">
+
+        <TextView
+            android:id="@+id/emptyReminder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="There's no questions"
+            android:textSize="18sp" />
 
         <ScrollView
             android:id="@+id/scrollView2"
