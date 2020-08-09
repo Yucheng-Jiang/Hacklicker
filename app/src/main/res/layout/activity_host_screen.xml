@@ -22,7 +22,7 @@
             android:id="@+id/scrollView2"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="93">
+            android:layout_weight="91">
 
             <LinearLayout
                 android:id="@+id/question_list"
@@ -48,8 +48,8 @@
             <ImageButton
                 android:id="@+id/shareRoom"
                 android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_gravity="bottom|left"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
                 android:layout_weight="26"
                 android:background="@null"
                 app:srcCompat="@drawable/share" />
@@ -62,7 +62,7 @@
             <ImageButton
                 android:id="@+id/makePost"
                 android:layout_width="0dp"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
                 android:layout_weight="26"
                 android:background="@null"
@@ -76,7 +76,7 @@
             <ImageButton
                 android:id="@+id/leaveRoom"
                 android:layout_width="0dp"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_gravity="bottom|right"
                 android:layout_weight="28"
                 android:background="@null"
@@ -87,6 +87,13 @@
                 android:layout_height="match_parent"
                 android:layout_weight="5" />
         </LinearLayout>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="2" />
+
+
 
     </LinearLayout>
 
