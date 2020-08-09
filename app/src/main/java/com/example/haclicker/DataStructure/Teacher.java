@@ -203,24 +203,22 @@ public class Teacher {
                 List<StudentResponse> allStudentResponse = new ArrayList<>();
                 //~ClassRooms/classID/StudentResponse/questionID
                 for (DataSnapshot singleQuestion : snapshot.getChildren()) {
-                    StudentResponse response = singleQuestion.getValue(StudentResponse.class);
-                    allStudentResponse.add(response);
-//                    //~ClassRooms/classID/StudentResponse/questionID/StuName
-//                    for (DataSnapshot singleResponse : singleQuestion.getChildren()) {
-//                        List<String> answers = new ArrayList<>();
-//                        //~ClassRooms/classID/StudentResponse/questionID/StuName/answer
-//                        for (DataSnapshot ans : singleResponse.child("answer").getChildren()) {
-//                            answers.add(ans.getValue().toString());
-//                        }
-//                        int questionID = Integer.parseInt(singleResponse
-//                                .child("questionID").getValue().toString());
-//                        String stuEmail = singleResponse.child("studentEmail").getValue().toString();
-//                        String stuName = singleResponse.child("studentName").getValue().toString();
-//                        long timeStamp = Long.parseLong(singleResponse
-//                                .child("timeStamp").getValue().toString());
-//                        allStudentResponse.add(new StudentResponse(stuName,
-//                                stuEmail, answers, questionID, timeStamp));
-//                    }
+                    //~ClassRooms/classID/StudentResponse/questionID/StuName
+                    for (DataSnapshot singleResponse : singleQuestion.getChildren()) {
+                        List<String> answers = new ArrayList<>();
+                        //~ClassRooms/classID/StudentResponse/questionID/StuName/answer
+                        for (DataSnapshot ans : singleResponse.child("answer").getChildren()) {
+                            answers.add(ans.getValue().toString());
+                        }
+                        int questionID = Integer.parseInt(singleResponse
+                                .child("questionID").getValue().toString());
+                        String stuEmail = singleResponse.child("studentEmail").getValue().toString();
+                        String stuName = singleResponse.child("studentName").getValue().toString();
+                        long timeStamp = Long.parseLong(singleResponse
+                                .child("timeStamp").getValue().toString());
+                        allStudentResponse.add(new StudentResponse(stuName,
+                                stuEmail, answers, questionID, timeStamp));
+                    }
                 }
                 try {
                     exportResultAsCSV(allStudentResponse);
