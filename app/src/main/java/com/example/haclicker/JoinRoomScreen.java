@@ -4,8 +4,11 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -20,7 +23,14 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.zxing.BinaryBitmap;
+import com.google.zxing.LuminanceSource;
+import com.google.zxing.RGBLuminanceSource;
+import com.google.zxing.Result;
+import com.google.zxing.common.HybridBinarizer;
+import com.google.zxing.qrcode.QRCodeReader;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,6 +40,9 @@ public class JoinRoomScreen extends AppCompatActivity {
     ImageButton scanQrBtn, galleryQrBtn;
     EditText inputRoomId;
     TextView invalidIdTxt;
+
+    private static final int RC_SCAN = 1;
+    private static final int RC_PICK = 2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +59,7 @@ public class JoinRoomScreen extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), ScanScreen.class);
-                startActivity(intent);
+                startActivityForResult(intent, RC_SCAN);
                 String result = ""; // store result here
                 inputRoomId.setText(result);
             }
@@ -56,6 +69,8 @@ public class JoinRoomScreen extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 // TODO: read qr from gallery
+                Intent pickPhoto = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(pickPhoto , RC_PICK);
                 String result = ""; // store result here
                 inputRoomId.setText(result);
             }
@@ -105,6 +120,44 @@ public class JoinRoomScreen extends AppCompatActivity {
 
             }
         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        String classID;
+        switch (requestCode) {
+            case RC_SCAN:
+                classID = data.getStringExtra("classID");
+                // TODO: Do something with class ID
+                break;
+            case RC_PICK:
+                Uri selectedImage = data.getData();
+                Bitmap bitmap = null;
+                try {
+                    bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImage);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                QRCodeReader reader = new QRCodeReader();
+                try {
+                    // BEGIN QUOTE
+                    // Referenced from: https://stackoverflow.com/questions/14861553/zxing-convert-bitmap-to-binarybitmap
+                    int[] intArray = new int[bitmap.getWidth() * bitmap.getHeight()];
+                    //copy pixel data from the Bitmap into the 'intArray' array
+                    bitmap.getPixels(intArray, 0, bitmap.getWidth(), 0, 0, bitmap.getWidth(), bitmap.getHeight());
+
+                    LuminanceSource source = new RGBLuminanceSource(bitmap.getWidth(), bitmap.getHeight(), intArray);
+                    BinaryBitmap binBitmap = new BinaryBitmap(new HybridBinarizer(source));
+                    // END QUOTE
+                    Result result = reader.decode(binBitmap);
+                    classID = result.getText();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                // TODO: Do something with class ID
+                break;
+        }
     }
 
 }
