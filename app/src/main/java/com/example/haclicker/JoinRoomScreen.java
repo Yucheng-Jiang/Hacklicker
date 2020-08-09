@@ -42,6 +42,23 @@ public class JoinRoomScreen extends AppCompatActivity {
         inputRoomId = findViewById(R.id.inputRoomId);
         invalidIdTxt = findViewById(R.id.invalidIdTxt);
 
+        scanQrBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // TODO: scan qr from camera
+                String result = ""; // store result here
+                inputRoomId.setText(result);
+            }
+        });
+
+        galleryQrBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // TODO: read qr from gallery
+                String result = ""; // store result here
+                inputRoomId.setText(result);
+            }
+        });
 
         confirmJoinBtn.setOnClickListener(new View.OnClickListener() {
             @Override
