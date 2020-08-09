@@ -118,7 +118,11 @@ MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.0] /Users/pyji
 	android:theme
 		ADDED from /Users/pyjiang/Documents/hack_this/haclicker/app/src/main/AndroidManifest.xml:13:9-40
 activity#com.example.haclicker.StudentQuestionScreen
+<<<<<<< HEAD
 ADDED from /Users/pyjiang/Documents/hack_this/haclicker/app/src/main/AndroidManifest.xml:14:9-68
+=======
+ADDED from C:\Users\steve\Desktop\Haclicker\app\src\main\AndroidManifest.xml:14:9-59
+>>>>>>> e626a964bc45fba21b95d7c0f07664348b96f654
 	android:name
 		ADDED from /Users/pyjiang/Documents/hack_this/haclicker/app/src/main/AndroidManifest.xml:14:19-56
 activity#com.example.haclicker.StudentScreen
