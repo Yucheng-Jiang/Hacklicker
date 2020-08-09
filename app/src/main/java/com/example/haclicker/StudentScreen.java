@@ -29,16 +29,18 @@ public class StudentScreen extends AppCompatActivity {
     List<Question> questions = new ArrayList<>();
     ImageButton exitRoom, shareRoom, makePost;
     String classId;
+    TextView emptyReminder;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_host_screen);
+        setContentView(R.layout.activity_student_screen);
         Intent intent = getIntent();
         classId = intent.getStringExtra("Id");
         // add image buttons
         exitRoom = findViewById(R.id.leaveRoom);
         shareRoom = findViewById(R.id.shareRoom);
         makePost = findViewById(R.id.makePost);
+        emptyReminder = findViewById(R.id.emptyReminder);
         // exit room button set on click listener
         exitRoom.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -104,7 +106,7 @@ public class StudentScreen extends AppCompatActivity {
                 if (questions != null) {
                     LinearLayout questionList = findViewById(R.id.question_list);
                     questionList.removeAllViews();
-
+                    emptyReminder.setVisibility(View.INVISIBLE);
                     for (final Question question : questions) {
                         View questionChunk = getLayoutInflater().inflate(R.layout.chunk_question,
                                 questionList, false);
@@ -121,6 +123,8 @@ public class StudentScreen extends AppCompatActivity {
                         });
                         questionList.addView(questionChunk);
                     }
+                } else {
+                    emptyReminder.setVisibility(View.VISIBLE);
                 }
             }
 
