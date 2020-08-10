@@ -37,7 +37,6 @@ import java.util.List;
 import java.util.Map;
 
 public class StudentQuestionScreen extends AppCompatActivity {
-
     TextView questionTxt;
     private int curQuestionID;
     private String classID;
@@ -49,20 +48,23 @@ public class StudentQuestionScreen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_student_question_screen);
 
+        // set UI component
         questionTxt = findViewById(R.id.question_txt);
-
+        // retrieve intent extra
         Intent intent = getIntent();
         curQuestionID = intent.getIntExtra("QuestionID", 0);
         classID = intent.getStringExtra("ClassID");
+        // update current question answer history
+        // if there's no history, make a new list
         curChoice = Student.getMyAnswerHistory(curQuestionID);
-
         if (curChoice == null) {
             curChoice = new ArrayList<>();
         }
-
         // display question and choices
         question = Student.getQuestionById(curQuestionID);
         updateUI();
+        // check if there's update on question correct answer on current question
+        // if yes, update UI
         final Thread thread = new Thread() {
             @Override
             public void run() {
@@ -81,13 +83,17 @@ public class StudentQuestionScreen extends AppCompatActivity {
                                 ref.addValueEventListener(new ValueEventListener() {
                                     @Override
                                     public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                        // get previous correct answer list
                                         List<String> ans = Student.getQuestionById(curQuestionID)
                                                 .getCorrectAns();
+                                        // retrieve new correct answer list from firebase
                                         List<String> retrievedAns = new ArrayList<>();
                                         for (DataSnapshot curAns : snapshot.getChildren()) {
                                             retrievedAns.add(curAns.getValue().toString());
                                         }
+                                        // update correct answer list
                                         Student.setCorrectAns(retrievedAns, curQuestionID);
+                                        // if there's difference, update UI
                                         if (!retrievedAns.equals(ans)) {
                                             updateUI();
                                         }
@@ -95,10 +101,8 @@ public class StudentQuestionScreen extends AppCompatActivity {
 
                                     @Override
                                     public void onCancelled(@NonNull DatabaseError error) {
-
                                     }
                                 });
-                                // update TextView here!
                             }
                         });
                     }
@@ -109,6 +113,9 @@ public class StudentQuestionScreen extends AppCompatActivity {
         thread.start();
     }
 
+    /**
+     * update question display UI depend on correct answers and student answers
+     */
     private void updateUI() {
         // set question description
         if (question.getQuestionId() == curQuestionID) {
@@ -116,35 +123,40 @@ public class StudentQuestionScreen extends AppCompatActivity {
             // populate answer options
             List<String> choices = question.getChoices();
             if (choices != null && choices.size() != 0) {
-                LinearLayout questionList = findViewById(R.id.question_list);
-                questionList.removeAllViews();
-
+                // remove all previous views
+                LinearLayout questionListLayout = findViewById(R.id.question_list);
+                questionListLayout.removeAllViews();
+                // get correct answer list
                 List<String> correctAnswer = Student.getQuestionById(curQuestionID).getCorrectAns();
                 // create a button to each choice
                 for (int i = 0; i < choices.size(); i++) {
                     String choice = choices.get(i);
-                    View questionChunk = getLayoutInflater().inflate(R.layout.chunk_question,
-                            questionList, false);
-                    final Button questionTxt = questionChunk.findViewById(R.id.question_txt);
+                    View choiceChunk = getLayoutInflater().inflate(R.layout.chunk_question,
+                            questionListLayout, false);
+                    final Button choiceTxt = choiceChunk.findViewById(R.id.question_txt);
                     final String index =Character.toString((char) (((int) 'A') + i));
-                    questionTxt.setText(choice);
-                    questionTxt.setBackgroundColor(Color.GRAY);
+                    choiceTxt.setText(choice);
+                    choiceTxt.setBackgroundColor(Color.GRAY);
+                    // if there's no correct answer, display previous student answers
+                    // allow student to update his/her answers
                     if (correctAnswer == null || correctAnswer.size() == 0) {
-                        questionTxt.setOnClickListener(new View.OnClickListener() {
+                        choiceTxt.setOnClickListener(new View.OnClickListener() {
                             @RequiresApi(api = Build.VERSION_CODES.N)
                             @Override
                             public void onClick(View view) {
-                                if (((ColorDrawable) questionTxt.getBackground()).getColor() ==
+                                // if the answer is already selected, return it into gray
+                                // and remove from choice history
+                                if (((ColorDrawable) choiceTxt.getBackground()).getColor() ==
                                         android.graphics.Color.parseColor("#fed8b1")) {
-                                    questionTxt.setBackgroundColor(Color.GRAY);
-                                    // un-choose
+                                    choiceTxt.setBackgroundColor(Color.GRAY);
                                     curChoice.remove(index);
-                                    Student.updateQuestionAnswer(curQuestionID, curChoice);
                                 } else {
-                                    questionTxt.setBackgroundColor(android.graphics.Color.parseColor("#fed8b1"));
+                                    // otherwise add new answers
+                                    choiceTxt.setBackgroundColor(android.graphics.Color.parseColor("#fed8b1"));
                                     curChoice.add(index);
-                                    Student.updateQuestionAnswer(curQuestionID, curChoice);
                                 }
+                                Student.updateQuestionAnswer(curQuestionID, curChoice);
+                                // send student response to server
                                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                                 StudentResponse studentResponse = new StudentResponse(
                                         user.getDisplayName(),
@@ -152,24 +164,28 @@ public class StudentQuestionScreen extends AppCompatActivity {
                                         curChoice,
                                         curQuestionID,
                                         System.currentTimeMillis());
-
                                 Student.sendResponse(studentResponse, classID);
                             }
                         });
                     } else {
+                        // if there are correct answers, show student's result
                         if (correctAnswer.contains(index)) {
-                            questionTxt.setBackgroundColor(android.graphics.Color.parseColor("#99ff99"));
+                            // make correct answer choices background green
+                            choiceTxt.setBackgroundColor(android.graphics.Color.parseColor("#99ff99"));
                             if (!curChoice.contains(index)) {
-                                questionTxt.setTextColor(Color.RED);
+                                // if student did not select, mark the text as red
+                                choiceTxt.setTextColor(Color.RED);
                             }
                         } else {
-                            questionTxt.setBackgroundColor(Color.GRAY);
+                            // mark incorrect questions as gray
+                            choiceTxt.setBackgroundColor(Color.GRAY);
                             if (curChoice.contains(index)) {
-                                questionTxt.setTextColor(Color.RED);
+                                // if student selected, mark the text as red
+                                choiceTxt.setTextColor(Color.RED);
                             }
                         }
                     }
-                    questionList.addView(questionChunk);
+                    questionListLayout.addView(choiceChunk);
                 }
             }
         }

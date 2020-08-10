@@ -13,6 +13,7 @@ import com.example.haclicker.DataStructure.Question;
 import com.example.haclicker.DataStructure.Teacher;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -23,28 +24,30 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+/**
+ * Main screen activity, allowing user to create and join room
+ */
 public class MainScreen extends AppCompatActivity {
-
     ImageButton settings, createRoom, joinRoom;
-    String username, userEmail, className;
-
+    String username, userEmail;
+    // set room ID length, set default to 10 digits ID number
     public static final int ID_LENGTH = 10;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_screen);
-
+        // find UI component
         settings = findViewById(R.id.settings);
         createRoom = findViewById(R.id.create_room);
         joinRoom = findViewById(R.id.join_room);
-
+        // get user name name and email
         GoogleSignInAccount signInAccount = GoogleSignIn.getLastSignedInAccount(this);
         if (signInAccount != null) {
             username = signInAccount.getDisplayName();
             userEmail = signInAccount.getEmail();
         }
-
+        // setting button onclickListener
         settings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -52,38 +55,42 @@ public class MainScreen extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
+        // create button onclickListener
         createRoom.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // generate a new room with random ID (without collision)
                 ClassRoom classroom = generateClassroom();
+                // set the classroom to Teacher class (static field)
                 Teacher.setClassroom(classroom);
+                // update the class room to firebase server
                 Teacher.createClassroom();
-                List<String> list = new ArrayList<String>() {{
-                    add("Choice A");
-                    add("Choice B");
-                    add("Choice C");
-                }};
-                //TODO:delete sample question
-                Teacher.addQuestionToQueue(new Question("test message. You see you one day day, look what look.", 11, list));
-                Teacher.addQuestion(11);
+                // jump to host screen activity
                 Intent intent = new Intent(getApplicationContext(), HostScreen.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
+                finish();
             }
         });
-
+        // join button onclickListener
         joinRoom.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), JoinRoomScreen.class);
                 startActivity(intent);
+                finish();
             }
         });
     }
-    private ClassRoom generateClassroom() {
 
+    /**
+     * Create a new classroom instance with random ID number
+     * @return the newly created classroom instance
+     */
+    private ClassRoom generateClassroom() {
+        // get all existing room IDs
         List<String> allRoomIDs = getAllRooms();
+        // generate a random 10 digits number while avoiding collision
         Random random = new Random();
         while (true) {
             StringBuilder id = new StringBuilder();
@@ -101,25 +108,22 @@ public class MainScreen extends AppCompatActivity {
      * @return all roomIDs
      */
     private List<String> getAllRooms() {
-
         final List<String> allRoomIDS = new ArrayList<>();
+        // create a new database reference
         DatabaseReference reference = FirebaseDatabase.getInstance()
                 .getReference("ClassRooms");
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot ID : snapshot.getChildren()) {
-                    System.out.println(ID.child("classID").getValue().toString());
                     allRoomIDS.add(ID.child("classID").getValue().toString());
                 }
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
             }
         });
-
         return allRoomIDS;
     }
 }

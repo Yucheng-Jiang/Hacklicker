@@ -20,7 +20,10 @@ import com.google.zxing.Result;
 
 import static android.Manifest.permission.CAMERA;
 
-
+/**
+ * Scan QR code activity
+ * Allow users to scan qr code without manually input classroom ID
+ */
 public class ScanScreen extends AppCompatActivity implements ZXingScannerView.ResultHandler {
 
     private static final int REQUEST_CAMERA = 1;
@@ -30,13 +33,13 @@ public class ScanScreen extends AppCompatActivity implements ZXingScannerView.Re
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scan_screen);
-
+        // set UI component
         scannerView = new ZXingScannerView(this);
         setContentView(scannerView);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (ContextCompat.checkSelfPermission(ScanScreen.this, CAMERA)
                     == PackageManager.PERMISSION_GRANTED) {
-                Toast.makeText(ScanScreen.this, "Permission is granted!", Toast.LENGTH_LONG).show();
+                //Toast.makeText(ScanScreen.this, "Permission is granted!", Toast.LENGTH_LONG).show();
             } else {
                 ActivityCompat.requestPermissions(this, new String[] {CAMERA}, REQUEST_CAMERA);
             }
@@ -51,27 +54,25 @@ public class ScanScreen extends AppCompatActivity implements ZXingScannerView.Re
     }
 
     public void onRequestPermissionResult(int requestCode, String[] permission, int[] grantResults) {
-        switch (requestCode) {
-            case REQUEST_CAMERA:
-                if (grantResults.length > 0) {
-                    boolean cameraAccepted = grantResults[0] == PackageManager.PERMISSION_GRANTED;
-                    if (cameraAccepted) {
-                        Toast.makeText(ScanScreen.this, "Permission Granted", Toast.LENGTH_LONG).show();
-                    } else {
-                        Toast.makeText(ScanScreen.this, "Permission Denied", Toast.LENGTH_LONG).show();
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                            if (shouldShowRequestPermissionRationale(CAMERA)) {
-                                displayAlertMessage("Permission required for scan", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialogInterface, int i) {
-                                        requestPermissions(new String[] {CAMERA}, REQUEST_CAMERA);
-                                    }
-                                });
-                            }
+        if (requestCode == REQUEST_CAMERA) {
+            if (grantResults.length > 0) {
+                boolean cameraAccepted = grantResults[0] == PackageManager.PERMISSION_GRANTED;
+                if (cameraAccepted) {
+                    Toast.makeText(ScanScreen.this, "Permission Granted", Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(ScanScreen.this, "Permission Denied", Toast.LENGTH_LONG).show();
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                        if (shouldShowRequestPermissionRationale(CAMERA)) {
+                            displayAlertMessage("Permission required for scan", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    requestPermissions(new String[]{CAMERA}, REQUEST_CAMERA);
+                                }
+                            });
                         }
                     }
                 }
-                break;
+            }
         }
     }
 

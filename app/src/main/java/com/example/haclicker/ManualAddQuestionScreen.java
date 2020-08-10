@@ -11,36 +11,36 @@ import android.widget.LinearLayout;
 
 import com.example.haclicker.DataStructure.Question;
 import com.example.haclicker.DataStructure.Teacher;
-import com.example.haclicker.HostScreen;
-import com.example.haclicker.R;
 
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Host user add question manually
+ */
 public class ManualAddQuestionScreen extends AppCompatActivity {
 
-    EditText questionDescibe;
+    EditText questionDescribe;
     Button addOption, createQuestion;
     List<String> options = new ArrayList<>();
     List<EditText> editText = new ArrayList<>();
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_manual_add_question_screen);
-
-        questionDescibe = findViewById(R.id.questionDescribe);
+        // set UI component
+        questionDescribe = findViewById(R.id.questionDescribe);
         addOption = findViewById(R.id.addOption);
         createQuestion = findViewById(R.id.createQuestion);
-
+        // add option button clicked
         addOption.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // remove all existing options
                 LinearLayout optionList = findViewById(R.id.optionList);
                 optionList.removeAllViews();
-
-
+                // re-populate all editText views
                 for (final EditText et : editText) {
                     View optionChunk = getLayoutInflater().inflate(R.layout.chunk_option,
                             optionList, false);
@@ -48,7 +48,7 @@ public class ManualAddQuestionScreen extends AppCompatActivity {
                     optionTxt.setText(et.getText().toString());
                     optionList.addView(optionChunk);
                 }
-
+                // add a new option editText
                 View optionChunk = getLayoutInflater().inflate(R.layout.chunk_option,
                         optionList, false);
                 EditText questionTxt = optionChunk.findViewById(R.id.optionTxt);
@@ -58,17 +58,27 @@ public class ManualAddQuestionScreen extends AppCompatActivity {
             }
         });
 
+        // confirm question button onClickListener
         createQuestion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 for (EditText et : editText) {
                     options.add(et.getText().toString());
                 }
+                // used to set question ID
                 int totalQuestion = Teacher.getClassroom().getQuestions().size();
-                Teacher.addQuestionToQueue(new Question(questionDescibe.getText().toString(), totalQuestion, options));
+                Teacher.addQuestionToQueue(new Question(questionDescribe.getText().toString(), totalQuestion, options));
                 Intent intent = new Intent(getApplicationContext(), HostScreen.class);
                 startActivity(intent);
+                finish();
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(getApplicationContext(), AddQuestionScreen.class);
+        startActivity(intent);
+        finish();
     }
 }
