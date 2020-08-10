@@ -31,20 +31,20 @@
                 <Space
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="15" />
+                    android:layout_weight="10" />
 
                 <TextView
                     android:id="@+id/question_txt"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_weight="70"
-                    android:background="@drawable/orangeblue" />
+                    android:layout_weight="80"
+                    android:background="@drawable/border"/>
 
                 <Space
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="15" />
+                    android:layout_weight="10" />
             </LinearLayout>
 
 

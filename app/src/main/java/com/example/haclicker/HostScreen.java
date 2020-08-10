@@ -3,6 +3,7 @@ package com.example.haclicker;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -78,6 +79,8 @@ public class HostScreen extends AppCompatActivity {
             // if there's no question, set empty question reminder
             if (questions.size() != 0) {
                 emptyReminder.setVisibility(View.INVISIBLE);
+            } else {
+                emptyReminder.setVisibility(View.VISIBLE);
             }
             // populate each question UI component
             for (final Question question : questions) {
@@ -87,6 +90,13 @@ public class HostScreen extends AppCompatActivity {
                 // set question text view with description
                 Button questionTxt = questionChunk.findViewById(R.id.question_txt);
                 questionTxt.setText(question.getQuestionDescription());
+                // if the question already has correct answer, mark it as yellow
+                // otherwise, mark it gray
+                if (question.getCorrectAns() != null && question.getCorrectAns().size() != 0) {
+                    questionTxt.setBackgroundColor(android.graphics.Color.parseColor("#fed8b1"));
+                } else {
+                    questionTxt.setBackgroundColor(Color.GRAY);
+                }
                 // set each question chunk onClickListener
                 questionTxt.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -102,7 +112,6 @@ public class HostScreen extends AppCompatActivity {
             }
         } else {
             // if the question list is null, set empty reminder.
-            emptyReminder.setText("There's no question added.");
             emptyReminder.setVisibility(View.VISIBLE);
         }
     }
