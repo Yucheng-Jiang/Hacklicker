@@ -129,6 +129,8 @@ public class StudentScreen extends AppCompatActivity {
             questionListLayout.removeAllViews();
             if (questions.size() != 0) {
                 emptyReminder.setVisibility(View.INVISIBLE);
+            } else {
+                emptyReminder.setVisibility(View.VISIBLE);
             }
             // iterate through every question
             for (final Question question : questions) {

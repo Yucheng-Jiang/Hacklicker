@@ -24,7 +24,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="15"
+            android:layout_weight="25"
             android:orientation="horizontal"
             android:weightSum="100">
 
@@ -37,9 +37,10 @@
                 android:id="@+id/roomIdDisplay"
                 android:layout_width="0dp"
                 android:layout_height="94dp"
+                android:layout_gravity="center_vertical"
                 android:layout_weight="80"
                 android:background="@drawable/orangeblue"
-                android:gravity="center|top"
+                android:gravity="center|center_vertical"
                 android:textSize="24sp"
                 tools:ignore="MissingConstraints" />
 
