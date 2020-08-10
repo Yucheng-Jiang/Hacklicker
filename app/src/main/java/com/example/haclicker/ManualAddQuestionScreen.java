@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 
+import com.example.haclicker.DataStructure.ClassRoom;
 import com.example.haclicker.DataStructure.Question;
 import com.example.haclicker.DataStructure.Teacher;
 
@@ -66,6 +67,7 @@ public class ManualAddQuestionScreen extends AppCompatActivity {
                     options.add(et.getText().toString());
                 }
                 // used to set question ID
+                ClassRoom classRoom = Teacher.getClassroom();
                 int totalQuestion = Teacher.getClassroom().getQuestions().size();
                 Teacher.addQuestionToQueue(new Question(questionDescribe.getText().toString(), totalQuestion, options));
                 Intent intent = new Intent(getApplicationContext(), HostScreen.class);

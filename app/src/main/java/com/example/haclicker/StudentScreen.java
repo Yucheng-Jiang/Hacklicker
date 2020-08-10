@@ -14,7 +14,6 @@ import android.widget.TextView;
 
 import com.example.haclicker.DataStructure.Question;
 import com.example.haclicker.DataStructure.Student;
-import com.example.haclicker.DataStructure.Teacher;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -56,7 +55,7 @@ public class StudentScreen extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), ShareRoomScreen.class);
-                intent.putExtra("Id", Teacher.getClassroom().getClassID());
+                intent.putExtra("Id", classID);
                 startActivity(intent);
             }
         });
