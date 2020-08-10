@@ -1,5 +1,6 @@
 package com.example.haclicker.DataStructure;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ClassRoom {
@@ -8,22 +9,20 @@ public class ClassRoom {
     private String instructor;
     private List<Question> questions;
 
-    public ClassRoom(String classID, String className, String instructor, List<Question> questions) {
+    public ClassRoom(String classID, String className, String instructor, List<Question> setQuestions) {
         this.classID = classID;
         this.className = className;
         this.instructor = instructor;
-        this.questions = questions;
+        if (setQuestions == null) {
+            questions = new ArrayList<>();
+        } else {
+            questions = setQuestions;
+        }
     }
 
     public String getClassID() {
         return classID;
     }
-
-    public String getClassName() {
-        return className;
-    }
-
-    public String getInstructor() { return instructor; }
 
     public List<Question> getQuestions() {
         return questions;
