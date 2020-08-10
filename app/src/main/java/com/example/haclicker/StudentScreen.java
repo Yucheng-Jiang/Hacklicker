@@ -101,7 +101,9 @@ public class StudentScreen extends AppCompatActivity {
                         }
                         String id = singleQuestion.child("questionId").getValue().toString();
                         String description = singleQuestion.child("questionDescription").getValue().toString();
-                        questions.add(new Question(description, Integer.parseInt(id), choices));
+                        boolean canAnswer = Boolean.parseBoolean(singleQuestion
+                                .child("canAnswer").getValue().toString());
+                        questions.add(new Question(description, Integer.parseInt(id), choices, canAnswer));
                     }
                     // if questions on the server is different from questions in local
                     // update UI

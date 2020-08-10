@@ -3,6 +3,7 @@ package com.example.haclicker;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -42,6 +43,8 @@ public class HostQuestionScreen extends AppCompatActivity {
     int curQuestionID;
     Question curQuestion;
     List<String> correctAnswers;
+
+        @SuppressLint("SetTextI18n")
         @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -85,6 +88,7 @@ public class HostQuestionScreen extends AppCompatActivity {
                     } else {
                         optionTxt.setBackgroundColor(android.graphics.Color.parseColor("#fed8b1"));
                     }
+
                     optionTxt.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
@@ -121,6 +125,7 @@ public class HostQuestionScreen extends AppCompatActivity {
         controlBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 // if there's no correct question marked
                 if (curQuestion.getCorrectAns() == null || curQuestion.getCorrectAns().size() == 0) {
                     if (controlBtn.getText().equals("Start")) {
@@ -129,6 +134,7 @@ public class HostQuestionScreen extends AppCompatActivity {
                         Teacher.addQuestion(curQuestionID);
                     } else {
                         controlBtn.setText("Start");
+                        Teacher.disableStudentResponse(curQuestionID);
                         showResult();
                     }
                 } else {
@@ -173,6 +179,7 @@ public class HostQuestionScreen extends AppCompatActivity {
                 .child("StudentResponse").child(curQuestionID + "");
 
         ref.addValueEventListener(new ValueEventListener() {
+            @SuppressLint("SetTextI18n")
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 test.setText(snapshot.getChildrenCount() + " stu voted");
