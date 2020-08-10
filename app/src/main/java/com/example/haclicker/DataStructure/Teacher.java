@@ -50,13 +50,9 @@ public class Teacher {
      * Add a new question to server.
      */
     public static void addQuestion(int ID) {
-
         List<Question> questionList = new ArrayList<>();
-        int index = 0;
-        for (int i = 0; i < questionsToAdd.size(); i++) {
-            Question question = questionsToAdd.get(i);
+        for (Question question : questionsToAdd) {
             if (question.getQuestionId() == ID) {
-                index = i;
                 DatabaseReference ref = FirebaseDatabase.getInstance().getReference()
                         .child("ClassRooms")
                         .child(classroom.getClassID())
@@ -67,10 +63,10 @@ public class Teacher {
                     questionList.add(question);
                 }
                 ref.child(question.getQuestionId() + "").setValue(question);
+                questionsToAdd.remove(question);
             }
         }
         classroom.setQuestions(questionList);
-        questionsToAdd.remove(index);
     }
 
     /**
