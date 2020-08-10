@@ -119,7 +119,7 @@ public class StudentQuestionScreen extends AppCompatActivity {
     private void updateUI() {
         // set question description
         if (question.getQuestionId() == curQuestionID) {
-            questionTxt.setText(question.getQuestionDescription());
+            questionTxt.setText("Question Description: \n" + question.getQuestionDescription());
             // populate answer options
             List<String> choices = question.getChoices();
             if (choices != null && choices.size() != 0) {

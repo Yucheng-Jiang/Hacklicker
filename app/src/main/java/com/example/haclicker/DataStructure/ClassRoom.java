@@ -20,6 +20,15 @@ public class ClassRoom {
         }
     }
 
+    public Question getQuestionById(int id) {
+        for (Question question : questions) {
+            if (question.getQuestionId() == id) {
+                return question;
+            }
+        }
+        return null;
+    }
+
     public String getClassID() {
         return classID;
     }
