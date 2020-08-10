@@ -149,7 +149,7 @@
                     android:layout_weight="20" />
 
                 <ImageButton
-                    android:id="@+id/export"
+                    android:id="@+id/exportBtn"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="bottom"
