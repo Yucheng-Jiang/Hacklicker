@@ -34,15 +34,18 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Join room screen. Allow users to join rooms with valid ID.
+ * Users can add room ID manually or through QR code scan.
+ */
 public class JoinRoomScreen extends AppCompatActivity {
-
     Button confirmJoinBtn;
     ImageButton scanQrBtn, galleryQrBtn;
     EditText inputRoomId;
     TextView invalidIdTxt;
     Intent intent;
-    final Boolean[] run = new Boolean[]{new Boolean(true)};
 
+    private final Boolean[] run = new Boolean[]{Boolean.TRUE};
     private static final int RC_SCAN = 1;
     private static final int RC_PICK = 2;
 
@@ -50,7 +53,7 @@ public class JoinRoomScreen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_join_room_screen);
-
+        // set UI component
         confirmJoinBtn = findViewById(R.id.confirmJoinBtn);
         scanQrBtn = findViewById(R.id.scanQrBtn);
         galleryQrBtn = findViewById(R.id.galleryQrBtn);
@@ -58,49 +61,50 @@ public class JoinRoomScreen extends AppCompatActivity {
         invalidIdTxt = findViewById(R.id.invalidIdTxt);
         intent = getIntent();
 
+        // scan QR code button
         scanQrBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), ScanScreen.class);
                 startActivityForResult(intent, RC_SCAN);
-                String result = ""; // store result here
-                inputRoomId.setText(result);
             }
         });
 
+        // recognize QR code from gallery photo
         galleryQrBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent pickPhoto = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                 startActivityForResult(pickPhoto , RC_PICK);
-                String result = ""; // store result here
-                inputRoomId.setText(result);
             }
         });
 
+        // confirm join button
         confirmJoinBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // get ID text in the editText box
                 final String id = inputRoomId.getText().toString();
-
+                // get all existing room IDs on the firebase
                 final List<String> allRoomIDS = new ArrayList<>();
                     DatabaseReference reference = FirebaseDatabase.getInstance()
                             .getReference("ClassRooms");
                 reference.addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            // if allow firebase to fetch update
                             if (run[0]) {
+                                // update all existing room IDs
                                 for (DataSnapshot ID : snapshot.getChildren()) {
                                     allRoomIDS.add(ID.child("classID").getValue().toString());
                                 }
-
+                                // if there's a match, login to the room
                                 if (allRoomIDS.contains(id)) {
-                                    // TODO: start new activity here
                                     Intent intent = new Intent(getApplicationContext(), StudentScreen.class);
                                     intent.putExtra("ClassID", id);
                                     startActivity(intent);
+                                    // stop firebase from fetching
                                     run[0] = false;
-                                    //TODO:debug this shit
                                     finish();
                                 } else {
                                     // Code below are cited from
@@ -126,6 +130,7 @@ public class JoinRoomScreen extends AppCompatActivity {
             }
         });
 
+        // if the intent has classId extra, join the room automatically
         if (intent.hasExtra("classId")) {
             inputRoomId.setText(intent.getStringExtra("classId"));
             confirmJoinBtn.performClick();
@@ -137,9 +142,11 @@ public class JoinRoomScreen extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         String classID = null;
         switch (requestCode) {
+            // if user choose to scan, get classID from intent directly
             case RC_SCAN:
                 classID = data.getStringExtra("classID");
                 break;
+            // if user choose to select from gallery, recognize the png first
             case RC_PICK:
                 Uri selectedImage = data.getData();
                 Bitmap bitmap = null;
@@ -159,8 +166,7 @@ public class JoinRoomScreen extends AppCompatActivity {
                     LuminanceSource source = new RGBLuminanceSource(bitmap.getWidth(), bitmap.getHeight(), intArray);
                     BinaryBitmap binBitmap = new BinaryBitmap(new HybridBinarizer(source));
                     // END QUOTE
-                    Result result = reader.decode(binBitmap);
-                    classID = result.getText();
+                    classID = reader.decode(binBitmap).getText();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -170,6 +176,13 @@ public class JoinRoomScreen extends AppCompatActivity {
         intent.putExtra("classId", classID);
         finish();
         startActivity(intent);
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(getApplicationContext(), MainScreen.class);
+        startActivity(intent);
+        finish();
     }
 
 }

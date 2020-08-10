@@ -5,7 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
-import android.content.ContextWrapper;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -22,32 +22,35 @@ import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
 
+/**
+ * Share classroom ID with other by copying invitation text or qr code png
+ */
 public class ShareRoomScreen extends AppCompatActivity {
-
     TextView roomIdDisplay;
     Button copyIdBtn, saveQrBtn;
     String id;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_share_room_screen);
-
+        // set UI component
         copyIdBtn = findViewById(R.id.qr_code_copy);
         saveQrBtn = findViewById(R.id.qr_code_save);
+        roomIdDisplay = findViewById(R.id.roomIdDisplay);
+        // retrieve classroom ID
         id = getIntent().getStringExtra("Id");
         final Bitmap QRCodeBitmap = renderQRCode();
+        // save QR png onClickListener
         saveQrBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 saveQRCode(QRCodeBitmap);
             }
         });
-
-        findViewById(R.id.qr_code_copy).setOnClickListener(new View.OnClickListener() {
+        // copy invitation text onClickListener
+        copyIdBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String str = "Join Haclicker room: " + id;
@@ -69,17 +72,11 @@ public class ShareRoomScreen extends AppCompatActivity {
 
             }
         });
-
-        roomIdDisplay = findViewById(R.id.roomIdDisplay);
         roomIdDisplay.setText("ROOM ID: " + id);
-
-
-
     }
 
     // Referenced from https://stackoverflow.com/questions/8800919/how-to-generate-a-qr-code-for-an-android-application
     private Bitmap renderQRCode() {
-
         int QR_CODE_DIMENSION = 512;
         QRCodeWriter writer = new QRCodeWriter();
         try {
@@ -117,4 +114,8 @@ public class ShareRoomScreen extends AppCompatActivity {
         // citation ends here
     }
 
+    @Override
+    public void onBackPressed() {
+        finish();
+    }
 }

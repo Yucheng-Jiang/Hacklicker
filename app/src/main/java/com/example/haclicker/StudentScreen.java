@@ -26,7 +26,7 @@ import java.util.List;
 
 public class StudentScreen extends AppCompatActivity {
     //List<Question> questions;
-    ImageButton shareRoom, exitRoom, addQuestion;
+    ImageButton shareRoom, exitRoom;
     TextView emptyReminder;
     String classID;
     final Boolean[] run = new Boolean[]{new Boolean(true)};
@@ -35,13 +35,11 @@ public class StudentScreen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_student_screen);
-        System.out.println("fuck");
-        // add image buttons
+        // set UI component
         shareRoom = findViewById(R.id.shareRoom);
         exitRoom = findViewById(R.id.leaveRoom);
         emptyReminder = findViewById(R.id.emptyReminder);
-        addQuestion = findViewById(R.id.makePost);
-
+        // get class ID
         classID = getIntent().getStringExtra("ClassID");
         // exit room button set on click listener
         exitRoom.setOnClickListener(new View.OnClickListener() {
@@ -50,13 +48,7 @@ public class StudentScreen extends AppCompatActivity {
                 //TODO: store data and delete cloud data
                 Intent intent = new Intent(getApplicationContext(), MainScreen.class);
                 startActivity(intent);
-            }
-        });
-        addQuestion.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), AddQuestionScreen.class);
-                startActivity(intent);
+                finish();
             }
         });
         // share room button set on click listener
@@ -81,7 +73,6 @@ public class StudentScreen extends AppCompatActivity {
                             @Override
                             public void run() {
                                 updateQuestion();
-                                // update TextView here!
                             }
                         });
                     }
@@ -89,87 +80,15 @@ public class StudentScreen extends AppCompatActivity {
                 }
             }
         };
-
         thread.start();
     }
 
+    /**
+     * update question list from firebase
+     */
     private void updateQuestion() {
-
-        //questions = Student.retrieveQuestions(classID);
-
         DatabaseReference ref = FirebaseDatabase.getInstance()
                 .getReference("ClassRooms").child(classID).child("Questions");
-
-        /*
-        ref.addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                List<Question> questions = new ArrayList<>();
-                for (DataSnapshot singleQuestion : snapshot.getChildren()) {
-                    List<String> choices = new ArrayList<>();
-                    for (long i = 0; i < singleQuestion.child("choices").getChildrenCount(); i++) {
-                        choices.add(singleQuestion.child("choices").child(i + "").getValue().toString());
-                    }
-                    String id = singleQuestion.child("questionId").getValue().toString();
-                    String description = singleQuestion.child("questionDescription").getValue().toString();
-                    questions.add(new Question(description, Integer.parseInt(id), choices));
-                }
-
-                if (questions != null) {
-                    emptyReminder.setVisibility(View.INVISIBLE);
-                    LinearLayout questionList = findViewById(R.id.question_list);
-                    questionList.removeAllViews();
-
-                    for (final Question question : questions) {
-                        View questionChunk = getLayoutInflater().inflate(R.layout.chunk_question,
-                                questionList, false);
-                        Button questionTxt = questionChunk.findViewById(R.id.question_txt);
-                        List<String> myHistory = Student.getMyAnswerHistory(question.getQuestionId());
-                        if (myHistory != null && myHistory.size() != 0) {
-                            questionTxt.setBackgroundColor(android.graphics.Color.parseColor("#fed8b1"));
-                        } else {
-                            questionTxt.setBackgroundColor(Color.GRAY);
-                        }
-                        questionTxt.setText(question.getQuestionDescription());
-                        questionTxt.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                Intent intent = new Intent(getApplicationContext(), HostQuestionScreen.class);
-                                intent.putExtra("Id", question.getQuestionId());
-                                startActivity(intent);
-                            }
-                        });
-
-                        questionList.addView(questionChunk);
-                    }
-                } else {
-                    emptyReminder.setText("There's no question added.");
-                    emptyReminder.setVisibility(View.VISIBLE);
-                }
-            }
-
-            @Override
-            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-            }
-
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
-         */
 
         ref.addValueEventListener(new ValueEventListener() {
             @Override
@@ -177,6 +96,7 @@ public class StudentScreen extends AppCompatActivity {
                 List<Question> questions = new ArrayList<>();
                     for (DataSnapshot singleQuestion : snapshot.getChildren()) {
                         List<String> choices = new ArrayList<>();
+                        // get all questions
                         for (long i = 0; i < singleQuestion.child("choices").getChildrenCount(); i++) {
                             choices.add(singleQuestion.child("choices").child(i + "").getValue().toString());
                         }
@@ -184,6 +104,8 @@ public class StudentScreen extends AppCompatActivity {
                         String description = singleQuestion.child("questionDescription").getValue().toString();
                         questions.add(new Question(description, Integer.parseInt(id), choices));
                     }
+                    // if questions on the server is different from questions in local
+                    // update UI
                     if (!questions.equals(Student.getQuestionList())) {
                         Student.setQuestionList(questions);
                         updateUI();
@@ -197,24 +119,33 @@ public class StudentScreen extends AppCompatActivity {
         });
     }
 
+    /**
+     * update question list by populate
+     */
     private void updateUI() {
-
         List<Question> questions = Student.getQuestionList();
         if (questions != null) {
-            emptyReminder.setVisibility(View.INVISIBLE);
-            LinearLayout questionList = findViewById(R.id.question_list);
-            questionList.removeAllViews();
-
+            // remove all current views
+            LinearLayout questionListLayout = findViewById(R.id.question_list);
+            questionListLayout.removeAllViews();
+            if (questions.size() != 0) {
+                emptyReminder.setVisibility(View.INVISIBLE);
+            }
+            // iterate through every question
             for (final Question question : questions) {
                 View questionChunk = getLayoutInflater().inflate(R.layout.chunk_question,
-                        questionList, false);
+                        questionListLayout, false);
                 Button questionTxt = questionChunk.findViewById(R.id.question_txt);
+                // get current question answer history
                 List<String> myHistory = Student.getMyAnswerHistory(question.getQuestionId());
+                // if current question has answer, set the question background as yellow
+                // otherwise set to gray
                 if (myHistory != null && myHistory.size() != 0) {
                     questionTxt.setBackgroundColor(android.graphics.Color.parseColor("#fed8b1"));
                 } else {
                     questionTxt.setBackgroundColor(Color.GRAY);
                 }
+                // fill in the question description
                 questionTxt.setText(question.getQuestionDescription());
                 questionTxt.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -228,11 +159,16 @@ public class StudentScreen extends AppCompatActivity {
                     }
                 });
 
-                questionList.addView(questionChunk);
+                questionListLayout.addView(questionChunk);
             }
         } else {
             emptyReminder.setText("There's no question added.");
             emptyReminder.setVisibility(View.VISIBLE);
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        exitRoom.performClick();
     }
 }

@@ -16,7 +16,7 @@ import com.example.haclicker.DataStructure.Teacher;
 import java.util.List;
 
 public class HostScreen extends AppCompatActivity {
-    List<Question> questions;
+    List<Question> questions; // store all existing questions
     ImageButton shareRoom, exitRoom, addQuestion;
     TextView emptyReminder;
 
@@ -24,25 +24,28 @@ public class HostScreen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_host_screen);
-        // add image buttons
+        // add all UI component
         shareRoom = findViewById(R.id.shareRoom);
         exitRoom = findViewById(R.id.leaveRoom);
         emptyReminder = findViewById(R.id.emptyReminder);
         addQuestion = findViewById(R.id.makePost);
-        // exit room button set on click listener
+        // exit room button onClickListener
         exitRoom.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //TODO: store data and delete cloud data
+                //TODO: when exisit, store data to local and clear cloud data
                 Intent intent = new Intent(getApplicationContext(), MainScreen.class);
                 startActivity(intent);
+                finish();
             }
         });
+        // add question button onClickListener
         addQuestion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), AddQuestionScreen.class);
                 startActivity(intent);
+                finish();
             }
         });
         // share room button set on click listener
@@ -56,38 +59,56 @@ public class HostScreen extends AppCompatActivity {
         });
         // update UI
         upDateUI();
-
     }
 
+    /**
+     * populate the screen with all the questions.
+     * If there's no questions added, show empty reminder.
+     */
     private void upDateUI() {
+        // get all existing questions on the firebase server
         questions = Teacher.getClassroom().getQuestions();
         if (questions != null) {
-            emptyReminder.setVisibility(View.INVISIBLE);
-            LinearLayout questionList = findViewById(R.id.question_list);
-            questionList.removeAllViews();
-
+            // clear previous UI components
+            LinearLayout questionListLayout = findViewById(R.id.question_list);
+            questionListLayout.removeAllViews();
+            // combine questions on the server and questions not published yet.
             questions.removeAll(Teacher.getQuestionsToAdd());
             questions.addAll(Teacher.getQuestionsToAdd());
+            // if there's no question, set empty question reminder
+            if (questions.size() != 0) {
+                emptyReminder.setVisibility(View.INVISIBLE);
+            }
+            // populate each question UI component
             for (final Question question : questions) {
+                // inflate from chunk_question
                 View questionChunk = getLayoutInflater().inflate(R.layout.chunk_question,
-                        questionList, false);
+                        questionListLayout, false);
+                // set question text view with description
                 Button questionTxt = questionChunk.findViewById(R.id.question_txt);
                 questionTxt.setText(question.getQuestionDescription());
+                // set each question chunk onClickListener
                 questionTxt.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         Intent intent = new Intent(getApplicationContext(), HostQuestionScreen.class);
                         intent.putExtra("Id", question.getQuestionId());
                         startActivity(intent);
+                        finish();
                     }
                 });
-
-                questionList.addView(questionChunk);
+                // populate the chunk to linear layout
+                questionListLayout.addView(questionChunk);
             }
         } else {
+            // if the question list is null, set empty reminder.
             emptyReminder.setText("There's no question added.");
             emptyReminder.setVisibility(View.VISIBLE);
         }
+    }
 
+    @Override
+    public void onBackPressed() {
+        exitRoom.performClick();
     }
 }
