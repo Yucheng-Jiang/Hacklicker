@@ -28,7 +28,7 @@ import java.util.Random;
  * Main screen activity, allowing user to create and join room
  */
 public class MainScreen extends AppCompatActivity {
-    ImageButton settings, createRoom, joinRoom;
+    ImageButton settings, createRoom, joinRoom, export;
     String username, userEmail;
     // set room ID length, set default to 10 digits ID number
     public static final int ID_LENGTH = 10;
@@ -41,6 +41,7 @@ public class MainScreen extends AppCompatActivity {
         settings = findViewById(R.id.settings);
         createRoom = findViewById(R.id.create_room);
         joinRoom = findViewById(R.id.join_room);
+        export = findViewById(R.id.export);
         // get user name name and email
         GoogleSignInAccount signInAccount = GoogleSignIn.getLastSignedInAccount(this);
         if (signInAccount != null) {
@@ -77,6 +78,15 @@ public class MainScreen extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), JoinRoomScreen.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+
+        export.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), FileExportScreen.class);
                 startActivity(intent);
                 finish();
             }
