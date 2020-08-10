@@ -10,7 +10,11 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.LinearInterpolator;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -38,10 +42,12 @@ import java.util.Map;
 
 public class StudentQuestionScreen extends AppCompatActivity {
     TextView questionTxt;
+    ImageButton banBtn;
     private int curQuestionID;
     private String classID;
     private List<String> curChoice = new ArrayList<>();
     private Question question;
+    private boolean canAnswer = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +56,7 @@ public class StudentQuestionScreen extends AppCompatActivity {
 
         // set UI component
         questionTxt = findViewById(R.id.question_txt);
+        banBtn = findViewById(R.id.banBtn);
         // retrieve intent extra
         Intent intent = getIntent();
         curQuestionID = intent.getIntExtra("QuestionID", 0);
@@ -74,35 +81,8 @@ public class StudentQuestionScreen extends AppCompatActivity {
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                DatabaseReference ref = FirebaseDatabase.getInstance()
-                                        .getReference("ClassRooms")
-                                        .child(classID)
-                                        .child("Questions").child(curQuestionID + "")
-                                        .child("answer");
-
-                                ref.addValueEventListener(new ValueEventListener() {
-                                    @Override
-                                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                        // get previous correct answer list
-                                        List<String> ans = Student.getQuestionById(curQuestionID)
-                                                .getCorrectAns();
-                                        // retrieve new correct answer list from firebase
-                                        List<String> retrievedAns = new ArrayList<>();
-                                        for (DataSnapshot curAns : snapshot.getChildren()) {
-                                            retrievedAns.add(curAns.getValue().toString());
-                                        }
-                                        // update correct answer list
-                                        Student.setCorrectAns(retrievedAns, curQuestionID);
-                                        // if there's difference, update UI
-                                        if (!retrievedAns.equals(ans)) {
-                                            updateUI();
-                                        }
-                                    }
-
-                                    @Override
-                                    public void onCancelled(@NonNull DatabaseError error) {
-                                    }
-                                });
+                                updateCorrectAns();
+                                updateAccessibility();
                             }
                         });
                     }
@@ -117,6 +97,8 @@ public class StudentQuestionScreen extends AppCompatActivity {
      * update question display UI depend on correct answers and student answers
      */
     private void updateUI() {
+        // set ban button invisible
+        banBtn.setVisibility(View.INVISIBLE);
         // set question description
         if (question.getQuestionId() == curQuestionID) {
             questionTxt.setText("Question Description: \n" + question.getQuestionDescription());
@@ -136,57 +118,48 @@ public class StudentQuestionScreen extends AppCompatActivity {
                     final Button choiceTxt = choiceChunk.findViewById(R.id.question_txt);
                     final String index =Character.toString((char) (((int) 'A') + i));
                     choiceTxt.setText(choice);
-                    choiceTxt.setBackgroundColor(Color.GRAY);
                     // if there's no correct answer, display previous student answers
                     // allow student to update his/her answers
+                    if (curChoice.contains(index)) {
+                        choiceTxt.setBackgroundColor(android.graphics.Color.parseColor("#fed8b1"));
+                    } else {
+                        choiceTxt.setBackgroundColor(Color.GRAY);
+                    }
+
                     if (correctAnswer == null || correctAnswer.size() == 0) {
                         choiceTxt.setOnClickListener(new View.OnClickListener() {
                             @RequiresApi(api = Build.VERSION_CODES.N)
                             @Override
                             public void onClick(View view) {
-
-                                DatabaseReference ref = FirebaseDatabase.getInstance()
-                                        .getReference("ClassRooms")
-                                        .child(classID + "")
-                                        .child("Questions")
-                                        .child(curQuestionID + "")
-                                        .child("canAnswer");
-
-                                ref.addValueEventListener(new ValueEventListener() {
-                                    @Override
-                                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                        boolean canAnswer = Boolean.parseBoolean(snapshot.getValue()
-                                                .toString());
-                                        if (canAnswer) {
-                                            // if the answer is already selected, return it into gray
-                                            // and remove from choice history
-                                            if (((ColorDrawable) choiceTxt.getBackground()).getColor() ==
-                                                    android.graphics.Color.parseColor("#fed8b1")) {
-                                                choiceTxt.setBackgroundColor(Color.GRAY);
-                                                curChoice.remove(index);
-                                            } else {
-                                                // otherwise add new answers
-                                                choiceTxt.setBackgroundColor(android.graphics.Color.parseColor("#fed8b1"));
-                                                curChoice.add(index);
-                                            }
-                                            Student.updateQuestionAnswer(curQuestionID, curChoice);
-                                            // send student response to server
-                                            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                                            StudentResponse studentResponse = new StudentResponse(
-                                                    user.getDisplayName(),
-                                                    user.getEmail(),
-                                                    curChoice,
-                                                    curQuestionID,
-                                                    System.currentTimeMillis());
-                                            Student.sendResponse(studentResponse, classID);
-                                        }
+                                if (canAnswer) {
+                                    // if the answer is already selected, return it into gray
+                                    // and remove from choice history
+                                    if (((ColorDrawable) choiceTxt.getBackground()).getColor() ==
+                                            android.graphics.Color.parseColor("#fed8b1")) {
+                                        choiceTxt.setBackgroundColor(Color.GRAY);
+                                        curChoice.remove(index);
+                                    } else {
+                                        // otherwise add new answers
+                                        choiceTxt.setBackgroundColor(android.graphics.Color.parseColor("#fed8b1"));
+                                        curChoice.add(index);
                                     }
-
-                                    @Override
-                                    public void onCancelled(@NonNull DatabaseError error) {
-
-                                    }
-                                });
+                                    Student.updateQuestionAnswer(curQuestionID, curChoice);
+                                    // send student response to server
+                                    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                                    StudentResponse studentResponse = new StudentResponse(
+                                            user.getDisplayName(),
+                                            user.getEmail(),
+                                            curChoice,
+                                            curQuestionID,
+                                            System.currentTimeMillis());
+                                    Student.sendResponse(studentResponse, classID);
+                                } else {
+                                    final Animation animation = new AlphaAnimation(1, 0); // Change alpha from fully visible to invisible
+                                    animation.setDuration(800); // duration - half a second
+                                    animation.setInterpolator(new LinearInterpolator()); // do not alter animation rate
+                                    animation.setRepeatCount(1); // Repeat animation infinitely
+                                    banBtn.startAnimation(animation);
+                                }
 
                             }
                         });
@@ -194,14 +167,8 @@ public class StudentQuestionScreen extends AppCompatActivity {
                         // if there are correct answers, show student's result
                         if (correctAnswer.contains(index)) {
                             // make correct answer choices background green
-                            choiceTxt.setBackgroundColor(android.graphics.Color.parseColor("#99ff99"));
-                            if (!curChoice.contains(index)) {
-                                // if student did not select, mark the text as red
-                                choiceTxt.setTextColor(Color.RED);
-                            }
+                            choiceTxt.setTextColor(android.graphics.Color.parseColor("#99ff99"));
                         } else {
-                            // mark incorrect questions as gray
-                            choiceTxt.setBackgroundColor(Color.GRAY);
                             if (curChoice.contains(index)) {
                                 // if student selected, mark the text as red
                                 choiceTxt.setTextColor(Color.RED);
@@ -212,6 +179,59 @@ public class StudentQuestionScreen extends AppCompatActivity {
                 }
             }
         }
+    }
+
+    private void updateCorrectAns() {
+        DatabaseReference ref = FirebaseDatabase.getInstance()
+                .getReference("ClassRooms")
+                .child(classID)
+                .child("Questions").child(curQuestionID + "")
+                .child("answer");
+
+        ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                // get previous correct answer list
+                List<String> ans = Student.getQuestionById(curQuestionID)
+                        .getCorrectAns();
+                // retrieve new correct answer list from firebase
+                List<String> retrievedAns = new ArrayList<>();
+                for (DataSnapshot curAns : snapshot.getChildren()) {
+                    retrievedAns.add(curAns.getValue().toString());
+                }
+                // update correct answer list
+                Student.setCorrectAns(retrievedAns, curQuestionID);
+                // if there's difference, update UI
+                if (!retrievedAns.equals(ans)) {
+                    updateUI();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
+        });
+    }
+
+    private void updateAccessibility() {
+        DatabaseReference ref = FirebaseDatabase.getInstance()
+                .getReference("ClassRooms")
+                .child(classID + "")
+                .child("Questions")
+                .child(curQuestionID + "")
+                .child("canAnswer");
+
+        ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                canAnswer = Boolean.parseBoolean(snapshot.getValue().toString());
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 
     @Override
