@@ -144,27 +144,50 @@ public class StudentQuestionScreen extends AppCompatActivity {
                             @RequiresApi(api = Build.VERSION_CODES.N)
                             @Override
                             public void onClick(View view) {
-                                // if the answer is already selected, return it into gray
-                                // and remove from choice history
-                                if (((ColorDrawable) choiceTxt.getBackground()).getColor() ==
-                                        android.graphics.Color.parseColor("#fed8b1")) {
-                                    choiceTxt.setBackgroundColor(Color.GRAY);
-                                    curChoice.remove(index);
-                                } else {
-                                    // otherwise add new answers
-                                    choiceTxt.setBackgroundColor(android.graphics.Color.parseColor("#fed8b1"));
-                                    curChoice.add(index);
-                                }
-                                Student.updateQuestionAnswer(curQuestionID, curChoice);
-                                // send student response to server
-                                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                                StudentResponse studentResponse = new StudentResponse(
-                                        user.getDisplayName(),
-                                        user.getEmail(),
-                                        curChoice,
-                                        curQuestionID,
-                                        System.currentTimeMillis());
-                                Student.sendResponse(studentResponse, classID);
+
+                                DatabaseReference ref = FirebaseDatabase.getInstance()
+                                        .getReference("ClassRooms")
+                                        .child(classID + "")
+                                        .child("Questions")
+                                        .child(curQuestionID + "")
+                                        .child("canAnswer");
+
+                                ref.addValueEventListener(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                        boolean canAnswer = Boolean.parseBoolean(snapshot.getValue()
+                                                .toString());
+                                        if (canAnswer) {
+                                            // if the answer is already selected, return it into gray
+                                            // and remove from choice history
+                                            if (((ColorDrawable) choiceTxt.getBackground()).getColor() ==
+                                                    android.graphics.Color.parseColor("#fed8b1")) {
+                                                choiceTxt.setBackgroundColor(Color.GRAY);
+                                                curChoice.remove(index);
+                                            } else {
+                                                // otherwise add new answers
+                                                choiceTxt.setBackgroundColor(android.graphics.Color.parseColor("#fed8b1"));
+                                                curChoice.add(index);
+                                            }
+                                            Student.updateQuestionAnswer(curQuestionID, curChoice);
+                                            // send student response to server
+                                            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                                            StudentResponse studentResponse = new StudentResponse(
+                                                    user.getDisplayName(),
+                                                    user.getEmail(),
+                                                    curChoice,
+                                                    curQuestionID,
+                                                    System.currentTimeMillis());
+                                            Student.sendResponse(studentResponse, classID);
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError error) {
+
+                                    }
+                                });
+
                             }
                         });
                     } else {
