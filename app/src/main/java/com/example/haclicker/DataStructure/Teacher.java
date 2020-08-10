@@ -74,7 +74,7 @@ public class Teacher {
 
     }
 
-    public static void disableStudentResponse(int Qid) {
+    public static void setStudentAccessibility(boolean isEnable, int Qid) {
 
         classroom.getQuestionById(Qid).setCanAnswer(false);
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference()
@@ -83,7 +83,8 @@ public class Teacher {
                 .child("Questions")
                 .child(Qid + "")
                 .child("canAnswer");
-        ref.setValue(false);
+
+        ref.setValue(isEnable);
     }
 
     /**
