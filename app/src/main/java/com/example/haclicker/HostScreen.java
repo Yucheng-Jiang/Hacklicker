@@ -34,10 +34,9 @@ public class HostScreen extends AppCompatActivity {
         exitRoom.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //TODO: when exisit, store data to local and clear cloud data
-                Intent intent = new Intent(getApplicationContext(), MainScreen.class);
+                Intent intent = new Intent(getApplicationContext(), FileExportScreen.class);
+                intent.putExtra("role", "host");
                 startActivity(intent);
-                finish();
             }
         });
         // add question button onClickListener

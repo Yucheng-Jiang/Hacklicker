@@ -9,11 +9,9 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.haclicker.DataStructure.ClassRoom;
-import com.example.haclicker.DataStructure.Question;
 import com.example.haclicker.DataStructure.Teacher;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -28,7 +26,7 @@ import java.util.Random;
  * Main screen activity, allowing user to create and join room
  */
 public class MainScreen extends AppCompatActivity {
-    ImageButton settings, createRoom, joinRoom, export;
+    ImageButton settings, createRoom, joinRoom;
     String username, userEmail;
     // set room ID length, set default to 10 digits ID number
     public static final int ID_LENGTH = 10;
@@ -38,10 +36,9 @@ public class MainScreen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_screen);
         // find UI component
-        settings = findViewById(R.id.settings);
+        settings = findViewById(R.id.exportBtn);
         createRoom = findViewById(R.id.create_room);
         joinRoom = findViewById(R.id.join_room);
-        export = findViewById(R.id.export);
         // get user name name and email
         GoogleSignInAccount signInAccount = GoogleSignIn.getLastSignedInAccount(this);
         if (signInAccount != null) {
@@ -78,15 +75,6 @@ public class MainScreen extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), JoinRoomScreen.class);
-                startActivity(intent);
-                finish();
-            }
-        });
-
-        export.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), FileExportScreen.class);
                 startActivity(intent);
                 finish();
             }
