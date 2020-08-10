@@ -114,7 +114,9 @@ public class Student {
                     }
                     String id = question.child("questionId").getValue().toString();
                     String description = question.child("questionDescription").getValue().toString();
-                    questions.add(new Question(description, Integer.parseInt(id), choices));
+                    boolean canAnswer = Boolean.parseBoolean(question.child("canAnswer")
+                            .getValue().toString());
+                    questions.add(new Question(description, Integer.parseInt(id), choices, canAnswer));
                 }
             }
 

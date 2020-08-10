@@ -68,7 +68,8 @@ public class ManualAddQuestionScreen extends AppCompatActivity {
                 }
                 // used to set question ID
                 int totalQuestion = Teacher.getClassroom().getQuestions().size();
-                Teacher.addQuestionToQueue(new Question(questionDescribe.getText().toString(), totalQuestion, options));
+                Teacher.addQuestionToQueue(new Question(questionDescribe.getText().toString(),
+                        totalQuestion, options, false));
                 Intent intent = new Intent(getApplicationContext(), HostScreen.class);
                 startActivity(intent);
                 finish();

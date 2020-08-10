@@ -49,10 +49,13 @@ public class Teacher {
     /**
      * Add a new question to server.
      */
-    public static void addQuestion(int ID) {
+    public static void addQuestion(int Qid) {
+
         List<Question> questionList = new ArrayList<>();
         for (Question question : questionsToAdd) {
-            if (question.getQuestionId() == ID) {
+            //enable answering
+            question.setCanAnswer(true);
+            if (question.getQuestionId() == Qid) {
                 DatabaseReference ref = FirebaseDatabase.getInstance().getReference()
                         .child("ClassRooms")
                         .child(classroom.getClassID())
@@ -69,6 +72,18 @@ public class Teacher {
             }
         }
 
+    }
+
+    public static void disableStudentResponse(int Qid) {
+
+        classroom.getQuestionById(Qid).setCanAnswer(false);
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference()
+                .child("ClassRooms")
+                .child(classroom.getClassID())
+                .child("Questions")
+                .child(Qid + "")
+                .child("canAnswer");
+        ref.setValue(false);
     }
 
     /**
@@ -128,10 +143,6 @@ public class Teacher {
         }
         list.remove(answer);
         ref.child("answer").setValue(list);
-    }
-
-    public static void StopResponse() {
-        //TODO: stop answering question
     }
 
     public static void addQuestionToQueue(Question question) {
