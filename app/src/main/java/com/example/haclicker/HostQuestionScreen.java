@@ -4,16 +4,16 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.haclicker.DataStructure.Question;
-import com.example.haclicker.DataStructure.Student;
-import com.example.haclicker.DataStructure.StudentResponse;
 import com.example.haclicker.DataStructure.Teacher;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.AxisBase;
@@ -40,7 +40,9 @@ public class HostQuestionScreen extends AppCompatActivity {
     Button controlBtn;
     BarChart resultBarChart;
     int curQuestionID;
-    @Override
+    Question curQuestion;
+    List<String> correctAnswers;
+        @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_host_question_screen);
@@ -52,66 +54,90 @@ public class HostQuestionScreen extends AppCompatActivity {
         // get intent extra
         Intent intent = getIntent();
         curQuestionID = intent.getIntExtra("Id", 0);
-        // display question and choices
-        List<Question> questions = Teacher.getClassroom().getQuestions();
-        for (final Question question : questions) {
-            // set question description
-            if (question.getQuestionId() == curQuestionID) {
-                questionTxt.setText(question.getQuestionDescription());
-                // populate answer options
-                List<String> choices = question.getChoices();
-                if (choices != null && choices.size() != 0) {
-                    LinearLayout questionList = findViewById(R.id.question_list);
-                    questionList.removeAllViews();
-                    // create a button to each choice
-                    for (int i = 0; i < choices.size(); i++) {
-                        String choice = choices.get(i);
-                        View questionChunk = getLayoutInflater().inflate(R.layout.chunk_question,
-                                questionList, false);
-                        final Button questionTxt = questionChunk.findViewById(R.id.question_txt);
-                        final String index =Character.toString((char) (((int) 'A') + i));
-                        questionTxt.setText(choice);
-                        questionTxt.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
+        // get current question info
+        curQuestion = Teacher.getClassroom().getQuestionById(curQuestionID);
+        correctAnswers = curQuestion.getCorrectAns();
+        if (curQuestion != null) {
+            // display question and choices
+            questionTxt.setText("Question Description: \n" + curQuestion.getQuestionDescription());
+            // populate answer options
+            List<String> choices = curQuestion.getChoices();
+            if (choices != null && choices.size() != 0) {
+                LinearLayout questionList = findViewById(R.id.question_list);
+                questionList.removeAllViews();
+                // create a button to each choice
+                for (int i = 0; i < choices.size(); i++) {
+                    String choice = choices.get(i);
+                    View questionChunk = getLayoutInflater().inflate(R.layout.chunk_question,
+                            questionList, false);
+                    final Button optionTxt = questionChunk.findViewById(R.id.question_txt);
+                    final String index =Character.toString((char) (((int) 'A') + i));
+                    optionTxt.setText(choice);
+                    // change optionTxt color based on correct answers
+                    if (correctAnswers != null && correctAnswers.size() != 0) {
+                        if (correctAnswers.contains(index)) {
+                            // make correct answer choices background green
+                            optionTxt.setBackgroundColor(android.graphics.Color.parseColor("#99ff99"));
+                        } else {
+                            // mark incorrect questions as gray
+                            optionTxt.setBackgroundColor(Color.GRAY);
+                        }
+                    } else {
+                        optionTxt.setBackgroundColor(android.graphics.Color.parseColor("#fed8b1"));
+                    }
+                    optionTxt.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            // if there's no correct questions marked
+                            if (correctAnswers == null || correctAnswers.size() == 0) {
                                 if (controlBtn.getText().equals("Start")) {
-                                    if (((ColorDrawable) questionTxt.getBackground()).getColor() ==
+                                    if (((ColorDrawable) optionTxt.getBackground()).getColor() ==
                                             android.graphics.Color.parseColor("#99ff99")) {
-                                        questionTxt.setBackgroundColor(android.graphics.Color.parseColor("#fed8b1"));
-                                        Teacher.deleteCorrectAnswer(question, index);
+                                        optionTxt.setBackgroundColor(android.graphics.Color.parseColor("#fed8b1"));
+                                        correctAnswers.remove(index); // local history
+                                        Teacher.deleteCorrectAnswer(curQuestion, index);
                                     } else {
-                                        questionTxt.setBackgroundColor(android.graphics.Color.parseColor("#99ff99"));
-                                        Teacher.sendCorrectAnswer(question, index);
+                                        optionTxt.setBackgroundColor(android.graphics.Color.parseColor("#99ff99"));
+                                        Teacher.sendCorrectAnswer(curQuestion, index);
+                                        correctAnswers.add(index); // local history
+                                        // set control button to gray
+                                        controlBtn.setBackgroundColor(Color.GRAY);
                                     }
                                 }
                             }
-                        });
-                        questionList.addView(questionChunk);
-                    }
-                }
-                break;
-            }
 
+                        }
+                    });
+
+                    questionList.addView(questionChunk);
+                }
+            }
         }
-        // control button logic
+        // if there's correct answer, mark control button as Gray
+        if (correctAnswers != null && correctAnswers.size() != 0) {
+            controlBtn.setBackgroundColor(Color.GRAY);
+        }
+        // control button onClickListener
         controlBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (controlBtn.getText().equals("Start")) {
-                    controlBtn.setText("Stop");
-                    resultBarChart.setVisibility(View.INVISIBLE);
-                    Teacher.addQuestion(curQuestionID);
+                // if there's no correct question marked
+                if (curQuestion.getCorrectAns() == null || curQuestion.getCorrectAns().size() == 0) {
+                    if (controlBtn.getText().equals("Start")) {
+                        controlBtn.setText("Stop");
+                        resultBarChart.setVisibility(View.INVISIBLE);
+                        Teacher.addQuestion(curQuestionID);
+                    } else {
+                        controlBtn.setText("Start");
+                        showResult();
+                    }
                 } else {
+                    // if there's already question marked
                     controlBtn.setText("Start");
-                    //fetch and show result from server
-                    showResult();
-//                    Map<String, Integer> result = new HashMap<>();
-//                    result.put("A", 10);
-//                    result.put("B", 50);
-//                    result.put("C", 35);
-//                    result.put("D", 40);
-//                    result.put("E", 55);
+                    Toast.makeText(HostQuestionScreen.this, "Cannot Start Completed Question!", Toast.LENGTH_LONG).show();
                 }
+
+
             }
         });
 
