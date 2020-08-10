@@ -64,9 +64,11 @@ public class Teacher {
                 }
                 ref.child(question.getQuestionId() + "").setValue(question);
                 questionsToAdd.remove(question);
+                classroom.setQuestions(questionList);
+                break;
             }
         }
-        classroom.setQuestions(questionList);
+
     }
 
     /**

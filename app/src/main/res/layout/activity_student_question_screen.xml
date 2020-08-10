@@ -39,7 +39,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_weight="80"
-                    android:background="@drawable/border"/>
+                    android:background="@null"/>
 
                 <Space
                     android:layout_width="0dp"
