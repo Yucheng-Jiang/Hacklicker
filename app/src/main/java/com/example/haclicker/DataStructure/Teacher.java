@@ -1,5 +1,6 @@
 package com.example.haclicker.DataStructure;
 
+import android.content.Context;
 import android.os.Build;
 
 import androidx.annotation.NonNull;
@@ -14,9 +15,15 @@ import com.google.firebase.database.ValueEventListener;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
 
+import java.io.FileOutputStream;
+
 import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +33,7 @@ public class Teacher {
     private static ClassRoom classroom;
     private static List<Question> questionsToAdd = new ArrayList<>();
     //TODO:Add test path
-    private static String EXPORT_CSV_FILE_PATH = "";
+    private static String EXPORT_CSV_FILE_PATH = "app/result.csv";
 
 
     public static void setClassroom(ClassRoom setClassRoom) {
@@ -162,48 +169,76 @@ public class Teacher {
      * @throws IOException exception
      */
     @RequiresApi(api = Build.VERSION_CODES.O)
-    public static void exportResultAsCSV(List<StudentResponse> allStudentResponse) throws IOException {
+    public static String constructCSV(List<StudentResponse> allStudentResponse) throws IOException {
 
-        try (
-            BufferedWriter writer = Files.newBufferedWriter(Paths.get(EXPORT_CSV_FILE_PATH));
-            CSVPrinter csvPrinter = new CSVPrinter(writer,
-                    CSVFormat.DEFAULT
-                    .withHeader("Name", "Email", "Answer", "QuestionID", "Time Stamp", "Correct"))
-        ) {
-            for (StudentResponse studentResponse : allStudentResponse) {
-                String name = studentResponse.getStudentName();
-                String email = studentResponse.getStudentEmail();
-                StringBuilder answerBuilder = new StringBuilder();
-                for (String ans : studentResponse.getAnswer()) {
-                    answerBuilder.append(ans);
-                }
-                String answer = answerBuilder.toString();
-                int questionID = studentResponse.getQuestionID();
-                long timeStamp = studentResponse.getTimeStamp();
-                boolean correctness = false;
-                StringBuilder correctAnswerBuilder = new StringBuilder();
-                for (String single : classroom.getQuestions().get(questionID).getCorrectAns()) {
-                    correctAnswerBuilder.append(single);
-                }
-                //check if student answer is correct
-                if (answer.equals(correctAnswerBuilder.toString()))
-                    correctness = true;
-                csvPrinter.printRecord(name, email, answer, questionID, timeStamp, correctness);
+//      try (
+//                BufferedWriter writer = new BufferedWriter(new FileWriter(new File(EXPORT_CSV_FILE_PATH)));
+//                CSVPrinter csvPrinter = new CSVPrinter(writer,
+//                    CSVFormat.DEFAULT
+//                    .withHeader("Name", "Email", "Answer", "QuestionID", "Time Stamp", "Correct"))
+//        ) {
+//            for (StudentResponse studentResponse : allStudentResponse) {
+//                String name = studentResponse.getStudentName();
+//                String email = studentResponse.getStudentEmail();
+//                StringBuilder answerBuilder = new StringBuilder();
+//                for (String ans : studentResponse.getAnswer()) {
+//                    answerBuilder.append(ans);
+//                }
+//                String answer = answerBuilder.toString();
+//                int questionID = studentResponse.getQuestionID();
+//                long timeStamp = studentResponse.getTimeStamp();
+//                boolean correctness = false;
+//                StringBuilder correctAnswerBuilder = new StringBuilder();
+//                for (String single : classroom.getQuestions().get(questionID).getCorrectAns()) {
+//                    correctAnswerBuilder.append(single);
+//                }
+//                //check if student answer is correct
+//                if (answer.equals(correctAnswerBuilder.toString()))
+//                    correctness = true;
+//                csvPrinter.printRecord(name, email, answer, questionID, timeStamp, correctness);
+//            }
+//        }
+
+        StringBuilder data = new StringBuilder();
+        data.append("Name,Email,Answer,QuestionID,Time Stamp,Correct Answer,Correctness");
+        for (StudentResponse studentResponse : allStudentResponse) {
+            String name = studentResponse.getStudentName();
+            String email = studentResponse.getStudentEmail();
+            StringBuilder answerBuilder = new StringBuilder();
+            for (String ans : studentResponse.getAnswer()) {
+                answerBuilder.append(ans);
             }
+            String answer = answerBuilder.toString();
+            int questionID = studentResponse.getQuestionID();
+            long timeStamp = studentResponse.getTimeStamp();
+            boolean correctness = false;
+            StringBuilder correctAnswerBuilder = new StringBuilder();
+//            for (String single : classroom.getQuestions().get(questionID).getCorrectAns()) {
+//                correctAnswerBuilder.append(single);
+//            }
+            correctAnswerBuilder.append("null");
+            //check if student answer is correct
+            if (answer.equals(correctAnswerBuilder.toString()))
+                correctness = true;
+                //csvPrinter.printRecord(name, email, answer, questionID, timeStamp, correctness);
+            data.append("\n" + name + "," + email + "," + answer + "," + questionID
+                    + "," + timeStamp + "," + correctAnswerBuilder.toString() + "," + correctness);
         }
         allStudentResponse.clear();
+        return data.toString();
     }
 
     /**
      * Retrieve all student response of a certain class.
      * @return list of student response
      */
-    private static void retrieveAllResponse() {
+    public static void exportResultAsCSV() {
 
         FirebaseDatabase db = FirebaseDatabase.getInstance();
         //~ClassRooms/classID/StudentResponse
         DatabaseReference ref = db.getReference("ClassRooms")
-                .child(Teacher.getClassroom().getClassID())
+//                .child(Teacher.getClassroom().getClassID())
+                .child("8415628875")
                 .child("StudentResponse");
         ref.addValueEventListener(new ValueEventListener() {
             @RequiresApi(api = Build.VERSION_CODES.O)
@@ -231,7 +266,7 @@ public class Teacher {
                     }
                 }
                 try {
-                    exportResultAsCSV(allStudentResponse);
+                    constructCSV(allStudentResponse);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
