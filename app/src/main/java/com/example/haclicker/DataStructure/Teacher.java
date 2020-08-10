@@ -32,7 +32,6 @@ public class Teacher {
 
     private static ClassRoom classroom;
     private static List<Question> questionsToAdd = new ArrayList<>();
-    //TODO:Add test path
     private static String EXPORT_CSV_FILE_PATH = "app/result.csv";
 
 
@@ -46,7 +45,6 @@ public class Teacher {
      * Send the newly created classroom to server.
      */
     public static void createClassroom() {
-
         FirebaseDatabase db = FirebaseDatabase.getInstance();
         DatabaseReference ref;
         ref = db.getReference("ClassRooms").child(classroom.getClassID());
@@ -82,7 +80,6 @@ public class Teacher {
     }
 
     public static void setStudentAccessibility(boolean isEnable, int Qid) {
-
         classroom.getQuestionById(Qid).setCanAnswer(false);
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference()
                 .child("ClassRooms")
@@ -99,7 +96,6 @@ public class Teacher {
      * @param question question to delete
      */
     public static void deleteQuestion(Question question) {
-
         List<Question> questionList = classroom.getQuestions();
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference()
                 .child("ClassRooms")
@@ -281,5 +277,11 @@ public class Teacher {
 
     public void setExportCSVPath(String relativePath) {
         EXPORT_CSV_FILE_PATH = relativePath;
+    }
+
+    public static void clearData() {
+        // TODO: remove class cloud data
+        classroom = null;
+        questionsToAdd.clear();
     }
 }

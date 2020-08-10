@@ -45,9 +45,9 @@ public class StudentScreen extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //TODO: store data and delete cloud data
-                Intent intent = new Intent(getApplicationContext(), MainScreen.class);
+                Intent intent = new Intent(getApplicationContext(), FileExportScreen.class);
+                intent.putExtra("role", "student");
                 startActivity(intent);
-                finish();
             }
         });
         // share room button set on click listener
