@@ -14,7 +14,7 @@ public class AddQuestionScreen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_question_screen);
-
+        // set UI component
         manualAddBtn = findViewById(R.id.manualAddBtn);
         jsonAddBtn = findViewById(R.id.jsonAddBtn);
 
@@ -23,7 +23,15 @@ public class AddQuestionScreen extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), ManualAddQuestionScreen.class);
                 startActivity(intent);
+                finish();
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(getApplicationContext(), HostScreen.class);
+        startActivity(intent);
+        finish();
     }
 }

@@ -44,12 +44,12 @@ public class HostQuestionScreen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_host_question_screen);
-
+        // set UI component
         questionTxt = findViewById(R.id.question_txt);
         controlBtn = findViewById(R.id.sendAnswer);
         test = findViewById(R.id.test);
         resultBarChart = findViewById(R.id.resultBarChart);
-
+        // get intent extra
         Intent intent = getIntent();
         curQuestionID = intent.getIntExtra("Id", 0);
         // display question and choices
@@ -84,7 +84,6 @@ public class HostQuestionScreen extends AppCompatActivity {
                                         Teacher.sendCorrectAnswer(question, index);
                                     }
                                 }
-                                // TODO: when stop button is activated, the correct answer should be the one clicked
                             }
                         });
 
@@ -139,8 +138,10 @@ public class HostQuestionScreen extends AppCompatActivity {
         thread.start();
     }
 
+    /**
+     * update number of students voted
+     */
     private void updateUI() {
-
         DatabaseReference ref = FirebaseDatabase.getInstance()
                 .getReference("ClassRooms")
                 .child(Teacher.getClassroom().getClassID())
@@ -160,8 +161,6 @@ public class HostQuestionScreen extends AppCompatActivity {
     }
 
     private void showResult() {
-
-
         DatabaseReference ref = FirebaseDatabase.getInstance()
                 .getReference("ClassRooms")
                 .child(Teacher.getClassroom().getClassID())
@@ -215,9 +214,7 @@ public class HostQuestionScreen extends AppCompatActivity {
     }
 
     public class MyXAxisValueFormatter extends ValueFormatter implements IAxisValueFormatter {
-
         private String[] mValues;
-
         public MyXAxisValueFormatter(String[] values) {
             this.mValues = values;
         }
@@ -225,5 +222,12 @@ public class HostQuestionScreen extends AppCompatActivity {
         public String getFormattedValue(float value, AxisBase axis) {
             return mValues[(int) value];
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(getApplicationContext(), HostScreen.class);
+        startActivity(intent);
+        finish();
     }
 }
