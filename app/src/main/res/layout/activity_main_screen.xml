@@ -13,20 +13,11 @@
         android:orientation="vertical"
         android:weightSum="100">
 
-        <ImageButton
-            android:id="@+id/settings"
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:layout_gravity="right"
-            android:layout_weight="10"
-            app:srcCompat="@drawable/settings"
-            android:background="@null"
-            tools:ignore="MissingConstraints" />
 
         <Space
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="10"/>
+            android:layout_weight="15" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -54,7 +45,8 @@
                 <ImageButton
                     android:id="@+id/create_room"
                     android:layout_width="0dp"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
                     android:layout_weight="30"
                     android:background="@null"
                     app:srcCompat="@drawable/create_room"
@@ -68,7 +60,8 @@
                 <ImageButton
                     android:id="@+id/join_room"
                     android:layout_width="0dp"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
                     android:layout_weight="30"
                     android:background="@null"
                     app:srcCompat="@drawable/join_room"
@@ -82,8 +75,50 @@
 
             <Space
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="15" />
+                android:layout_height="0dp"
+                android:layout_weight="3" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="15"
+                android:orientation="horizontal">
+
+                <Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="10" />
+
+                <TextView
+                    android:id="@+id/create_room_txt"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="30"
+                    android:background="@null"
+                    android:gravity="center_horizontal"
+                    android:text="Create Room"
+                    tools:ignore="MissingConstraints" />
+
+                <Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="20" />
+
+                <TextView
+                    android:id="@+id/join_room_text"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="30"
+                    android:background="@null"
+                    android:gravity="center_horizontal"
+                    android:text="Join Room"
+                    tools:ignore="MissingConstraints" />
+
+                <Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="10" />
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -100,10 +135,11 @@
                 <ImageButton
                     android:id="@+id/question_history"
                     android:layout_width="0dp"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
                     android:layout_weight="30"
-                    app:srcCompat="@drawable/question_history"
                     android:background="@null"
+                    app:srcCompat="@drawable/question_history"
                     tools:ignore="MissingConstraints" />
 
 
@@ -115,10 +151,11 @@
                 <ImageButton
                     android:id="@+id/export"
                     android:layout_width="0dp"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
                     android:layout_weight="30"
                     android:background="@null"
-                    app:srcCompat="@drawable/export"
+                    app:srcCompat="@drawable/settings"
                     tools:ignore="MissingConstraints" />
 
                 <Space
@@ -129,15 +166,57 @@
 
             <Space
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="15" />
+                android:layout_height="0dp"
+                android:layout_weight="3" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="25"
+                android:orientation="horizontal">
+
+                <Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="10" />
+
+                <TextView
+                    android:id="@+id/history_txt"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="30"
+                    android:background="@null"
+                    android:gravity="center_horizontal"
+                    android:text="History"
+                    tools:ignore="MissingConstraints" />
+
+                <Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="20" />
+
+                <TextView
+                    android:id="@+id/settings_txt"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="30"
+                    android:background="@null"
+                    android:gravity="center_horizontal"
+                    android:text="Settings"
+                    tools:ignore="MissingConstraints" />
+
+                <Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="10" />
+            </LinearLayout>
         </LinearLayout>
 
 
         <Space
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="10" />
+            android:layout_weight="15" />
     </LinearLayout>
 
 
