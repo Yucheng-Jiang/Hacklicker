@@ -93,23 +93,23 @@ public class HostQuestionScreen extends AppCompatActivity {
                         @Override
                         public void onClick(View view) {
                             // if there's no correct questions marked
-                            if (correctAnswers == null || correctAnswers.size() == 0) {
-                                if (controlBtn.getText().equals("Start")) {
-                                    if (((ColorDrawable) optionTxt.getBackground()).getColor() ==
-                                            android.graphics.Color.parseColor("#99ff99")) {
-                                        optionTxt.setBackgroundColor(android.graphics.Color.parseColor("#fed8b1"));
-                                        correctAnswers.remove(index); // local history
-                                        Teacher.deleteCorrectAnswer(curQuestion, index);
-                                    } else {
-                                        optionTxt.setBackgroundColor(android.graphics.Color.parseColor("#99ff99"));
-                                        Teacher.sendCorrectAnswer(curQuestion, index);
-                                        correctAnswers.add(index); // local history
-                                        // set control button to gray
-                                        controlBtn.setBackgroundColor(Color.GRAY);
+                            if (controlBtn.getText().equals("Start")) {
+                                if (((ColorDrawable) optionTxt.getBackground()).getColor() ==
+                                        android.graphics.Color.parseColor("#99ff99")) {
+                                    optionTxt.setBackgroundColor(android.graphics.Color.parseColor("#fed8b1"));
+                                    correctAnswers.remove(index); // local history
+                                    Teacher.deleteCorrectAnswer(curQuestion, index);
+                                    if (correctAnswers.size() == 0) {
+                                        controlBtn.setBackgroundColor(android.graphics.Color.parseColor("#fed8b1"));
                                     }
+                                } else {
+                                    optionTxt.setBackgroundColor(android.graphics.Color.parseColor("#99ff99"));
+                                    Teacher.sendCorrectAnswer(curQuestion, index);
+                                    correctAnswers.add(index); // local history
+                                    // set control button to gray
+                                    controlBtn.setBackgroundColor(Color.GRAY);
                                 }
                             }
-
                         }
                     });
 
@@ -132,9 +132,10 @@ public class HostQuestionScreen extends AppCompatActivity {
                         controlBtn.setText("Stop");
                         resultBarChart.setVisibility(View.INVISIBLE);
                         Teacher.addQuestion(curQuestionID);
+                        Teacher.setStudentAccessibility(true, curQuestionID);
                     } else {
                         controlBtn.setText("Start");
-                        Teacher.disableStudentResponse(curQuestionID);
+                        Teacher.setStudentAccessibility(false, curQuestionID);
                         showResult();
                     }
                 } else {
