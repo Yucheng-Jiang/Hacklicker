@@ -24,7 +24,7 @@ import java.util.List;
 public class Teacher {
 
     private static ClassRoom classroom;
-    private static List<Question> questionsToAdd;
+    private static List<Question> questionsToAdd = new ArrayList<>();
     //TODO:Add test path
     private static String EXPORT_CSV_FILE_PATH = "";
 
