@@ -38,7 +38,7 @@
                 android:id="@+id/chatInputTxt"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
+                android:layout_gravity="bottom"
                 android:layout_weight="95"
                 android:ems="10"
                 android:inputType="text" />
@@ -47,7 +47,7 @@
                 android:id="@+id/chatSendBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
+                android:layout_gravity="bottom"
                 android:layout_weight="5"
                 android:background="#07C160"
                 android:text="Send"

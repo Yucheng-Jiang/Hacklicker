@@ -61,8 +61,7 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:layout_gravity="center_horizontal"
-            android:layout_weight="35"
-            android:background="#DAE5ED" />
+            android:layout_weight="35" />
 
         <Space
             android:layout_width="1dp"

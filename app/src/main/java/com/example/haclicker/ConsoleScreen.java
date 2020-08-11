@@ -21,7 +21,6 @@ public class ConsoleScreen extends AppCompatActivity {
 
     Button logout;
     TextView name, mail;
-    ImageButton consoleBack;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,15 +30,6 @@ public class ConsoleScreen extends AppCompatActivity {
         logout = findViewById(R.id.logout);
         name = findViewById(R.id.name);
         mail = findViewById(R.id.mail);
-        consoleBack = findViewById(R.id.consoleBack);
-
-        consoleBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), MainScreen.class);
-                startActivity(intent);
-            }
-        });
 
         GoogleSignInAccount signInAccount = GoogleSignIn.getLastSignedInAccount(this);
         if (signInAccount != null) {
@@ -57,5 +47,11 @@ public class ConsoleScreen extends AppCompatActivity {
             }
         });
 
+    }
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(getApplicationContext(), MainScreen.class);
+        startActivity(intent);
+        finish();
     }
 }
