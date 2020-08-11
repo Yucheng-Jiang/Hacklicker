@@ -1,6 +1,5 @@
 package com.example.haclicker.DataStructure;
 import android.os.Build;
-import android.util.Pair;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;

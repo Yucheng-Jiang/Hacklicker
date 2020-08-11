@@ -44,9 +44,9 @@ public class StudentScreen extends AppCompatActivity {
         exitRoom.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //TODO: store data and delete cloud data
                 Intent intent = new Intent(getApplicationContext(), FileExportScreen.class);
                 intent.putExtra("role", "student");
+                intent.putExtra("classID", classID);
                 startActivity(intent);
             }
         });
@@ -88,7 +88,6 @@ public class StudentScreen extends AppCompatActivity {
     private void updateQuestion() {
         DatabaseReference ref = FirebaseDatabase.getInstance()
                 .getReference("ClassRooms").child(classID).child("Questions");
-
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {

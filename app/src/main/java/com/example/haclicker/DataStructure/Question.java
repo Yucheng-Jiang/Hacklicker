@@ -31,7 +31,10 @@ public class Question {
 
     public List<String> getCorrectAns() { return correctAns; }
 
-    public void setCorrectAns(List<String> correctAns) { this.correctAns = correctAns; }
+    public void setCorrectAns(List<String> setCorrectAns) {
+        this.correctAns.clear();
+        this.correctAns.addAll(setCorrectAns);
+    }
 
     public void setCanAnswer(boolean canAnswer) {
         this.canAnswer = canAnswer;
