@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.haclicker.DataStructure.Question;
 import com.example.haclicker.DataStructure.Student;
@@ -41,6 +42,11 @@ public class StudentScreen extends AppCompatActivity {
         emptyReminder = findViewById(R.id.emptyReminder);
         // get class ID
         classID = getIntent().getStringExtra("ClassID");
+        //TODO: debug this
+        if (classID == null) {
+            Toast.makeText(this, "Class Ended", Toast.LENGTH_SHORT).show();
+            finish();
+        }
         // exit room button set on click listener
         exitRoom.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -93,7 +93,7 @@ public class FileExportScreen extends AppCompatActivity {
     private void hostExport() {
         FirebaseDatabase db = FirebaseDatabase.getInstance();
         DatabaseReference ref = db.getReference("ClassRooms")
-                .child("8415628875")
+                .child(classID)
                 .child("StudentResponse");
         ref.addValueEventListener(new ValueEventListener() {
             @RequiresApi(api = Build.VERSION_CODES.O)
