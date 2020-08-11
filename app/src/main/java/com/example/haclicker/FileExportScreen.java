@@ -5,6 +5,7 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -14,6 +15,8 @@ import android.view.View;
 import android.widget.Button;
 
 import com.example.haclicker.DataStructure.ClassRoom;
+import com.example.haclicker.DataStructure.Question;
+import com.example.haclicker.DataStructure.Student;
 import com.example.haclicker.DataStructure.StudentResponse;
 import com.example.haclicker.DataStructure.Teacher;
 import com.google.firebase.database.DataSnapshot;
@@ -25,13 +28,18 @@ import com.google.firebase.database.ValueEventListener;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 public class FileExportScreen extends AppCompatActivity {
     Button exportBtn, backBtn, leaveBtn;
     Intent intent;
-    String role;
+    String role, classID, defaultFileName;
+    @SuppressLint("SimpleDateFormat")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,6 +51,11 @@ public class FileExportScreen extends AppCompatActivity {
         // get role extra from intent
         intent = getIntent();
         role = intent.getStringExtra("role");
+        classID =  intent.getStringExtra("classID");
+        // set current date and default file name
+        defaultFileName = "Hacklicker data " +
+                new SimpleDateFormat("yyyyMMdd_HHmmss")
+                        .format(Calendar.getInstance().getTime());
         exportBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -116,7 +129,7 @@ public class FileExportScreen extends AppCompatActivity {
                             "com.example.haclicker.fileprovider", fileLocation);
                     Intent intent = new Intent(Intent.ACTION_SEND);
                     intent.setType("text/csv");
-                    intent.putExtra(Intent.EXTRA_SUBJECT, "Data");
+                    intent.putExtra(Intent.EXTRA_SUBJECT, defaultFileName);
                     intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
                     intent.putExtra(Intent.EXTRA_STREAM, path);
                     startActivity(Intent.createChooser(intent, "Send Email"));
@@ -131,7 +144,75 @@ public class FileExportScreen extends AppCompatActivity {
             }
         });
     }
-    private void studentExport() {}
+    private void studentExport() {
+        StringBuilder stringBuilder = new StringBuilder();
+        // append current time
+        stringBuilder.append("Time: ")
+                .append(new Date(System.currentTimeMillis()).toString())
+                .append("\n");
+        // append class ID
+        stringBuilder.append("class ID: ").append(classID).append("\n");
+        // append each question
+        List<Question> questions = Student.getQuestionList();
+        for (int i = 0; i < questions.size(); i++) {
+            Question question = questions.get(i);
+            List<String> choices = question.getChoices();
+            List<String> correctAns = question.getCorrectAns();
+            List<String> myAnswer = Student.getMyAnswerHistory(question.getQuestionId());
+            // append question description
+            stringBuilder
+                    .append("Question ").append(i).append("\n")
+                    .append("Question description: ")
+                    .append(question.getQuestionDescription()).append("\n");
+            // append option description
+            for (int j = 0;  j < choices.size(); j++) {
+                stringBuilder.append(j).append(") ").append(choices.get(j)).append("\n");
+            }
+            // append correct choices
+            if (correctAns != null || correctAns.size() != 0) {
+                stringBuilder.append("Correct answer: ");
+                for (String option : correctAns) {
+                    stringBuilder.append(option).append(", ");
+                }
+                stringBuilder.append("\n");
+            } else {
+                stringBuilder.append("Correct answer: Not Available").append("\n");
+            }
+            // append my answers
+            if (myAnswer != null || myAnswer.size() != 0) {
+                stringBuilder.append("Your answer: ");
+                for (String answer : myAnswer) {
+                    stringBuilder.append(answer).append(", ");
+                }
+                stringBuilder.append("\n");
+            } else {
+                stringBuilder.append("My answer: Not Available").append("\n");
+            }
+            // end current question
+            stringBuilder.append("\n\n");
+        }
+
+        try {
+            //save file to device
+            String data = stringBuilder.toString();
+            FileOutputStream out = openFileOutput("myAnswer.txt", Context.MODE_PRIVATE);
+            out.write(data.getBytes());
+            out.close();
+
+            Context context = getApplicationContext();
+            File fileLocation = new File(getFilesDir(), "myAnswer.txt");
+            Uri path = FileProvider.getUriForFile(context,
+                    "com.example.haclicker.fileprovider", fileLocation);
+            Intent intent = new Intent(Intent.ACTION_SEND);
+            intent.setType("text/txt");
+            intent.putExtra(Intent.EXTRA_SUBJECT, defaultFileName);
+            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            intent.putExtra(Intent.EXTRA_STREAM, path);
+            startActivity(Intent.createChooser(intent, "Send Email"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     @Override
     public void onBackPressed() {

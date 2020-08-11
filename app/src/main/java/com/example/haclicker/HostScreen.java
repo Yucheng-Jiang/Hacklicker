@@ -36,6 +36,7 @@ public class HostScreen extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), FileExportScreen.class);
                 intent.putExtra("role", "host");
+                intent.putExtra("classID", Teacher.getClassroom().getClassID());
                 startActivity(intent);
             }
         });

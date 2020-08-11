@@ -192,17 +192,16 @@ public class StudentQuestionScreen extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 // get previous correct answer list
-                List<String> ans = Student.getQuestionById(curQuestionID)
-                        .getCorrectAns();
+                List<String> ans = Student.getQuestionById(curQuestionID).getCorrectAns();
                 // retrieve new correct answer list from firebase
                 List<String> retrievedAns = new ArrayList<>();
                 for (DataSnapshot curAns : snapshot.getChildren()) {
                     retrievedAns.add(curAns.getValue().toString());
                 }
-                // update correct answer list
-                Student.setCorrectAns(retrievedAns, curQuestionID);
                 // if there's difference, update UI
                 if (!retrievedAns.equals(ans)) {
+                    // update correct answer list
+                    Student.setCorrectAns(retrievedAns, curQuestionID);
                     updateUI();
                 }
             }
