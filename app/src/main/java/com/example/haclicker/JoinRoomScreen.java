@@ -58,7 +58,6 @@ public class JoinRoomScreen extends AppCompatActivity {
         scanQrBtn = findViewById(R.id.scanQrBtn);
         galleryQrBtn = findViewById(R.id.galleryQrBtn);
         inputRoomId = findViewById(R.id.inputRoomId);
-        invalidIdTxt = findViewById(R.id.invalidIdTxt);
         intent = getIntent();
 
         // scan QR code button
@@ -111,12 +110,12 @@ public class JoinRoomScreen extends AppCompatActivity {
                                     // https://stackoverflow.com/questions/22194761/hide-textview-after-some-time-in-android
                                     confirmJoinBtn.setText("INVALID ID");
                                     confirmJoinBtn.setTextColor(Color.RED);
-                                    invalidIdTxt.postDelayed(new Runnable() {
+                                    confirmJoinBtn.postDelayed(new Runnable() {
                                         public void run() {
                                             confirmJoinBtn.setTextColor(Color.BLACK);
                                             confirmJoinBtn.setText("JOIN ROOM");
                                         }
-                                    }, 1500);
+                                    }, 1000);
                                     // citation ends here
                                 }
                             }
