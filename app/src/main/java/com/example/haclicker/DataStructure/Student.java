@@ -21,7 +21,7 @@ public class Student {
     static List<Question> questionList = new ArrayList<>();
     static Map<Integer, List<String>> questionAnswer = new HashMap<>();
 
-    public static void clearHistory() {
+    public static void clearData() {
         questionList.clear();
         questionAnswer.clear();
     }
