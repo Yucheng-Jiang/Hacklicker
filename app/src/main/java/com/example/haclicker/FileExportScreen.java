@@ -31,6 +31,8 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -77,11 +79,13 @@ public class FileExportScreen extends AppCompatActivity {
             public void onClick(View view) {
                 if (role.equals("host")) {
                     Teacher.clearData();
-                    Intent intent = new Intent(getApplicationContext(), MainScreen.class);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(intent);
-                    finish();
+                } else if (role.equals("student")) {
+                    Student.clearData();
                 }
+                Intent intent = new Intent(getApplicationContext(), MainScreen.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+                finish();
             }
         });
     }
@@ -145,72 +149,98 @@ public class FileExportScreen extends AppCompatActivity {
         });
     }
     private void studentExport() {
-        StringBuilder stringBuilder = new StringBuilder();
-        // append current time
-        stringBuilder.append("Time: ")
-                .append(new Date(System.currentTimeMillis()).toString())
-                .append("\n");
-        // append class ID
-        stringBuilder.append("class ID: ").append(classID).append("\n");
         // append each question
         List<Question> questions = Student.getQuestionList();
         for (int i = 0; i < questions.size(); i++) {
-            Question question = questions.get(i);
-            List<String> choices = question.getChoices();
-            List<String> correctAns = question.getCorrectAns();
-            List<String> myAnswer = Student.getMyAnswerHistory(question.getQuestionId());
-            // append question description
-            stringBuilder
-                    .append("Question ").append(i).append("\n")
-                    .append("Question description: ")
-                    .append(question.getQuestionDescription()).append("\n");
-            // append option description
-            for (int j = 0;  j < choices.size(); j++) {
-                stringBuilder.append(j).append(") ").append(choices.get(j)).append("\n");
-            }
-            // append correct choices
-            if (correctAns != null || correctAns.size() != 0) {
-                stringBuilder.append("Correct answer: ");
-                for (String option : correctAns) {
-                    stringBuilder.append(option).append(", ");
-                }
-                stringBuilder.append("\n");
-            } else {
-                stringBuilder.append("Correct answer: Not Available").append("\n");
-            }
-            // append my answers
-            if (myAnswer != null || myAnswer.size() != 0) {
-                stringBuilder.append("Your answer: ");
-                for (String answer : myAnswer) {
-                    stringBuilder.append(answer).append(", ");
-                }
-                stringBuilder.append("\n");
-            } else {
-                stringBuilder.append("My answer: Not Available").append("\n");
-            }
-            // end current question
-            stringBuilder.append("\n\n");
-        }
+            final Question question = questions.get(i);
+            final List<String> choices = question.getChoices();
 
-        try {
-            //save file to device
-            String data = stringBuilder.toString();
-            FileOutputStream out = openFileOutput("myAnswer.txt", Context.MODE_PRIVATE);
-            out.write(data.getBytes());
-            out.close();
+            DatabaseReference ref = FirebaseDatabase.getInstance()
+                    .getReference("ClassRooms").child(classID).child("Questions")
+                    .child(question.getQuestionId() + "").child("answer");
+            final int index = i;
+            ref.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-            Context context = getApplicationContext();
-            File fileLocation = new File(getFilesDir(), "myAnswer.txt");
-            Uri path = FileProvider.getUriForFile(context,
-                    "com.example.haclicker.fileprovider", fileLocation);
-            Intent intent = new Intent(Intent.ACTION_SEND);
-            intent.setType("text/txt");
-            intent.putExtra(Intent.EXTRA_SUBJECT, defaultFileName);
-            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-            intent.putExtra(Intent.EXTRA_STREAM, path);
-            startActivity(Intent.createChooser(intent, "Send Email"));
-        } catch (IOException e) {
-            e.printStackTrace();
+                    StringBuilder stringBuilder = new StringBuilder();
+                    // append current time
+                    stringBuilder.append("Time: ")
+                            .append(new Date(System.currentTimeMillis()).toString())
+                            .append("\n");
+                    // append class ID
+                    stringBuilder.append("class ID: ").append(classID).append("\n");
+                    // update correct answer
+                    List<String> correctAns = new ArrayList<>();
+                    for (DataSnapshot singleAnswer : snapshot.getChildren()) {
+                        correctAns.add(singleAnswer.getValue().toString());
+                    }
+                    // get my answer
+                    List<String> myAnswer = Student.getMyAnswerHistory(question.getQuestionId());
+                    // sort list
+                    Collections.sort(correctAns);
+                    Collections.sort(myAnswer);
+                    // append question description
+                    stringBuilder
+                            .append("Question ").append(index).append("\n")
+                            .append("Question description: ")
+                            .append(question.getQuestionDescription()).append("\n");
+                    // append option description
+                    for (int j = 0;  j < choices.size(); j++) {
+                        stringBuilder.append(j).append(") ").append(choices.get(j)).append("\n");
+                    }
+                    // append correct choices
+                    if (correctAns != null || correctAns.size() != 0) {
+                        stringBuilder.append("Correct answer: ");
+                        for (String option : correctAns) {
+                            stringBuilder.append(option).append(", ");
+                        }
+                        stringBuilder.append("\n");
+                    } else {
+                        stringBuilder.append("Correct answer: Not Available").append("\n");
+                    }
+                    // append my answers
+                    if (myAnswer != null || myAnswer.size() != 0) {
+                        stringBuilder.append("Your answer: ");
+                        for (String answer : myAnswer) {
+                            stringBuilder.append(answer).append(", ");
+                        }
+                        stringBuilder.append("\n");
+                    } else {
+                        stringBuilder.append("My answer: Not Available").append("\n");
+                    }
+                    // end current question
+                    stringBuilder.append("\n\n");
+
+                    try {
+                        //save file to device
+                        String data = stringBuilder.toString();
+                        FileOutputStream out = openFileOutput("myAnswer.txt", Context.MODE_PRIVATE);
+                        out.write(data.getBytes());
+                        out.close();
+
+                        //share file
+                        Context context = getApplicationContext();
+                        File fileLocation = new File(getFilesDir(), "myAnswer.txt");
+                        Uri path = FileProvider.getUriForFile(context,
+                                "com.example.haclicker.fileprovider", fileLocation);
+                        Intent intent = new Intent(Intent.ACTION_SEND);
+                        intent.setType("text/txt");
+                        intent.putExtra(Intent.EXTRA_SUBJECT, defaultFileName);
+                        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                        intent.putExtra(Intent.EXTRA_STREAM, path);
+                        startActivity(Intent.createChooser(intent, "Send Email"));
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+
         }
     }
 
