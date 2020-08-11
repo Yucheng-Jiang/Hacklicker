@@ -83,7 +83,7 @@ public class HostQuestionScreen extends AppCompatActivity {
                             optionTxt.setBackgroundColor(android.graphics.Color.parseColor("#99ff99"));
                         } else {
                             // mark incorrect questions as gray
-                            optionTxt.setBackgroundColor(Color.GRAY);
+                            optionTxt.setBackgroundColor(android.graphics.Color.parseColor("#fed8b1"));
                         }
                     } else {
                         optionTxt.setBackgroundColor(android.graphics.Color.parseColor("#fed8b1"));

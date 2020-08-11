@@ -144,7 +144,11 @@ public class JoinRoomScreen extends AppCompatActivity {
         switch (requestCode) {
             // if user choose to scan, get classID from intent directly
             case RC_SCAN:
-                classID = data.getStringExtra("classID");
+                if (data.hasExtra("classID")) {
+                    classID = data.getStringExtra("classID");
+                } else {
+                    classID = "";
+                }
                 break;
             // if user choose to select from gallery, recognize the png first
             case RC_PICK:
