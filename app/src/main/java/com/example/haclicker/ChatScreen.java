@@ -92,7 +92,8 @@ public class ChatScreen extends AppCompatActivity {
                     String content = singleChat.child("chatContent").getValue().toString();
                     int vote = Integer.parseInt(singleChat.child("numVote").getValue().toString());
                     String userName = singleChat.child("userName").getValue().toString();
-                    chatList.add(new Chat(chatID, content, vote, userName));
+                    boolean isAnswered = (boolean) singleChat.child("answered").getValue();
+                    chatList.add(new Chat(chatID, content, vote, userName, isAnswered));
                 }
                 // if questions on the server is different from questions in local
                 // update UI
@@ -134,31 +135,43 @@ public class ChatScreen extends AppCompatActivity {
                         chatListLayout, false);
                 final int currentID = chat.getChatId();
                 // set user avatar
-                Button userAvatar = chatChunk.findViewById(R.id.userAvatar);
+                final Button userAvatar = chatChunk.findViewById(R.id.userAvatar);
                 userAvatar.setText(chat.getUserName());
                 // set chat content
-                Button userChatContent = chatChunk.findViewById(R.id.userChatContent);
+                final Button userChatContent = chatChunk.findViewById(R.id.userChatContent);
                 userChatContent .setText(chat.getChatContent());
                 if (chat.isAnswered()) {
                     userChatContent.setBackgroundColor(android.graphics.Color.parseColor("#99ff99"));
                 }
+                // enable teacher to mark answered question
+                userChatContent.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if (role.equals("host")) {
+                            if (chat.isAnswered()) {
+                                chat.markNotAnswered();
+                                userChatContent.setBackgroundColor(android.R.drawable.btn_default);
+                            } else {
+                                chat.markAnswered();;
+                                userChatContent.setBackgroundColor(android.graphics.Color.parseColor("#99ff99"));
+                            }
+                        }
+                        sendChat(chat);
+                    }
+                });
                 // set vote button
                 final Button chatVoteBtn = chatChunk.findViewById(R.id.chatVoteBtn);
                 chatVoteBtn.setId(chat.getChatId());
                 chatVoteBtn.setText("+ " + chat.getNumVote());
-
+                chatVoteBtn.setBackgroundColor(android.R.drawable.btn_default);
                 // change color based on vote history
                 if (role.equals("student")) {
                     if (Student.isVote(currentID)) {
-                        chatVoteBtn.setBackgroundColor(android.graphics.Color.parseColor("#99ff99"));
-                    } else {
-                        chatVoteBtn.setBackgroundColor(Color.GRAY);
+                        chatVoteBtn.setTextColor(android.graphics.Color.parseColor("#07C160"));
                     }
                 } else if (role.equals("host")) {
                     if (Teacher.isVote(currentID)) {
-                        chatVoteBtn.setBackgroundColor(android.graphics.Color.parseColor("#99ff99"));
-                    } else {
-                        chatVoteBtn.setBackgroundColor(Color.GRAY);
+                        chatVoteBtn.setTextColor(android.graphics.Color.parseColor("#07C160"));
                     }
                 }
                 chatVoteBtn.setOnClickListener(new View.OnClickListener() {
@@ -169,24 +182,24 @@ public class ChatScreen extends AppCompatActivity {
                             if (Student.isVote(currentID)) {
                                 chat.voteDecrement();
                                 Student.unVote(currentID);
-                                chatVoteBtn.setBackgroundColor(Color.GRAY);
+                                chatVoteBtn.setBackgroundColor(android.R.drawable.btn_default);
                                 num--;
                             } else {
                                 chat.voteIncrement();
                                 Student.addVote(currentID);
-                                chatVoteBtn.setBackgroundColor(android.graphics.Color.parseColor("#99ff99"));
+                                chatVoteBtn.setTextColor(android.graphics.Color.parseColor("#07C160"));
                                 num++;
                             }
                         } else if (role.equals("host")) {
-                            if (Student.isVote(currentID)) {
+                            if (Teacher.isVote(currentID)) {
                                 Teacher.unVote(currentID);
                                 chat.voteDecrement();
-                                chatVoteBtn.setBackgroundColor(Color.GRAY);
+                                chatVoteBtn.setBackgroundColor(android.R.drawable.btn_default);
                                 num--;
                             } else {
                                 chat.voteIncrement();
                                 Teacher.addVote(currentID);
-                                chatVoteBtn.setBackgroundColor(android.graphics.Color.parseColor("#99ff99"));
+                                chatVoteBtn.setTextColor(android.graphics.Color.parseColor("#07C160"));
                                 num++;
                             }
                         }

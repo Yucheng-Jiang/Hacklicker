@@ -10,6 +10,12 @@ public class Chat {
     private String userName;
     private boolean isAnswered = false;
 
+    public Chat(int setChatId, String setChatContent, int setNumVote, String setUserName, boolean setIsAnswered) {
+        this(setChatId, setChatContent, setUserName);
+        numVote = setNumVote;
+        isAnswered = setIsAnswered;
+    }
+
     public Chat(int setChatId, String setChatContent, int setNumVote, String setUserName) {
         this(setChatId, setChatContent, setUserName);
         numVote = setNumVote;
