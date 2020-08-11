@@ -18,7 +18,7 @@ import java.util.List;
 
 public class HostScreen extends AppCompatActivity {
     List<Question> questions; // store all existing questions
-    ImageButton shareRoom, exitRoom, addQuestion;
+    ImageButton shareRoom, exitRoom, addQuestion, chatRoom;
     TextView emptyReminder;
 
     @Override
@@ -30,6 +30,7 @@ public class HostScreen extends AppCompatActivity {
         exitRoom = findViewById(R.id.leaveRoom);
         emptyReminder = findViewById(R.id.emptyReminder);
         addQuestion = findViewById(R.id.studentChatBtn);
+        chatRoom = findViewById(R.id.hostChatBtn);
         // exit room button onClickListener
         exitRoom.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -55,6 +56,15 @@ public class HostScreen extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), ShareRoomScreen.class);
                 intent.putExtra("Id", Teacher.getClassroom().getClassID());
+                startActivity(intent);
+            }
+        });
+        chatRoom.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), ChatScreen.class);
+                intent.putExtra("role", "host");
+                intent.putExtra("classID", Teacher.getClassroom().getClassID());
                 startActivity(intent);
             }
         });

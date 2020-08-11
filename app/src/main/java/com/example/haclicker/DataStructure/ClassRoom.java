@@ -8,6 +8,7 @@ public class ClassRoom {
     private String className;
     private String instructor;
     private List<Question> questions;
+    private List<Chat> chatList;
 
     public ClassRoom(String classID, String className, String instructor, List<Question> setQuestions) {
         this.classID = classID;
@@ -18,6 +19,7 @@ public class ClassRoom {
         } else {
             questions = setQuestions;
         }
+        chatList = new ArrayList<>();
     }
 
     public Question getQuestionById(int id) {
@@ -40,4 +42,11 @@ public class ClassRoom {
     public void setQuestions(List<Question> questions) {
         this.questions = questions;
     }
+
+    public void setChatList(List<Chat> chatList) {
+        this.chatList.clear();
+        this.chatList.addAll(chatList);
+    }
+
+    public List<Chat> getChatList() { return this.chatList; }
 }
