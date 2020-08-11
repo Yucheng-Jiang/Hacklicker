@@ -47,7 +47,7 @@
             android:id="@+id/scrollView2"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="74">
+            android:layout_weight="70">
 
             <LinearLayout
                 android:id="@+id/question_list"
@@ -56,13 +56,21 @@
                 android:orientation="vertical" />
         </ScrollView>
 
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="7"
-            android:gravity="right"
+            android:layout_weight="10"
+            android:foregroundGravity="bottom"
+            android:gravity="bottom"
             android:orientation="horizontal"
             android:weightSum="100">
+
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="67" />
 
             <ImageButton
                 android:id="@+id/studentChatBtn"
@@ -73,17 +81,21 @@
                 android:background="@null"
                 app:srcCompat="@drawable/add" />
 
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="5" />
         </LinearLayout>
 
         <Space
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="5" />
+            android:layout_weight="3" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="7"
+            android:layout_weight="10"
             android:foregroundGravity="bottom"
             android:gravity="bottom"
             android:orientation="horizontal"
@@ -94,14 +106,28 @@
                 android:layout_height="match_parent"
                 android:layout_weight="5" />
 
-            <ImageButton
-                android:id="@+id/shareRoom"
+            <LinearLayout
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom"
+                android:layout_height="match_parent"
                 android:layout_weight="26"
-                android:background="@null"
-                app:srcCompat="@drawable/share" />
+                android:orientation="vertical"
+                android:weightSum="100">
+
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="26" />
+
+                <ImageButton
+                    android:id="@+id/shareRoom"
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_gravity="bottom|center"
+                    android:layout_weight="70"
+                    android:background="@null"
+                    app:srcCompat="@drawable/share" />
+
+            </LinearLayout>
 
             <Space
                 android:layout_width="0dp"
