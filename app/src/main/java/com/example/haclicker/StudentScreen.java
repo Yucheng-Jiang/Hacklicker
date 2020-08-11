@@ -25,7 +25,7 @@ import java.util.List;
 
 public class StudentScreen extends AppCompatActivity {
     //List<Question> questions;
-    ImageButton shareRoom, exitRoom;
+    ImageButton shareRoom, exitRoom, chatRoom;
     TextView emptyReminder;
     String classID;
     final Boolean[] run = new Boolean[]{new Boolean(true)};
@@ -37,6 +37,7 @@ public class StudentScreen extends AppCompatActivity {
         // set UI component
         shareRoom = findViewById(R.id.shareRoom);
         exitRoom = findViewById(R.id.leaveRoom);
+        chatRoom = findViewById(R.id.studentChatBtn);
         emptyReminder = findViewById(R.id.emptyReminder);
         // get class ID
         classID = getIntent().getStringExtra("ClassID");
@@ -56,6 +57,15 @@ public class StudentScreen extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), ShareRoomScreen.class);
                 intent.putExtra("Id", classID);
+                startActivity(intent);
+            }
+        });
+        chatRoom.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), ChatScreen.class);
+                intent.putExtra("role", "student");
+                intent.putExtra("classID", classID);
                 startActivity(intent);
             }
         });

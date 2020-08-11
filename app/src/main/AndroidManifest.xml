@@ -17,7 +17,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".FileExportScreen"></activity>
+        <activity android:name=".ChatScreen"></activity>
+        <activity android:name=".FileExportScreen" />
         <activity android:name=".StudentQuestionScreen" />
         <activity android:name=".StudentScreen" />
         <activity android:name=".ScanScreen" />

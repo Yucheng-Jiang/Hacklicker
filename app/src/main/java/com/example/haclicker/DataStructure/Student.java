@@ -20,10 +20,14 @@ public class Student {
     static DatabaseReference ref;
     static List<Question> questionList = new ArrayList<>();
     static Map<Integer, List<String>> questionAnswer = new HashMap<>();
+    static List<Chat> chatList = new ArrayList<>();
+    static List<Integer> voteHistory = new ArrayList<>(); // store voted chat id
 
     public static void clearData() {
         questionList.clear();
         questionAnswer.clear();
+        chatList.clear();
+        voteHistory.clear();
     }
 
     public static List<String> getMyAnswerHistory(int questionId) {
@@ -55,19 +59,6 @@ public class Student {
         }
     }
 
-
-    //return true if join classroom successful
-    public static boolean joinClassroom(String classID) {
-        List<String> allRooms = getAllRooms();;
-
-        for (int i = 0; i < allRooms.size(); i++) {
-            if (classID.equals(allRooms.get(i))) {
-                return true;
-            }
-        }
-        return false;
-    }
-
     /**
      * Send student response to server.
      * @param studentResponse student answer.
@@ -83,48 +74,6 @@ public class Student {
 
         //send to server
         ref.setValue(studentResponse);
-    }
-
-    /**
-     * Send newly chosen answer to server.
-     * @param studentResponse newly chosen answer
-     */
-    public static void updateStudentResponse(StudentResponse studentResponse, String classRoomID) {
-
-        ref = db.getReference("ClassRooms").child(classRoomID).child("StudentResponse")
-                .child(studentResponse.getQuestionID() + "");
-        Map<String, Object> childUpdates = new HashMap<>();
-        childUpdates.put("/" + studentResponse.getStudentName() + "/", studentResponse);
-        ref.updateChildren(childUpdates);
-    }
-
-    public static List<Question> retrieveQuestions(String roomID) {
-        final List<Question> questions = new ArrayList<>();
-
-        ref = FirebaseDatabase.getInstance().getReference("ClassRooms")
-                .child(roomID).child("Questions");
-        ref.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot question : snapshot.getChildren()) {
-                    List<String> choices = new ArrayList<>();
-                    for (long i = 0; i < question.child("choices").getChildrenCount(); i++) {
-                        choices.add(question.child("choices").child(i + "").getValue().toString());
-                    }
-                    String id = question.child("questionId").getValue().toString();
-                    String description = question.child("questionDescription").getValue().toString();
-                    boolean canAnswer = Boolean.parseBoolean(question.child("canAnswer")
-                            .getValue().toString());
-                    questions.add(new Question(description, Integer.parseInt(id), choices, canAnswer));
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-        return questions;
     }
 
     /**
@@ -153,33 +102,6 @@ public class Student {
         return allRoomIDS;
     }
 
-    public static Map<Integer, List<String>> getQuestionAnswer() {
-        return questionAnswer;
-    }
-
-    public static void retrieveCorAns(final int Qid, String classID) {
-        DatabaseReference ref = FirebaseDatabase.getInstance()
-                .getReference("ClassRooms").child(classID)
-                .child("Questions").child(Qid + "").child("answer");
-        ref.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                List<String> answers = new ArrayList<>();
-                snapshot.getValue(answers.getClass());
-                for (Question question : questionList) {
-                    if (question.getQuestionId() == Qid) {
-                        question.setCorrectAns(answers);
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-    }
-
     public static List<Question> getQuestionList() {
         return questionList;
     }
@@ -194,5 +116,26 @@ public class Student {
             if (question.getQuestionId() == Qid)
                 question.setCorrectAns(ans);
         }
+    }
+
+    public static List<Chat> getChatList() {
+        return chatList;
+    }
+
+    public static void setChatList(List<Chat> chatList) {
+        Student.chatList.clear();
+        Student.chatList.addAll(chatList);
+    }
+
+    public static void unVote(int chatID) {
+        voteHistory.remove(Integer.valueOf(chatID));
+    }
+
+    public static void addVote(int chatID) {
+        voteHistory.add(chatID);
+    }
+
+    public static boolean isVote(int chatID) {
+        return voteHistory.contains(chatID);
     }
 }

@@ -33,7 +33,7 @@ public class Teacher {
     private static ClassRoom classroom;
     private static List<Question> questionsToAdd = new ArrayList<>();
     private static String EXPORT_CSV_FILE_PATH = "app/result.csv";
-
+    private static List<Integer> voteHistory = new ArrayList<>(); // store voted chat id
 
     public static void setClassroom(ClassRoom setClassRoom) {
         classroom = setClassRoom;
@@ -55,7 +55,6 @@ public class Teacher {
      * Add a new question to server.
      */
     public static void addQuestion(int Qid) {
-
         List<Question> questionList = new ArrayList<>();
         for (Question question : questionsToAdd) {
             //enable answering
@@ -283,5 +282,19 @@ public class Teacher {
         // TODO: remove class cloud data
         classroom = null;
         questionsToAdd.clear();
+        voteHistory.clear();
     }
+
+    public static void unVote(int chatID) {
+        voteHistory.remove(Integer.valueOf(chatID));
+    }
+
+    public static void addVote(int chatID) {
+        voteHistory.add(chatID);
+    }
+
+    public static boolean isVote(int chatID) {
+        return voteHistory.contains(chatID);
+    }
+
 }
