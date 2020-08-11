@@ -29,7 +29,7 @@ public class HostScreen extends AppCompatActivity {
         shareRoom = findViewById(R.id.shareRoom);
         exitRoom = findViewById(R.id.leaveRoom);
         emptyReminder = findViewById(R.id.emptyReminder);
-        addQuestion = findViewById(R.id.makePost);
+        addQuestion = findViewById(R.id.studentChatBtn);
         // exit room button onClickListener
         exitRoom.setOnClickListener(new View.OnClickListener() {
             @Override

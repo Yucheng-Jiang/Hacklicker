@@ -84,13 +84,13 @@
                 android:layout_weight="5" />
 
             <ImageButton
-                android:id="@+id/makePost"
+                android:id="@+id/studentChatBtn"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
                 android:layout_weight="26"
                 android:background="@null"
-                app:srcCompat="@drawable/add" />
+                app:srcCompat="@drawable/chat" />
 
             <Space
                 android:layout_width="0dp"
