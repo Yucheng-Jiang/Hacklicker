@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#cce7e8"
+    android:background="#add8e6"
     tools:context=".ShareRoomScreen">
 
     <LinearLayout
@@ -41,6 +41,7 @@
                 android:layout_weight="80"
                 android:background="@drawable/orangeblue"
                 android:gravity="center|center_vertical"
+                android:radius="10dp"
                 android:textSize="24sp"
                 tools:ignore="MissingConstraints" />
 

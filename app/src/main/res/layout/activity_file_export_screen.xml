@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:background="#cce7e8"
+        android:background="#add8e6"
         android:weightSum="100">
 
         <Space
@@ -48,7 +48,7 @@
                 android:layout_gravity="center|center_vertical"
                 android:layout_weight="60"
                 android:text="\nEXPORT Data\n"
-                android:background="#fed8b1"
+                android:background="#ffc38d"
                 android:textSize="18sp" />
 
             <Space
@@ -76,7 +76,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="35"
-                android:background="#fed8b1"
+                android:background="#ffc38d"
                 android:text="Back" />
 
             <Space
@@ -89,7 +89,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="35"
-                android:background="#fed8b1"
+                android:background="#ffc38d"
                 android:text="Exit" />
 
             <Space

@@ -159,7 +159,7 @@ public class StudentScreen extends AppCompatActivity {
                 // if current question has answer, set the question background as yellow
                 // otherwise set to gray
                 if (myHistory != null && myHistory.size() != 0) {
-                    questionTxt.setBackgroundColor(android.graphics.Color.parseColor("#fed8b1"));
+                    questionTxt.setBackgroundColor(android.graphics.Color.parseColor("#ffc38d"));
                 } else {
                     questionTxt.setBackgroundColor(Color.GRAY);
                 }

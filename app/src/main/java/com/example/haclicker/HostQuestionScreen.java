@@ -83,10 +83,10 @@ public class HostQuestionScreen extends AppCompatActivity {
                             optionTxt.setBackgroundColor(android.graphics.Color.parseColor("#99ff99"));
                         } else {
                             // mark incorrect questions as gray
-                            optionTxt.setBackgroundColor(android.graphics.Color.parseColor("#fed8b1"));
+                            optionTxt.setBackgroundColor(android.graphics.Color.parseColor("#ffc38d"));
                         }
                     } else {
-                        optionTxt.setBackgroundColor(android.graphics.Color.parseColor("#fed8b1"));
+                        optionTxt.setBackgroundColor(android.graphics.Color.parseColor("#ffc38d"));
                     }
 
                     optionTxt.setOnClickListener(new View.OnClickListener() {
@@ -96,11 +96,11 @@ public class HostQuestionScreen extends AppCompatActivity {
                             if (controlBtn.getText().equals("Start")) {
                                 if (((ColorDrawable) optionTxt.getBackground()).getColor() ==
                                         android.graphics.Color.parseColor("#99ff99")) {
-                                    optionTxt.setBackgroundColor(android.graphics.Color.parseColor("#fed8b1"));
+                                    optionTxt.setBackgroundColor(android.graphics.Color.parseColor("#ffc38d"));
                                     correctAnswers.remove(index); // local history
                                     Teacher.deleteCorrectAnswer(curQuestion, index);
                                     if (correctAnswers.size() == 0) {
-                                        controlBtn.setBackgroundColor(android.graphics.Color.parseColor("#fed8b1"));
+                                        controlBtn.setBackgroundColor(android.graphics.Color.parseColor("#ffc38d"));
                                     }
                                 } else {
                                     optionTxt.setBackgroundColor(android.graphics.Color.parseColor("#99ff99"));
