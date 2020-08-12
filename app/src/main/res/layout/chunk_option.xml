@@ -26,7 +26,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_weight="70"
-                android:color="#fed8b1"
+                android:color="#ffc38d"
                 android:hint="Option Description"
                 tools:ignore="MissingConstraints"
                 tools:layout_editor_absoluteX="69dp"

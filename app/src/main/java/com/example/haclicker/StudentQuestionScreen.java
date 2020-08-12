@@ -121,7 +121,7 @@ public class StudentQuestionScreen extends AppCompatActivity {
                     // if there's no correct answer, display previous student answers
                     // allow student to update his/her answers
                     if (curChoice.contains(index)) {
-                        choiceTxt.setBackgroundColor(android.graphics.Color.parseColor("#fed8b1"));
+                        choiceTxt.setBackgroundColor(android.graphics.Color.parseColor("#ffc38d"));
                     } else {
                         choiceTxt.setBackgroundColor(Color.GRAY);
                     }
@@ -135,12 +135,12 @@ public class StudentQuestionScreen extends AppCompatActivity {
                                     // if the answer is already selected, return it into gray
                                     // and remove from choice history
                                     if (((ColorDrawable) choiceTxt.getBackground()).getColor() ==
-                                            android.graphics.Color.parseColor("#fed8b1")) {
+                                            android.graphics.Color.parseColor("#ffc38d")) {
                                         choiceTxt.setBackgroundColor(Color.GRAY);
                                         curChoice.remove(index);
                                     } else {
                                         // otherwise add new answers
-                                        choiceTxt.setBackgroundColor(android.graphics.Color.parseColor("#fed8b1"));
+                                        choiceTxt.setBackgroundColor(android.graphics.Color.parseColor("#ffc38d"));
                                         curChoice.add(index);
                                     }
                                     Student.updateQuestionAnswer(curQuestionID, curChoice);

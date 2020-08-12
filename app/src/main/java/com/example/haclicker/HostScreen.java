@@ -103,7 +103,7 @@ public class HostScreen extends AppCompatActivity {
                 // if the question already has correct answer, mark it as yellow
                 // otherwise, mark it gray
                 if (question.getCorrectAns() != null && question.getCorrectAns().size() != 0) {
-                    questionTxt.setBackgroundColor(android.graphics.Color.parseColor("#fed8b1"));
+                    questionTxt.setBackgroundColor(android.graphics.Color.parseColor("#ffc38d"));
                 } else {
                     questionTxt.setBackgroundColor(Color.GRAY);
                 }
