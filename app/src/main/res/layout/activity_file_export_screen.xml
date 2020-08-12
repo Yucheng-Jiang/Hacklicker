@@ -48,7 +48,7 @@
                 android:layout_gravity="center|center_vertical"
                 android:layout_weight="60"
                 android:text="\nEXPORT Data\n"
-                android:background="#ffc38d"
+                android:background="@drawable/orangeblue"
                 android:textSize="18sp" />
 
             <Space
@@ -76,7 +76,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="35"
-                android:background="#ffc38d"
+                android:background="@drawable/orangeblue"
                 android:text="Back" />
 
             <Space
@@ -89,7 +89,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="35"
-                android:background="#ffc38d"
+                android:background="@drawable/orangeblue"
                 android:text="Exit" />
 
             <Space

@@ -71,7 +71,7 @@ public class StudentQuestionScreen extends AppCompatActivity {
             public void run() {
                 try {
                     while (!isInterrupted()) {
-                        Thread.sleep(1000);
+                        Thread.sleep(500);
                         if (!isRunning) {
                             break;
                         }
