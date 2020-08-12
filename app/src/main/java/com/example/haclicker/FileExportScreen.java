@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -18,13 +19,20 @@ import android.widget.Toast;
 import com.example.haclicker.DataStructure.ClassRoom;
 import com.example.haclicker.DataStructure.Question;
 import com.example.haclicker.DataStructure.Student;
+import com.example.haclicker.DataStructure.StudentHistoryEntity;
 import com.example.haclicker.DataStructure.StudentResponse;
 import com.example.haclicker.DataStructure.Teacher;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -36,7 +44,9 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class FileExportScreen extends AppCompatActivity {
     Button exportBtn, backBtn, leaveBtn;
@@ -86,9 +96,10 @@ public class FileExportScreen extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (role.equals("host")) {
-                    Teacher.clearData();
+                    storeHostDataToFireStore();
 
                 } else if (role.equals("student")) {
+                    storeStudentDataToFireStore();
                     Student.clearData();
                 }
                 Intent intent = new Intent(getApplicationContext(), MainScreen.class);
@@ -100,6 +111,7 @@ public class FileExportScreen extends AppCompatActivity {
     }
 
     private void hostExport() {
+
         FirebaseDatabase db = FirebaseDatabase.getInstance();
         DatabaseReference ref = db.getReference("ClassRooms")
                 .child(classID)
@@ -157,7 +169,84 @@ public class FileExportScreen extends AppCompatActivity {
             }
         });
     }
+
+    /**
+     * Store all student responses to fire store server.
+     */
+    private void storeHostDataToFireStore() {
+
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        final String email = user.getEmail();
+
+        //get all info from firebase realtime server
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("ClassRooms")
+                .child(classID)
+                .child("StudentResponse");
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                List<StudentHistoryEntity> allStudentResponse = new ArrayList<>();
+                //~ClassRooms/classID/StudentResponse/questionID
+                for (DataSnapshot singleQuestion : snapshot.getChildren()) {
+                    //~ClassRooms/classID/StudentResponse/questionID/StuName
+                    for (DataSnapshot singleResponse : singleQuestion.getChildren()) {
+                        List<String> answers = new ArrayList<>();
+                        //~ClassRooms/classID/StudentResponse/questionID/StuName/answer
+                        for (DataSnapshot ans : singleResponse.child("answer").getChildren()) {
+                            answers.add(ans.getValue().toString());
+                        }
+                        int questionID = Integer.parseInt(singleResponse
+                                .child("questionID").getValue().toString());
+                        String stuEmail = singleResponse.child("studentEmail").getValue().toString();
+                        String stuName = singleResponse.child("studentName").getValue().toString();
+                        Question question = Teacher.getClassroom().getQuestionById(questionID);
+                        String description = question.getQuestionDescription();
+                        List<String> choices = question.getChoices();
+                        List<String> correctAnswer = question.getCorrectAns();
+                        allStudentResponse.add(new StudentHistoryEntity(stuName,
+                                stuEmail, answers, questionID, description, choices, correctAnswer));
+                    }
+                }
+
+                List<StudentHistoryEntity> responseList = new ArrayList<>();
+                for (StudentHistoryEntity response : allStudentResponse) {
+                    responseList.add(response);
+                }
+                //Add to fire store server
+                FirebaseFirestore store = FirebaseFirestore.getInstance();
+                for (StudentHistoryEntity singleResponse : allStudentResponse) {
+                    store.collection("Host")
+                            .document(email)
+                            .collection(singleResponse.getStudentEmail())
+                            .document(singleResponse.getStudentEmail())
+                            .set(singleResponse)
+                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    Log.d("TAG", "DocumentSnapshot successfully written!");
+                                }
+                            })
+                            .addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Log.w("TAG", "Error writing document", e);
+                                }
+                            });
+                }
+                Teacher.clearData();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+    }
+
     private void studentExport() {
+
         // append each question
         List<Question> questions = Student.getQuestionList();
         for (int i = 0; i < questions.size(); i++) {
@@ -250,6 +339,48 @@ public class FileExportScreen extends AppCompatActivity {
                 }
             });
 
+        }
+    }
+
+    private void storeStudentDataToFireStore() {
+
+        //get user
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        final String email = user.getEmail();
+        final String userName = user.getDisplayName();
+
+        final List<Question> questions = Student.getQuestionList();
+        for (int i = 0; i < questions.size(); i++) {
+            //get student answers
+
+            DatabaseReference ref = FirebaseDatabase.getInstance()
+                    .getReference("ClassRooms").child(classID).child("StudentResponse");
+            int id = questions.get(i).getQuestionId();
+            List<String> correctAnswer = questions.get(id).getCorrectAns();
+            String description = questions.get(i).getQuestionDescription();
+            List<String> choices = questions.get(i).getChoices();
+            List<String> answer = Student.getMyAnswerHistory(id);
+
+            StudentHistoryEntity entity = new StudentHistoryEntity(userName, email, answer,
+                    id, description, choices, correctAnswer);
+
+            //upload to fire store server
+            FirebaseFirestore store = FirebaseFirestore.getInstance();
+            store.collection("Student")
+                    .document(email)
+                    .set(entity)
+                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            Log.d("TAG", "DocumentSnapshot successfully written!");
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Log.w("TAG", "Error writing document", e);
+                        }
+                    });
         }
     }
 
