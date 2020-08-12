@@ -29,7 +29,7 @@ public class StudentScreen extends AppCompatActivity {
     ImageButton shareRoom, exitRoom, chatRoom;
     TextView emptyReminder;
     String classID;
-    final Boolean[] run = new Boolean[]{new Boolean(true)};
+    final Boolean[] run = new Boolean[]{Boolean.TRUE};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

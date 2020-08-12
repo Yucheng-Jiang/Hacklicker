@@ -13,6 +13,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.example.haclicker.DataStructure.ClassRoom;
 import com.example.haclicker.DataStructure.Question;
@@ -71,7 +72,14 @@ public class FileExportScreen extends AppCompatActivity {
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish();
+                if (intent.hasExtra("canBack")) {
+                    if (!intent.getBooleanExtra("canBack", false)) {
+                        Toast.makeText(FileExportScreen.this,
+                                "Room Closed", Toast.LENGTH_LONG).show();
+                    }
+                } else {
+                    finish();
+                }
             }
         });
         leaveBtn.setOnClickListener(new View.OnClickListener() {

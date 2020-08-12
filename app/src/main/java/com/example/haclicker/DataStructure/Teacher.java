@@ -273,6 +273,10 @@ public class Teacher {
         });
     }
 
+    /**
+     * Clear local data and
+     * delete classroom from the database.
+     */
     public static void clearData() {
 
         DatabaseReference ref = FirebaseDatabase.getInstance()

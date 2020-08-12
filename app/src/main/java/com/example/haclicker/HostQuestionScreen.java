@@ -157,7 +157,8 @@ public class HostQuestionScreen extends AppCompatActivity {
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                updateUI();
+                                if (Teacher.getClassroom() != null)
+                                    updateUI();
                                 // update TextView here!
                             }
                         });
