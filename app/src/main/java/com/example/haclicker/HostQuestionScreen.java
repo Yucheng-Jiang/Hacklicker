@@ -105,6 +105,7 @@ public class HostQuestionScreen extends AppCompatActivity {
                                 } else {
                                     optionTxt.setBackgroundColor(android.graphics.Color.parseColor("#99ff99"));
                                     Teacher.sendCorrectAnswer(curQuestion, index);
+                                    correctAnswers.remove(index);
                                     correctAnswers.add(index); // local history
                                     // set control button to gray
                                     controlBtn.setBackgroundColor(Color.GRAY);

@@ -97,10 +97,8 @@ public class FileExportScreen extends AppCompatActivity {
             public void onClick(View view) {
                 if (role.equals("host")) {
                     storeHostDataToFireStore();
-
                 } else if (role.equals("student")) {
                     storeStudentDataToFireStore();
-                    Student.clearData();
                 }
                 Intent intent = new Intent(getApplicationContext(), MainScreen.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -213,17 +211,19 @@ public class FileExportScreen extends AppCompatActivity {
                 for (StudentHistoryEntity response : allStudentResponse) {
                     responseList.add(response);
                 }
+
                 //Add to fire store server
                 FirebaseFirestore store = FirebaseFirestore.getInstance();
                 for (StudentHistoryEntity singleResponse : allStudentResponse) {
                     store.collection("Host")
                             .document(email)
-                            .collection(singleResponse.getStudentEmail())
+                            .collection(classID)
                             .document(singleResponse.getStudentEmail())
-                            .set(singleResponse)
-                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                            .collection(singleResponse.getQuestionID() + "")
+                            .add(singleResponse)
+                            .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                                 @Override
-                                public void onSuccess(Void aVoid) {
+                                public void onSuccess(DocumentReference documentReference) {
                                     Log.d("TAG", "DocumentSnapshot successfully written!");
                                 }
                             })
@@ -352,9 +352,6 @@ public class FileExportScreen extends AppCompatActivity {
         final List<Question> questions = Student.getQuestionList();
         for (int i = 0; i < questions.size(); i++) {
             //get student answers
-
-            DatabaseReference ref = FirebaseDatabase.getInstance()
-                    .getReference("ClassRooms").child(classID).child("StudentResponse");
             int id = questions.get(i).getQuestionId();
             List<String> correctAnswer = questions.get(id).getCorrectAns();
             String description = questions.get(i).getQuestionDescription();
@@ -364,14 +361,16 @@ public class FileExportScreen extends AppCompatActivity {
             StudentHistoryEntity entity = new StudentHistoryEntity(userName, email, answer,
                     id, description, choices, correctAnswer);
 
+
             //upload to fire store server
             FirebaseFirestore store = FirebaseFirestore.getInstance();
             store.collection("Student")
                     .document(email)
-                    .set(entity)
-                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    .collection(questions.get(i).getQuestionId() + "")
+                    .add(entity)
+                    .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                         @Override
-                        public void onSuccess(Void aVoid) {
+                        public void onSuccess(DocumentReference documentReference) {
                             Log.d("TAG", "DocumentSnapshot successfully written!");
                         }
                     })
@@ -382,6 +381,7 @@ public class FileExportScreen extends AppCompatActivity {
                         }
                     });
         }
+        Student.clearData();
     }
 
     @Override
