@@ -79,6 +79,7 @@ public class FileExportScreen extends AppCompatActivity {
             public void onClick(View view) {
                 if (role.equals("host")) {
                     Teacher.clearData();
+
                 } else if (role.equals("student")) {
                     Student.clearData();
                 }

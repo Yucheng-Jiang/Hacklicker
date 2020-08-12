@@ -32,7 +32,6 @@ public class Teacher {
 
     private static ClassRoom classroom;
     private static List<Question> questionsToAdd = new ArrayList<>();
-    private static String EXPORT_CSV_FILE_PATH = "app/result.csv";
     private static List<Integer> voteHistory = new ArrayList<>(); // store voted chat id
 
     public static void setClassroom(ClassRoom setClassRoom) {
@@ -274,12 +273,11 @@ public class Teacher {
         });
     }
 
-    public void setExportCSVPath(String relativePath) {
-        EXPORT_CSV_FILE_PATH = relativePath;
-    }
-
     public static void clearData() {
-        // TODO: remove class cloud data
+
+        DatabaseReference ref = FirebaseDatabase.getInstance()
+                .getReference("ClassRooms").child(classroom.getClassID());
+        ref.removeValue();
         classroom = null;
         questionsToAdd.clear();
         voteHistory.clear();
