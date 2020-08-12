@@ -17,6 +17,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.haclicker.DataStructure.Question;
 import com.example.haclicker.DataStructure.Student;
@@ -48,6 +49,7 @@ public class StudentQuestionScreen extends AppCompatActivity {
     private List<String> curChoice = new ArrayList<>();
     private Question question;
     private boolean canAnswer = false;
+    private final Boolean[] fuck = new Boolean[]{Boolean.TRUE};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,8 +83,19 @@ public class StudentQuestionScreen extends AppCompatActivity {
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                updateCorrectAns();
-                                updateAccessibility();
+                                try {
+                                    updateCorrectAns();
+                                    updateAccessibility();
+                                } catch (NullPointerException e) {
+                                    Toast.makeText(StudentQuestionScreen.this,
+                                            "Room closed by host", Toast.LENGTH_LONG).show();
+                                    Intent intent = new Intent(getApplicationContext(), FileExportScreen.class);
+                                    intent.putExtra("canBack", false);
+                                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                    startActivity(intent);
+                                    finish();
+                                }
+
                             }
                         });
                     }
@@ -182,28 +195,50 @@ public class StudentQuestionScreen extends AppCompatActivity {
     }
 
     private void updateCorrectAns() {
+
         DatabaseReference ref = FirebaseDatabase.getInstance()
                 .getReference("ClassRooms")
-                .child(classID)
-                .child("Questions").child(curQuestionID + "")
-                .child("answer");
+                .child(classID);
+
 
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                // get previous correct answer list
-                List<String> ans = Student.getQuestionById(curQuestionID).getCorrectAns();
-                // retrieve new correct answer list from firebase
-                List<String> retrievedAns = new ArrayList<>();
-                for (DataSnapshot curAns : snapshot.getChildren()) {
-                    retrievedAns.add(curAns.getValue().toString());
+
+                if (!fuck[0]) {
+                    return;
                 }
-                // if there's difference, update UI
-                if (!retrievedAns.equals(ans)) {
-                    // update correct answer list
-                    Student.setCorrectAns(retrievedAns, curQuestionID);
-                    updateUI();
+                Object id = snapshot.getValue();
+                //check if classroom has been closed
+                if (id != null && !id.toString().equals("")) {
+                    // get previous correct answer list
+                    List<String> ans = Student.getQuestionById(curQuestionID).getCorrectAns();
+                    // retrieve new correct answer list from firebase
+                    List<String> retrievedAns = new ArrayList<>();
+                    DataSnapshot answerSnapshot = snapshot.child("Questions")
+                            .child(curQuestionID + "")
+                            .child("answer");
+                    for (DataSnapshot curAns : answerSnapshot.getChildren()) {
+                        retrievedAns.add(curAns.getValue().toString());
+                    }
+                    // if there's difference, update UI
+                    if (!retrievedAns.equals(ans)) {
+                        classID = null;
+                        // update correct answer list
+                        Student.setCorrectAns(retrievedAns, curQuestionID);
+                        updateUI();
+                    }
+                } else {
+                    fuck[0] = false;
+                    Toast.makeText(StudentQuestionScreen.this,
+                            "Room closed by host", Toast.LENGTH_LONG).show();
+                    Intent intent = new Intent(getApplicationContext(), FileExportScreen.class);
+                    intent.putExtra("canBack", false);
+                    intent.putExtra("role", "student");
+                    startActivity(intent);
+                    finish();
                 }
+
             }
 
             @Override
@@ -213,6 +248,7 @@ public class StudentQuestionScreen extends AppCompatActivity {
     }
 
     private void updateAccessibility() {
+
         DatabaseReference ref = FirebaseDatabase.getInstance()
                 .getReference("ClassRooms")
                 .child(classID + "")
@@ -223,7 +259,8 @@ public class StudentQuestionScreen extends AppCompatActivity {
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                canAnswer = Boolean.parseBoolean(snapshot.getValue().toString());
+                if (snapshot.getValue() != null)
+                    canAnswer = Boolean.parseBoolean(snapshot.getValue().toString());
             }
 
             @Override
@@ -241,4 +278,5 @@ public class StudentQuestionScreen extends AppCompatActivity {
         startActivity(intent);
         finish();
     }
+
 }
