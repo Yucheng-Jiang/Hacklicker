@@ -29,7 +29,7 @@ public class StudentScreen extends AppCompatActivity {
     ImageButton shareRoom, exitRoom, chatRoom;
     TextView emptyReminder;
     String classID;
-    final Boolean[] run = new Boolean[]{Boolean.TRUE};
+    private boolean isRunning = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,9 +42,10 @@ public class StudentScreen extends AppCompatActivity {
         emptyReminder = findViewById(R.id.emptyReminder);
         // get class ID
         classID = getIntent().getStringExtra("ClassID");
-        //TODO: debug this
+        isRunning = true;
         if (classID == null) {
             Toast.makeText(this, "Class Ended", Toast.LENGTH_SHORT).show();
+            isRunning = false;
             finish();
         }
         // exit room button set on click listener
@@ -55,6 +56,7 @@ public class StudentScreen extends AppCompatActivity {
                 intent.putExtra("role", "student");
                 intent.putExtra("classID", classID);
                 startActivity(intent);
+                isRunning = false;
             }
         });
         // share room button set on click listener
@@ -64,6 +66,7 @@ public class StudentScreen extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(), ShareRoomScreen.class);
                 intent.putExtra("Id", classID);
                 startActivity(intent);
+                isRunning = false;
             }
         });
         chatRoom.setOnClickListener(new View.OnClickListener() {
@@ -73,6 +76,7 @@ public class StudentScreen extends AppCompatActivity {
                 intent.putExtra("role", "student");
                 intent.putExtra("classID", classID);
                 startActivity(intent);
+                isRunning = false;
             }
         });
 
@@ -104,7 +108,7 @@ public class StudentScreen extends AppCompatActivity {
     private void updateQuestion() {
         DatabaseReference ref = FirebaseDatabase.getInstance()
                 .getReference("ClassRooms").child(classID).child("Questions");
-        ref.addValueEventListener(new ValueEventListener() {
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 List<Question> questions = new ArrayList<>();
@@ -168,11 +172,11 @@ public class StudentScreen extends AppCompatActivity {
                 questionTxt.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        isRunning = false;
                         Intent intent = new Intent(getApplicationContext(), StudentQuestionScreen.class);
                         intent.putExtra("ClassID", classID);
                         intent.putExtra("QuestionID", question.getQuestionId());
                         startActivity(intent);
-                        run[0] = false;
                         finish();
                     }
                 });
@@ -189,4 +193,18 @@ public class StudentScreen extends AppCompatActivity {
     public void onBackPressed() {
         exitRoom.performClick();
     }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        isRunning = false;
+        finish();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        isRunning = true;
+    }
+
 }

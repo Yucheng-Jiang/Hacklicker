@@ -8,23 +8,25 @@ public class Chat {
     private String chatContent;
     private int numVote = 0;
     private String userName;
+    private String userEmail;
     private boolean isAnswered = false;
 
-    public Chat(int setChatId, String setChatContent, int setNumVote, String setUserName, boolean setIsAnswered) {
-        this(setChatId, setChatContent, setUserName);
+    public Chat(int setChatId, String setChatContent, int setNumVote, String setUserName, String setUserEmail, boolean setIsAnswered) {
+        this(setChatId, setChatContent, setUserName, setUserEmail);
         numVote = setNumVote;
         isAnswered = setIsAnswered;
     }
 
-    public Chat(int setChatId, String setChatContent, int setNumVote, String setUserName) {
-        this(setChatId, setChatContent, setUserName);
+    public Chat(int setChatId, String setChatContent, int setNumVote, String setUserName, String setUserEmail) {
+        this(setChatId, setChatContent, setUserName, setUserEmail);
         numVote = setNumVote;
     }
 
-    public Chat(int setChatId, String setChatContent, String setUserName) {
+    public Chat(int setChatId, String setChatContent, String setUserName, String setUserEmail) {
         this.chatId = setChatId;
         this.chatContent = setChatContent;
         this.userName = setUserName;
+        this.userEmail = setUserEmail;
     }
 
     public void voteIncrement() {
@@ -75,5 +77,9 @@ public class Chat {
 
     public boolean isAnswered() {
         return isAnswered;
+    }
+
+    public String getUserEmail() {
+        return userEmail;
     }
 }

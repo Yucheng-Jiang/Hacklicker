@@ -180,7 +180,7 @@ public class HostQuestionScreen extends AppCompatActivity {
                 .child(Teacher.getClassroom().getClassID())
                 .child("StudentResponse").child(curQuestionID + "");
 
-        ref.addValueEventListener(new ValueEventListener() {
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
             @SuppressLint("SetTextI18n")
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -199,7 +199,7 @@ public class HostQuestionScreen extends AppCompatActivity {
                 .getReference("ClassRooms")
                 .child(Teacher.getClassroom().getClassID())
                 .child("StudentResponse").child(curQuestionID + "");
-        ref.addValueEventListener(new ValueEventListener() {
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 Map<String, Integer> result = new HashMap<>();

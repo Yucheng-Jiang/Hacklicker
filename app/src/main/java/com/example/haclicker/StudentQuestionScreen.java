@@ -22,13 +22,6 @@ import android.widget.Toast;
 import com.example.haclicker.DataStructure.Question;
 import com.example.haclicker.DataStructure.Student;
 import com.example.haclicker.DataStructure.StudentResponse;
-import com.example.haclicker.DataStructure.Teacher;
-import com.github.mikephil.charting.charts.BarChart;
-import com.github.mikephil.charting.components.XAxis;
-import com.github.mikephil.charting.data.BarData;
-import com.github.mikephil.charting.data.BarDataSet;
-import com.github.mikephil.charting.data.BarEntry;
-import com.github.mikephil.charting.utils.ColorTemplate;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -39,7 +32,6 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class StudentQuestionScreen extends AppCompatActivity {
     TextView questionTxt;
@@ -49,7 +41,7 @@ public class StudentQuestionScreen extends AppCompatActivity {
     private List<String> curChoice = new ArrayList<>();
     private Question question;
     private boolean canAnswer = false;
-    private final Boolean[] fuck = new Boolean[]{Boolean.TRUE};
+    private boolean isRunning = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,22 +72,14 @@ public class StudentQuestionScreen extends AppCompatActivity {
                 try {
                     while (!isInterrupted()) {
                         Thread.sleep(1000);
+                        if (!isRunning) {
+                            break;
+                        }
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                try {
-                                    updateCorrectAns();
-                                    updateAccessibility();
-                                } catch (NullPointerException e) {
-                                    Toast.makeText(StudentQuestionScreen.this,
-                                            "Room closed by host", Toast.LENGTH_LONG).show();
-                                    Intent intent = new Intent(getApplicationContext(), FileExportScreen.class);
-                                    intent.putExtra("canBack", false);
-                                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                    startActivity(intent);
-                                    finish();
-                                }
-
+                                updateCorrectAns();
+                                updateAccessibility();
                             }
                         });
                     }
@@ -201,13 +185,9 @@ public class StudentQuestionScreen extends AppCompatActivity {
                 .child(classID);
 
 
-        ref.addValueEventListener(new ValueEventListener() {
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-
-                if (!fuck[0]) {
-                    return;
-                }
                 Object id = snapshot.getValue();
                 //check if classroom has been closed
                 if (id != null && !id.toString().equals("")) {
@@ -223,13 +203,12 @@ public class StudentQuestionScreen extends AppCompatActivity {
                     }
                     // if there's difference, update UI
                     if (!retrievedAns.equals(ans)) {
-                        classID = null;
                         // update correct answer list
                         Student.setCorrectAns(retrievedAns, curQuestionID);
                         updateUI();
                     }
                 } else {
-                    fuck[0] = false;
+                    isRunning = false;
                     Toast.makeText(StudentQuestionScreen.this,
                             "Room closed by host", Toast.LENGTH_LONG).show();
                     Intent intent = new Intent(getApplicationContext(), FileExportScreen.class);
@@ -256,7 +235,7 @@ public class StudentQuestionScreen extends AppCompatActivity {
                 .child(curQuestionID + "")
                 .child("canAnswer");
 
-        ref.addValueEventListener(new ValueEventListener() {
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.getValue() != null)
@@ -276,6 +255,12 @@ public class StudentQuestionScreen extends AppCompatActivity {
         Intent intent = new Intent(getApplicationContext(), StudentScreen.class);
         intent.putExtra("ClassID", classID);
         startActivity(intent);
+        finish();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
         finish();
     }
 
