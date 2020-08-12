@@ -20,6 +20,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
@@ -88,19 +89,22 @@ public class MainScreen extends AppCompatActivity {
      * @return the newly created classroom instance
      */
     private ClassRoom generateClassroom() {
-        // get all existing room IDs
-        List<String> allRoomIDs = getAllRooms();
-        // generate a random 10 digits number while avoiding collision
-        Random random = new Random();
-        while (true) {
-            StringBuilder id = new StringBuilder();
-            for (int i = 0; i < ID_LENGTH; i++) {
-                id.append(random.nextInt(10));
-            }
-            if (!allRoomIDs.contains(id.toString())) {
-                return new ClassRoom(id.toString(), id.toString(), username, null);
-            }
-        }
+
+        String id = System.currentTimeMillis() + "";
+        return new ClassRoom(id.toString(), id.toString(), username, null);
+//        // get all existing room IDs
+//        List<String> allRoomIDs = getAllRooms();
+//        // generate a random 10 digits number while avoiding collision
+//        Random random = new Random();
+//        while (true) {
+//            StringBuilder id = new StringBuilder();
+//            for (int i = 0; i < ID_LENGTH; i++) {
+//                id.append(random.nextInt(10));
+//            }
+//            if (!allRoomIDs.contains(id.toString())) {
+//                return new ClassRoom(id.toString(), id.toString(), username, null);
+//            }
+//        }
     }
 
     /**

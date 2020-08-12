@@ -112,7 +112,6 @@ public class HostQuestionScreen extends AppCompatActivity {
                             }
                         }
                     });
-
                     questionList.addView(questionChunk);
                 }
             }

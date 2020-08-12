@@ -38,6 +38,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="top"
                 android:layout_weight="60"
+                android:textAllCaps="false"
                 android:text="TextView" />
 
             <Button

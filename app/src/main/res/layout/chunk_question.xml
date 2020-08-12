@@ -29,6 +29,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="70"
                 android:background="@drawable/orangeblue"
+                android:textAllCaps="false"
                 android:maxLines="3"/>
 
             <Space
