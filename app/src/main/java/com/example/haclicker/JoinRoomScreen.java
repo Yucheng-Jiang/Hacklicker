@@ -42,10 +42,8 @@ public class JoinRoomScreen extends AppCompatActivity {
     Button confirmJoinBtn;
     ImageButton scanQrBtn, galleryQrBtn;
     EditText inputRoomId;
-    TextView invalidIdTxt;
     Intent intent;
 
-    private final Boolean[] run = new Boolean[]{Boolean.TRUE};
     private static final int RC_SCAN = 1;
     private static final int RC_PICK = 2;
 
@@ -88,36 +86,33 @@ public class JoinRoomScreen extends AppCompatActivity {
                 final List<String> allRoomIDS = new ArrayList<>();
                     DatabaseReference reference = FirebaseDatabase.getInstance()
                             .getReference("ClassRooms");
-                reference.addValueEventListener(new ValueEventListener() {
+                reference.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
                             // if allow firebase to fetch update
-                            if (run[0]) {
-                                // update all existing room IDs
-                                for (DataSnapshot ID : snapshot.getChildren()) {
-                                    allRoomIDS.add(ID.child("classID").getValue().toString());
-                                }
-                                // if there's a match, login to the room
-                                if (allRoomIDS.contains(id)) {
-                                    Intent intent = new Intent(getApplicationContext(), StudentScreen.class);
-                                    intent.putExtra("ClassID", id);
-                                    startActivity(intent);
-                                    // stop firebase from fetching
-                                    run[0] = false;
-                                    finish();
-                                } else {
-                                    // Code below are cited from
-                                    // https://stackoverflow.com/questions/22194761/hide-textview-after-some-time-in-android
-                                    confirmJoinBtn.setText("INVALID ID");
-                                    confirmJoinBtn.setTextColor(Color.RED);
-                                    confirmJoinBtn.postDelayed(new Runnable() {
-                                        public void run() {
-                                            confirmJoinBtn.setTextColor(Color.BLACK);
-                                            confirmJoinBtn.setText("JOIN ROOM");
-                                        }
-                                    }, 1000);
-                                    // citation ends here
-                                }
+                            // update all existing room IDs
+                            for (DataSnapshot ID : snapshot.getChildren()) {
+                                allRoomIDS.add(ID.child("classID").getValue().toString());
+                            }
+                            // if there's a match, login to the room
+                            if (allRoomIDS.contains(id)) {
+                                Intent intent = new Intent(getApplicationContext(), StudentScreen.class);
+                                intent.putExtra("ClassID", id);
+                                startActivity(intent);
+                                // stop firebase from fetching
+                                finish();
+                            } else {
+                                // Code below are cited from
+                                // https://stackoverflow.com/questions/22194761/hide-textview-after-some-time-in-android
+                                confirmJoinBtn.setText("INVALID ID");
+                                confirmJoinBtn.setTextColor(Color.RED);
+                                confirmJoinBtn.postDelayed(new Runnable() {
+                                    public void run() {
+                                        confirmJoinBtn.setTextColor(Color.BLACK);
+                                        confirmJoinBtn.setText("JOIN ROOM");
+                                    }
+                                }, 1000);
+                                // citation ends here
                             }
                         }
 
@@ -185,6 +180,12 @@ public class JoinRoomScreen extends AppCompatActivity {
     public void onBackPressed() {
         Intent intent = new Intent(getApplicationContext(), MainScreen.class);
         startActivity(intent);
+        finish();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
         finish();
     }
 

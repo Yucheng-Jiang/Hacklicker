@@ -8,6 +8,7 @@ import android.widget.ImageButton;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.haclicker.DataStructure.Chat;
 import com.example.haclicker.DataStructure.ClassRoom;
 import com.example.haclicker.DataStructure.Teacher;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -63,6 +64,7 @@ public class MainScreen extends AppCompatActivity {
                 Teacher.setClassroom(classroom);
                 // update the class room to firebase server
                 Teacher.createClassroom();
+                Chat.sendNewChat(new Chat(0, "Welcome", username, userEmail), classroom.getClassID());
                 // jump to host screen activity
                 Intent intent = new Intent(getApplicationContext(), HostScreen.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -110,7 +112,7 @@ public class MainScreen extends AppCompatActivity {
         // create a new database reference
         DatabaseReference reference = FirebaseDatabase.getInstance()
                 .getReference("ClassRooms");
-        reference.addValueEventListener(new ValueEventListener() {
+        reference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot ID : snapshot.getChildren()) {

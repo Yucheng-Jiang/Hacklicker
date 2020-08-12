@@ -234,7 +234,7 @@ public class Teacher {
 //                .child(Teacher.getClassroom().getClassID())
                 .child("8415628875")
                 .child("StudentResponse");
-        ref.addValueEventListener(new ValueEventListener() {
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
             @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {

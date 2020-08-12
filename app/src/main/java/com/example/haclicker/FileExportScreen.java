@@ -104,7 +104,7 @@ public class FileExportScreen extends AppCompatActivity {
         DatabaseReference ref = db.getReference("ClassRooms")
                 .child(classID)
                 .child("StudentResponse");
-        ref.addValueEventListener(new ValueEventListener() {
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
             @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -168,7 +168,7 @@ public class FileExportScreen extends AppCompatActivity {
                     .getReference("ClassRooms").child(classID).child("Questions")
                     .child(question.getQuestionId() + "").child("answer");
             final int index = i;
-            ref.addValueEventListener(new ValueEventListener() {
+            ref.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
 

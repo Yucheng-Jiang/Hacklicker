@@ -10,8 +10,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.haclicker.DataStructure.Chat;
+import com.example.haclicker.DataStructure.ChatComparator;
 import com.example.haclicker.DataStructure.Question;
 import com.example.haclicker.DataStructure.Student;
 import com.example.haclicker.DataStructure.Teacher;
@@ -26,14 +28,16 @@ import com.google.firebase.database.ValueEventListener;
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class ChatScreen extends AppCompatActivity {
-    String classID;
-    String role;
+    String classID, myName, myEmail, role;
     TextView chatInputTxt;
     Button chatSendBtn;
     int totalChatNum;
+    boolean isRunning = true;
+    FirebaseUser user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,21 +46,26 @@ public class ChatScreen extends AppCompatActivity {
         // set UI component
         chatInputTxt = findViewById(R.id.chatInputTxt);
         chatSendBtn = findViewById(R.id.chatSendBtn);
+        // get user info
+        user = FirebaseAuth.getInstance().getCurrentUser();
+        myEmail = user.getEmail();
+        myName = user.getDisplayName();
+        // get intent
+        Intent intent = getIntent();
+        classID = intent.getStringExtra("classID");
+        role = intent.getStringExtra("role");
+        // chat send listener
         chatSendBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String input = chatInputTxt.getText().toString();
                 if (input.length() != 0) {
                     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                    sendChat(new Chat(totalChatNum, input, user.getDisplayName()));
+                    sendChat(new Chat(totalChatNum, input, myName, myEmail));
                     chatInputTxt.setText("");
                 }
             }
         });
-        // get intent
-        Intent intent = getIntent();
-        classID = intent.getStringExtra("classID");
-        role = intent.getStringExtra("role");
         // update UI
         // keep updating updateChatList
         final Thread thread = new Thread() {
@@ -64,13 +73,18 @@ public class ChatScreen extends AppCompatActivity {
             public void run() {
                 try {
                     while (!isInterrupted()) {
-                        Thread.sleep(1000);
+                        if (!isRunning) {
+                            break;
+                        }
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                updateChatList();
+                                if (isRunning) {
+                                    updateChatList();
+                                }
                             }
                         });
+                        Thread.sleep(500);
                     }
                 } catch (InterruptedException e) {
                 }
@@ -83,17 +97,29 @@ public class ChatScreen extends AppCompatActivity {
     public void updateChatList() {
         DatabaseReference ref = FirebaseDatabase.getInstance()
                 .getReference("ClassRooms").child(classID).child("Chat");
-        ref.addValueEventListener(new ValueEventListener() {
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                Object id = snapshot.getValue();
+                if (id == null || id.toString().equals("")) {
+                    isRunning = false;
+                    Toast.makeText(ChatScreen.this,
+                            "Room closed by host (1) ", Toast.LENGTH_LONG).show();
+                    Intent intent = new Intent(getApplicationContext(), FileExportScreen.class);
+                    intent.putExtra("canBack", false);
+                    intent.putExtra("role", role);
+                    startActivity(intent);
+                    finish();
+                }
                 List<Chat> chatList = new ArrayList<>();
                 for (DataSnapshot singleChat : snapshot.getChildren()) {
                     int chatID = Integer.parseInt(singleChat.child("chatId").getValue().toString());
                     String content = singleChat.child("chatContent").getValue().toString();
                     int vote = Integer.parseInt(singleChat.child("numVote").getValue().toString());
                     String userName = singleChat.child("userName").getValue().toString();
+                    String userEmail = singleChat.child("userEmail").getValue().toString();
                     boolean isAnswered = (boolean) singleChat.child("answered").getValue();
-                    chatList.add(new Chat(chatID, content, vote, userName, isAnswered));
+                    chatList.add(new Chat(chatID, content, vote, userName, userEmail, isAnswered));
                 }
                 // if questions on the server is different from questions in local
                 // update UI
@@ -125,14 +151,21 @@ public class ChatScreen extends AppCompatActivity {
         } else if (role.equals("host")) {
             chats = Teacher.getClassroom().getChatList();
         }
+        Collections.sort(chats, new ChatComparator());
         if (chats != null) {
             // remove all current views
             LinearLayout chatListLayout = findViewById(R.id.chatListLayout);
             chatListLayout.removeAllViews();
             // iterate through every question
             for (final Chat chat : chats) {
-                View chatChunk = getLayoutInflater().inflate(R.layout.chunk_chat,
-                        chatListLayout, false);
+                View chatChunk;
+                if (chat.getUserEmail().equals(myEmail)) {
+                    chatChunk = getLayoutInflater().inflate(R.layout.chunk_my_chat,
+                            chatListLayout, false);
+                } else {
+                    chatChunk = getLayoutInflater().inflate(R.layout.chunk_chat,
+                            chatListLayout, false);
+                }
                 final int currentID = chat.getChatId();
                 // set user avatar
                 final Button userAvatar = chatChunk.findViewById(R.id.userAvatar);

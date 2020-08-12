@@ -85,7 +85,7 @@ public class Student {
         final List<String> allRoomIDS = new ArrayList<>();
         DatabaseReference reference = FirebaseDatabase.getInstance()
                 .getReference("ClassRooms");
-        reference.addValueEventListener(new ValueEventListener() {
+        reference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot ID : snapshot.getChildren()) {
