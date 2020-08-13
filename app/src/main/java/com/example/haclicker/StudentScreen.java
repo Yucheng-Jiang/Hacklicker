@@ -29,7 +29,6 @@ public class StudentScreen extends AppCompatActivity {
     ImageButton shareRoom, exitRoom, chatRoom;
     TextView emptyReminder;
     String classID;
-    private boolean isRunning = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,10 +41,8 @@ public class StudentScreen extends AppCompatActivity {
         emptyReminder = findViewById(R.id.emptyReminder);
         // get class ID
         classID = getIntent().getStringExtra("ClassID");
-        isRunning = true;
         if (classID == null) {
             Toast.makeText(this, "Class Ended", Toast.LENGTH_SHORT).show();
-            isRunning = false;
             finish();
         }
         // exit room button set on click listener
@@ -56,7 +53,6 @@ public class StudentScreen extends AppCompatActivity {
                 intent.putExtra("role", "student");
                 intent.putExtra("classID", classID);
                 startActivity(intent);
-                isRunning = false;
             }
         });
         // share room button set on click listener
@@ -66,7 +62,6 @@ public class StudentScreen extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(), ShareRoomScreen.class);
                 intent.putExtra("Id", classID);
                 startActivity(intent);
-                isRunning = false;
             }
         });
         chatRoom.setOnClickListener(new View.OnClickListener() {
@@ -76,7 +71,6 @@ public class StudentScreen extends AppCompatActivity {
                 intent.putExtra("role", "student");
                 intent.putExtra("classID", classID);
                 startActivity(intent);
-                isRunning = false;
             }
         });
 
@@ -172,7 +166,6 @@ public class StudentScreen extends AppCompatActivity {
                 questionTxt.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        isRunning = false;
                         Intent intent = new Intent(getApplicationContext(), StudentQuestionScreen.class);
                         intent.putExtra("ClassID", classID);
                         intent.putExtra("QuestionID", question.getQuestionId());
@@ -197,14 +190,12 @@ public class StudentScreen extends AppCompatActivity {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        isRunning = false;
         finish();
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        isRunning = true;
     }
 
 }
