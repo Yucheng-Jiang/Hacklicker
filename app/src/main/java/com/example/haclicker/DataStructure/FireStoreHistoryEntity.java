@@ -9,6 +9,12 @@ public class FireStoreHistoryEntity {
     private List<Question> questionList;
     private List<StudentResponse> studentResponseList;
 
+    public FireStoreHistoryEntity() {
+        classID = null;
+        questionList = null;
+        studentResponseList = null;
+    }
+
     public FireStoreHistoryEntity(String classID, List<Question> questionList,
                                   List<StudentResponse> studentResponseList) {
         this.classID = classID;

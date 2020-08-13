@@ -16,11 +16,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.example.haclicker.DataStructure.ClassRoom;
 import com.example.haclicker.DataStructure.FireStoreHistoryEntity;
 import com.example.haclicker.DataStructure.Question;
 import com.example.haclicker.DataStructure.Student;
-import com.example.haclicker.DataStructure.StudentHistoryEntity;
 import com.example.haclicker.DataStructure.StudentResponse;
 import com.example.haclicker.DataStructure.Teacher;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -32,7 +30,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.io.File;
@@ -41,13 +38,9 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class FileExportScreen extends AppCompatActivity {
     Button exportBtn, backBtn, leaveBtn;

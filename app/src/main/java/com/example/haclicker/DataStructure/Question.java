@@ -10,6 +10,14 @@ public class Question {
     private List<String> choices;
     private List<String> correctAns = new ArrayList<>();
 
+    public Question() {
+        questionDescription = null;
+        questionId = -1;
+        canAnswer = false;
+        choices = null;
+        correctAns = null;
+    }
+
     public Question(String questionDescription, int questionId, List<String> choices, boolean canAnswer) {
         this.questionDescription = questionDescription;
         this.questionId = questionId;
@@ -32,8 +40,13 @@ public class Question {
     public List<String> getCorrectAns() { return correctAns; }
 
     public void setCorrectAns(List<String> setCorrectAns) {
-        this.correctAns.clear();
-        this.correctAns.addAll(setCorrectAns);
+        if (correctAns != null) {
+            this.correctAns.clear();
+            this.correctAns.addAll(setCorrectAns);
+        } else {
+            this.correctAns = new ArrayList<>();
+            this.correctAns.addAll((setCorrectAns));
+        }
     }
 
     public void setCanAnswer(boolean canAnswer) {

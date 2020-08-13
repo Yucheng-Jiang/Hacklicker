@@ -213,6 +213,7 @@ public class StudentQuestionScreen extends AppCompatActivity {
                             "Room closed by host", Toast.LENGTH_LONG).show();
                     Intent intent = new Intent(getApplicationContext(), FileExportScreen.class);
                     intent.putExtra("canBack", false);
+                    intent.putExtra("classID", classID);
                     intent.putExtra("role", "student");
                     startActivity(intent);
                     finish();
