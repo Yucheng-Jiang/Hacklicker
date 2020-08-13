@@ -4,33 +4,24 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.example.haclicker.DataStructure.Question;
-import com.example.haclicker.DataStructure.Student;
 import com.example.haclicker.DataStructure.StudentHistoryEntity;
-import com.example.haclicker.DataStructure.Teacher;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class HistoryQuestionScreen extends AppCompatActivity {
     TextView emptyReminder;
-    String role;
     private final int MAX_DESCRIPTION_LENGTH = 50;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_history_question_screen);
-        role = getIntent().getStringExtra("role");
         emptyReminder = findViewById(R.id.emptyReminder);
         updateUI();
     }
@@ -83,7 +74,6 @@ public class HistoryQuestionScreen extends AppCompatActivity {
                         }
                         detailTxt += finalAnswerHistory;
                         intent.putExtra("detail", detailTxt);
-                        intent.putExtra("role", role);
                         startActivity(intent);
                         finish();
                     }
@@ -102,7 +92,6 @@ public class HistoryQuestionScreen extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
         Intent intent = new Intent(getApplicationContext(), HistoryClassScreen.class);
-        intent.putExtra("role", role);
         startActivity(intent);
         finish();
     }

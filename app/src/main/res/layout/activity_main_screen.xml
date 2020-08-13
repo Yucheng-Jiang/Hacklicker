@@ -133,7 +133,7 @@
                     android:layout_weight="10" />
 
                 <ImageButton
-                    android:id="@+id/question_history"
+                    android:id="@+id/historyBtn"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="bottom"

@@ -13,7 +13,6 @@ import android.widget.Button;
 import android.widget.TextView;
 
 public class HistoryDetailScreen extends AppCompatActivity {
-    private String role;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,7 +21,6 @@ public class HistoryDetailScreen extends AppCompatActivity {
 
         final TextView descriptionTxt = findViewById(R.id.descriptionTxt);
         final Button copyBtn = findViewById(R.id.copyBtn);
-        role  = getIntent().getStringExtra("role");
 
         descriptionTxt.setText(getIntent().getStringExtra("detail"));
         copyBtn.setOnClickListener(new View.OnClickListener() {
@@ -50,7 +48,6 @@ public class HistoryDetailScreen extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         Intent intent = new Intent(getApplication(), HistoryQuestionScreen.class);
-        intent.putExtra("role", role);
         startActivity(intent);
         finish();
     }
