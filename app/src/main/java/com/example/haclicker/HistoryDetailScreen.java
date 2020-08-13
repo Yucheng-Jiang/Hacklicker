@@ -51,29 +51,32 @@ public class HistoryDetailScreen extends AppCompatActivity {
             for (Question question : questionList) {
                 if (question.getQuestionId() == questionID && questionID != -1) {
                     for (final StudentResponse studentResponse : studentResponsesList) {
-                        // inflate from chunk_question
-                        View questionChunk = getLayoutInflater().inflate(R.layout.chunk_history_detail,
-                                questionListLayout, false);
-                        // set question text view with description
-                        TextView descriptionTxt = questionChunk.findViewById(R.id.descriptionTxt);
-                        String detail = "Student email: " + studentResponse.getStudentEmail() + "\n";
-                        detail += "Student name: " + studentResponse.getStudentName() + "\n";
-                        detail += "Question ID: " + studentResponse.getQuestionID() + "\n\n";
+                        if (studentResponse.getQuestionID() == questionID) {
+                            // inflate from chunk_question
+                            View questionChunk = getLayoutInflater().inflate(R.layout.chunk_history_detail,
+                                    questionListLayout, false);
+                            // set question text view with description
+                            TextView descriptionTxt = questionChunk.findViewById(R.id.descriptionTxt);
+                            String detail = "Student email: " + studentResponse.getStudentEmail() + "\n";
+                            detail += "Student name: " + studentResponse.getStudentName() + "\n";
+                            detail += "Question ID: " + studentResponse.getQuestionID() + "\n\n";
 
-                        detail += "Question Description: " + question.getQuestionDescription() + "\n\n";
-                        for (int i = 0; i < question.getChoices().size(); i++) {
-                            detail += (char)((int) 'A' + i) + ") " + question.getChoices().get(i) + "\n";
+                            detail += "Question Description: " + question.getQuestionDescription() + "\n\n";
+                            for (int i = 0; i < question.getChoices().size(); i++) {
+                                detail += (char)((int) 'A' + i) + ") " + question.getChoices().get(i) + "\n";
+                            }
+                            detail += "\n Correct Answer(s): ";
+                            detail += question.getCorrectAns() == null ? "Not available" : question.getCorrectAns().toString();
+                            detail += "\n Chosen Answer(s): ";
+                            detail +=  studentResponse.getAnswer() == null ? "Not available" : studentResponse.getAnswer().toString();
+                            descriptionTxt.setText(detail);
+
+                            // populate the chunk to linear layout
+                            questionListLayout.addView(questionChunk);
                         }
-                        detail += "\n Correct Answer(s): ";
-                        detail += question.getCorrectAns() == null ? "Not available" : question.getCorrectAns().toString();
-                        detail += "\n Chosen Answer(s): ";
-                        detail +=  studentResponse.getAnswer() == null ? "Not available" : studentResponse.getAnswer().toString();
-                        descriptionTxt.setText(detail);
-
-                        // populate the chunk to linear layout
-                        questionListLayout.addView(questionChunk);
                     }
                 }
+                break;
             }
 
         } else {
