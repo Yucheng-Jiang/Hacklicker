@@ -14,6 +14,10 @@ import com.example.haclicker.DataStructure.FireStoreHistoryEntity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Map;
 
 public class HistoryClassScreen extends AppCompatActivity {
@@ -51,7 +55,11 @@ public class HistoryClassScreen extends AppCompatActivity {
                     questionListLayout, false);
             // set question text view with description
             Button classIdBtn = questionChunk.findViewById(R.id.question_txt);
-            classIdBtn.setText("Class: " + fireStoreHistoryEntity.getClassID());
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTimeInMillis(Long.parseLong(fireStoreHistoryEntity.getClassID()));
+            classIdBtn.setText("Class: " + fireStoreHistoryEntity.getClassID() + "\n "
+                    + calendar.getTime());
+
 
             // set each question chunk onClickListener
             classIdBtn.setOnClickListener(new View.OnClickListener() {
