@@ -23,7 +23,7 @@
             android:background="#DAE5ED"
             android:ems="10"
             android:inputType="textPersonName"
-            android:text="   Share Room"
+            android:text="   Share "
             android:textSize="24sp" />
 
 

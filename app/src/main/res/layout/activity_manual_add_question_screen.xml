@@ -20,7 +20,7 @@
             android:background="#DAE5ED"
             android:ems="10"
             android:inputType="textPersonName"
-            android:text="   Manul Add Question"
+            android:text="   Edit Question"
             android:textSize="24sp" />
 
         <Space

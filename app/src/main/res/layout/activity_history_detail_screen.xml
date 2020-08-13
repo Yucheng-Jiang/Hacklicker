@@ -20,7 +20,7 @@
             android:background="#DAE5ED"
             android:ems="10"
             android:inputType="textPersonName"
-            android:text="   Question Detail"
+            android:text="   Question Record"
             android:textSize="24sp" />
 
 

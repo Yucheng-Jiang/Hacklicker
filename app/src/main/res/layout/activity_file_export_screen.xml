@@ -20,7 +20,7 @@
             android:background="#DAE5ED"
             android:ems="10"
             android:inputType="textPersonName"
-            android:text="   File Export"
+            android:text="   Export"
             android:textSize="24sp" />
 
 
