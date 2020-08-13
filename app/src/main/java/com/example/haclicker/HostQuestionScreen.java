@@ -114,6 +114,7 @@ public class HostQuestionScreen extends AppCompatActivity {
                                     // set control button to gray
                                     controlBtn.setBackgroundColor(Color.GRAY);
                                 }
+                                showResult();
                             }
                         }
                     });
@@ -148,12 +149,11 @@ public class HostQuestionScreen extends AppCompatActivity {
                         controlBtn.setText("Start");
                         // update firebase
                         Teacher.setStudentAccessibility(false, curQuestionID);
-
+                        showResult();
                     }
                 } else {
                     // if there's already question marked
                     controlBtn.setText("Start");
-                    showResult();
                     Toast.makeText(HostQuestionScreen.this, "Cannot Start Completed Question!", Toast.LENGTH_LONG).show();
                 }
 
@@ -246,19 +246,17 @@ public class HostQuestionScreen extends AppCompatActivity {
                 }
 
                 BarDataSet barDataSet = new BarDataSet(resultEntries, label);
-                DataSnapshot answerSnapshot = snapshot.child("Questions")
-                        .child(curQuestionID + "")
-                        .child("answer");
                 List<String> correctAns = Teacher.getClassroom().getQuestionById(curQuestionID).getCorrectAns();
                 if ( correctAns != null && correctAns.size() != 0) {
-                    int[] barColor = new int[result.keySet().size()];
-                    for (int j = 0; j < result.keySet().size(); j++) {
-                        barColor[j] = Color.RED;
-                    }
-                    for (int k = 0; k < result.keySet().size(); k++) {
-                        if (correctAns.contains(result.get(k))) {
-                            barColor[k] = Color.GREEN;
+                    List<Integer> barColor = new ArrayList<>();
+                    int k = 0;
+                    for (String choice : result.keySet()) {
+                        if (correctAns.contains(choice)) {
+                            barColor.add(k, android.graphics.Color.parseColor("#99ff99"));
+                        } else {
+                            barColor.add(k, Color.RED);
                         }
+                        k++;
                     }
                     barDataSet.setColors(barColor);
                 } else {

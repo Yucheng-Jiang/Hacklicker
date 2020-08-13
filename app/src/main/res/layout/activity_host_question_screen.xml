@@ -107,7 +107,7 @@
                     android:layout_weight="40"
                     android:background="@drawable/orangeblue"
                     android:gravity="center|center_horizontal"
-                    android:text="TextView"
+                    android:text="0 Stu Voted"
                     android:textSize="18sp" />
 
                 <Space
