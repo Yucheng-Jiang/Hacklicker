@@ -168,7 +168,6 @@ public class FileExportScreen extends AppCompatActivity {
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         final String email = user.getEmail();
-
         //get all info from firebase realtime server
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("ClassRooms")
                 .child(classID)
@@ -176,7 +175,9 @@ public class FileExportScreen extends AppCompatActivity {
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-
+                if (Teacher.getClassroom().getQuestions().size() == 0) {
+                    return;
+                }
                 List<StudentResponse> studentResponseList = new ArrayList<>();
                 //~ClassRooms/classID/StudentResponse/questionID
                 for (DataSnapshot singleQuestion : snapshot.getChildren()) {
@@ -323,7 +324,9 @@ public class FileExportScreen extends AppCompatActivity {
     }
 
     private void storeStudentDataToFireStore() {
-
+        if (Student.getQuestionList().size() == 0) {
+            return;
+        }
         //get user
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         final String email = user.getEmail();
