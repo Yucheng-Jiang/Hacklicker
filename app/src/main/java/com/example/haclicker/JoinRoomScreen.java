@@ -146,6 +146,9 @@ public class JoinRoomScreen extends AppCompatActivity {
                 break;
             // if user choose to select from gallery, recognize the png first
             case RC_PICK:
+                if (data == null) {
+                    break;
+                }
                 Uri selectedImage = data.getData();
                 Bitmap bitmap = null;
                 try {

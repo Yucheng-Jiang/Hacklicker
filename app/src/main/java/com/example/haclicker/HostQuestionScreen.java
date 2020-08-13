@@ -84,7 +84,7 @@ public class HostQuestionScreen extends AppCompatActivity {
                     if (correctAnswers != null && correctAnswers.size() != 0) {
                         if (correctAnswers.contains(index)) {
                             // make correct answer choices background green
-                            optionTxt.setBackgroundColor(android.graphics.Color.parseColor("#99ff99"));
+                            optionTxt.setBackgroundColor(android.graphics.Color.parseColor("#07C160"));
                         } else {
                             // mark incorrect questions as gray
                             optionTxt.setBackgroundColor(android.graphics.Color.parseColor("#ffc38d"));
@@ -99,7 +99,7 @@ public class HostQuestionScreen extends AppCompatActivity {
                             // if there's no correct questions marked
                             if (controlBtn.getText().equals("Start")) {
                                 if (((ColorDrawable) optionTxt.getBackground()).getColor() ==
-                                        android.graphics.Color.parseColor("#99ff99")) {
+                                        android.graphics.Color.parseColor("#07C160")) {
                                     optionTxt.setBackgroundColor(android.graphics.Color.parseColor("#ffc38d"));
                                     correctAnswers.remove(index); // local history
                                     Teacher.deleteCorrectAnswer(curQuestion, index);
@@ -107,7 +107,7 @@ public class HostQuestionScreen extends AppCompatActivity {
                                         controlBtn.setBackgroundColor(android.graphics.Color.parseColor("#ffc38d"));
                                     }
                                 } else {
-                                    optionTxt.setBackgroundColor(android.graphics.Color.parseColor("#99ff99"));
+                                    optionTxt.setBackgroundColor(android.graphics.Color.parseColor("#07C160"));
                                     Teacher.sendCorrectAnswer(curQuestion, index);
                                     correctAnswers.remove(index);
                                     correctAnswers.add(index); // local history
@@ -252,7 +252,7 @@ public class HostQuestionScreen extends AppCompatActivity {
                     int k = 0;
                     for (String choice : result.keySet()) {
                         if (correctAns.contains(choice)) {
-                            barColor.add(k, android.graphics.Color.parseColor("#99ff99"));
+                            barColor.add(k, android.graphics.Color.parseColor("#07C160"));
                         } else {
                             barColor.add(k, Color.RED);
                         }
