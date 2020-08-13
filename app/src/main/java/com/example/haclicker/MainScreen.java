@@ -63,7 +63,6 @@ public class MainScreen extends AppCompatActivity {
         createRoom.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Teacher.clearData();
                 // generate a new room with random ID (without collision)
                 ClassRoom classroom = generateClassroom();
                 // set the classroom to Teacher class (static field)
