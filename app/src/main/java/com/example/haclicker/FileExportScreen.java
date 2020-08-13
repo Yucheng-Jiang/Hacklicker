@@ -199,18 +199,19 @@ public class FileExportScreen extends AppCompatActivity {
                                 .child("questionID").getValue().toString());
                         String stuEmail = singleResponse.child("studentEmail").getValue().toString();
                         String stuName = singleResponse.child("studentName").getValue().toString();
-                        long timeStamp = Long.parseLong(singleResponse.child("timeStamp").toString());
+                        long timeStamp = Long.parseLong(singleResponse.child("timeStamp").getValue().toString());
                         studentResponseList.add(new StudentResponse(stuName, stuEmail, answers, questionID, timeStamp));
                     }
                 }
 
                 //Add to fire store server
                 FirebaseFirestore store = FirebaseFirestore.getInstance();
-                store.collection(classID).add(new FireStoreHistoryEntity(classID,
+                store.collection(email).document(classID)
+                    .set(new FireStoreHistoryEntity(classID,
                         Teacher.getClassroom().getQuestions(), studentResponseList))
-                        .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                        .addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
-                            public void onSuccess(DocumentReference documentReference) {
+                            public void onSuccess(Void aVoid) {
                                 Log.d("TAG", "DocumentSnapshot successfully written!");
                             }
                         })
@@ -347,10 +348,11 @@ public class FileExportScreen extends AppCompatActivity {
         //upload to fire store server
         FirebaseFirestore store = FirebaseFirestore.getInstance();
         store.collection(email)
-                .add(new FireStoreHistoryEntity(classID, questions, studentResponseList))
-                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                .document(classID)
+                .set(new FireStoreHistoryEntity(classID, questions, studentResponseList))
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
-                    public void onSuccess(DocumentReference documentReference) {
+                    public void onSuccess(Void aVoid) {
                         Log.d("TAG", "DocumentSnapshot successfully written!");
                         Student.clearData();
                     }
