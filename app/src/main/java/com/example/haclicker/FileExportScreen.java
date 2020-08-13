@@ -118,7 +118,6 @@ public class FileExportScreen extends AppCompatActivity {
             @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-
                 List<StudentResponse> allStudentResponse = new ArrayList<>();
                 //~ClassRooms/classID/StudentResponse/questionID
                 for (DataSnapshot singleQuestion : snapshot.getChildren()) {

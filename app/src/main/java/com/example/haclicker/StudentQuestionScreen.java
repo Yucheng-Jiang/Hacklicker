@@ -71,17 +71,17 @@ public class StudentQuestionScreen extends AppCompatActivity {
             public void run() {
                 try {
                     while (!isInterrupted()) {
-                        Thread.sleep(500);
                         if (!isRunning) {
                             break;
                         }
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                updateCorrectAns();
                                 updateAccessibility();
+                                updateCorrectAns();
                             }
                         });
+                        Thread.sleep(500);
                     }
                 } catch (InterruptedException e) {
                 }
