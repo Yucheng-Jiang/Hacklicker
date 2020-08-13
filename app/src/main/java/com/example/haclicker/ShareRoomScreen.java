@@ -103,12 +103,12 @@ public class ShareRoomScreen extends AppCompatActivity {
 
         // Code below are cited from
         // https://stackoverflow.com/questions/22194761/hide-textview-after-some-time-in-android
-        copyIdBtn.setText("IMAGE SAVED");
-        copyIdBtn.setTextColor(Color.GREEN);
-        copyIdBtn.postDelayed(new Runnable() {
+        saveQrBtn.setText("IMAGE SAVED");
+        saveQrBtn.setTextColor(Color.GREEN);
+        saveQrBtn.postDelayed(new Runnable() {
             public void run() {
-                copyIdBtn.setTextColor(Color.BLACK);
-                copyIdBtn.setText("SAVE IMAGE");
+                saveQrBtn.setTextColor(Color.BLACK);
+                saveQrBtn.setText("SAVE IMAGE");
             }
         }, 1500);
         // citation ends here
