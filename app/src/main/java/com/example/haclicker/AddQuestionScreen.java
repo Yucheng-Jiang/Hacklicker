@@ -8,7 +8,7 @@ import android.view.View;
 import android.widget.Button;
 
 public class AddQuestionScreen extends AppCompatActivity {
-    Button manualAddBtn, jsonAddBtn;
+    Button manualAddBtn, quickAddbtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -16,12 +16,23 @@ public class AddQuestionScreen extends AppCompatActivity {
         setContentView(R.layout.activity_add_question_screen);
         // set UI component
         manualAddBtn = findViewById(R.id.manualAddBtn);
-        jsonAddBtn = findViewById(R.id.jsonAddBtn);
+        quickAddbtn = findViewById(R.id.quickAddbtn);
 
         manualAddBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), ManualAddQuestionScreen.class);
+                intent.putExtra("quickAdd", false);
+                startActivity(intent);
+                finish();
+            }
+        });
+
+        quickAddbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), ManualAddQuestionScreen.class);
+                intent.putExtra("quickAdd", true);
                 startActivity(intent);
                 finish();
             }
