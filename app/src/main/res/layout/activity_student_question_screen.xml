@@ -21,7 +21,7 @@
             android:background="#DAE5ED"
             android:ems="10"
             android:inputType="textPersonName"
-            android:text="   Question Screen"
+            android:text="   Question "
             android:textSize="24sp" />
 
         <LinearLayout
