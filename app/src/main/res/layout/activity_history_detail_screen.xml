@@ -18,62 +18,42 @@
             android:layout_height="0dp"
             android:layout_weight="5" />
 
+
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="85"
-            android:orientation="horizontal"
-            android:weightSum="100">
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
-            <ScrollView
-                android:layout_width="match_parent"
+            <Space
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_marginLeft="30dp"
-                android:layout_marginRight="30dp"
-                android:layout_weight="80"
-                android:background="#DAE5ED">
+                android:layout_weight="5" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
+            <TextView
+                android:id="@+id/emptyReminder"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="No Question Added"
+                android:textSize="14sp" />
 
-                    <TextView
-                        android:id="@+id/descriptionTxt"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="TextView" />
-                </LinearLayout>
-            </ScrollView>
-
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="5" />
         </LinearLayout>
 
-        <LinearLayout
+        <ScrollView
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="10"
-            android:orientation="horizontal"
-            android:weightSum="100">
+            android:layout_weight="95">
 
-            <Space
-                android:layout_width="0dp"
+            <LinearLayout
+                android:id="@+id/descriptionListView"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="30" />
+                android:orientation="vertical" />
+        </ScrollView>
 
-            <Button
-                android:id="@+id/copyBtn"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_weight="40"
-                android:background="@drawable/orangeblue"
-                android:gravity="center"
-                android:text="copy text" />
-
-            <Space
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="30" />
-        </LinearLayout>
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

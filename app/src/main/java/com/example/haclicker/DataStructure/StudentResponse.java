@@ -9,6 +9,14 @@ public class StudentResponse {
     private int questionID;
     private long timeStamp;
 
+    public StudentResponse() {
+        studentName = null;
+        studentEmail = null;
+        answer = null;
+        questionID = -1;
+        timeStamp = -1;
+    }
+
     public StudentResponse(String studentName, String studentEmail, List<String> answer, int questionID, long timeStamp) {
         this.studentName = studentName;
         this.studentEmail = studentEmail;
