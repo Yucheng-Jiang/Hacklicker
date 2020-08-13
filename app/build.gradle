@@ -5,10 +5,6 @@ android {
     compileSdkVersion 30
     buildToolsVersion "30.0.1"
 
-    packagingOptions {
-        pickFirst  'META-INF/*'
-    }
-
     defaultConfig {
         multiDexEnabled true
         applicationId "com.example.haclicker"
@@ -24,6 +20,16 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    packagingOptions {
+        exclude 'project.properties'
+        exclude 'META-INF/DEPENDENCIES'
+    }
+    configurations {
+        all {
+            exclude module: 'httpclient'
         }
     }
 }
