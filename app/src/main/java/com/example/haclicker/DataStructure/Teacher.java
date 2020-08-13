@@ -278,7 +278,6 @@ public class Teacher {
      * delete classroom from the database.
      */
     public static void clearData() {
-
         DatabaseReference ref = FirebaseDatabase.getInstance()
                 .getReference("ClassRooms").child(classroom.getClassID());
         ref.removeValue();
