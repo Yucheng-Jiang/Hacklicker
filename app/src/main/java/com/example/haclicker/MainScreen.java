@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.haclicker.DataStructure.Chat;
 import com.example.haclicker.DataStructure.ClassRoom;
 import com.example.haclicker.DataStructure.FireStoreHistoryEntity;
+import com.example.haclicker.DataStructure.Student;
 import com.example.haclicker.DataStructure.Teacher;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -62,6 +63,7 @@ public class MainScreen extends AppCompatActivity {
         createRoom.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Teacher.clearData();
                 // generate a new room with random ID (without collision)
                 ClassRoom classroom = generateClassroom();
                 // set the classroom to Teacher class (static field)
@@ -80,6 +82,7 @@ public class MainScreen extends AppCompatActivity {
         joinRoom.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Student.clearData();
                 Intent intent = new Intent(getApplicationContext(), JoinRoomScreen.class);
                 startActivity(intent);
                 finish();
