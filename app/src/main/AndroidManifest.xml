@@ -17,7 +17,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        <activity android:name=".SignInScreen"></activity>
+        <activity android:name=".HistoryScreen"></activity>
+        <activity android:name=".SignInScreen" />
         <activity android:name=".ChatScreen" />
         <activity android:name=".FileExportScreen" />
         <activity android:name=".StudentQuestionScreen" />
