@@ -57,7 +57,7 @@ public class HistoryClassScreen extends AppCompatActivity {
             Button classIdBtn = questionChunk.findViewById(R.id.question_txt);
             Calendar calendar = Calendar.getInstance();
             calendar.setTimeInMillis(Long.parseLong(fireStoreHistoryEntity.getClassID()));
-            classIdBtn.setText("Class: " + fireStoreHistoryEntity.getClassID() + "\n "
+            classIdBtn.setText("Class: " + fireStoreHistoryEntity.getClassID() + "\n\n "
                     + calendar.getTime());
 
 

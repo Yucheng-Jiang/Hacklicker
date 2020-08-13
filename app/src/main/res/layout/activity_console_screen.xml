@@ -50,7 +50,7 @@
                 android:background="@drawable/orangeblue"
                 android:gravity="center"
                 android:text="TextView"
-                android:textSize="24sp" />
+                android:textSize="14sp" />
 
             <Space
                 android:layout_width="0dp"
@@ -115,8 +115,10 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="70"
+                android:textAllCaps="false"
                 android:background="@drawable/orangeblue"
-                android:text="Logout" />
+                android:text="Logout"
+                android:textSize="18sp" />
 
             <Space
                 android:layout_width="0dp"

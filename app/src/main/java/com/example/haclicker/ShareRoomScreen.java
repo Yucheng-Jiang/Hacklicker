@@ -27,8 +27,7 @@ import com.google.zxing.qrcode.QRCodeWriter;
  * Share classroom ID with other by copying invitation text or qr code png
  */
 public class ShareRoomScreen extends AppCompatActivity {
-    TextView roomIdDisplay;
-    Button copyIdBtn, saveQrBtn;
+    Button copyIdBtn, saveQrBtn, roomIdDisplay;
     String id;
 
     @Override
