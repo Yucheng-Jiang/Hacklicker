@@ -13,6 +13,17 @@
         android:orientation="vertical"
         android:weightSum="100">
 
+        <TextView
+            android:id="@+id/editTextTextPersonName2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#DAE5ED"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:text="   Question Detail"
+            android:textSize="24sp" />
+
+
         <Space
             android:layout_width="match_parent"
             android:layout_height="0dp"
