@@ -126,7 +126,7 @@ public class StudentScreen extends AppCompatActivity {
                     }
                     // if questions on the server is different from questions in local
                     // update UI
-                    if (!questions.equals(Student.getQuestionList())) {
+                    if (!questions.equals(Student.getQuestionList()) && questions.size() != 0) {
                         Student.setQuestionList(questions);
                         updateUI();
                     }

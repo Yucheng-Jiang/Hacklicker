@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -40,6 +41,7 @@ public class HostQuestionScreen extends AppCompatActivity {
     TextView questionTxt, test;
     Button controlBtn;
     BarChart resultBarChart;
+    ScrollView scrollView;
     int curQuestionID;
     Question curQuestion;
     List<String> correctAnswers;
@@ -53,6 +55,7 @@ public class HostQuestionScreen extends AppCompatActivity {
         questionTxt = findViewById(R.id.question_txt);
         controlBtn = findViewById(R.id.sendAnswer);
         test = findViewById(R.id.test);
+        scrollView = findViewById(R.id.scrollView);
         resultBarChart = findViewById(R.id.resultBarChart);
         // get intent extra
         Intent intent = getIntent();
@@ -130,11 +133,12 @@ public class HostQuestionScreen extends AppCompatActivity {
                 if (curQuestion.getCorrectAns() == null || curQuestion.getCorrectAns().size() == 0) {
                     if (controlBtn.getText().equals("Start")) {
                         controlBtn.setText("Stop");
-                        resultBarChart.setVisibility(View.INVISIBLE);
+                        // update firebase
                         Teacher.addQuestion(curQuestionID);
                         Teacher.setStudentAccessibility(true, curQuestionID);
                     } else {
                         controlBtn.setText("Start");
+                        // update firebase
                         Teacher.setStudentAccessibility(false, curQuestionID);
                         showResult();
                     }
