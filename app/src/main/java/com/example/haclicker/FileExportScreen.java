@@ -360,16 +360,16 @@ public class FileExportScreen extends AppCompatActivity {
             StudentHistoryEntity entity = new StudentHistoryEntity(userName, email, answer,
                     id, description, choices, correctAnswer);
 
-
             //upload to fire store server
             FirebaseFirestore store = FirebaseFirestore.getInstance();
             store.collection("Student")
                     .document(email)
-                    .collection(questions.get(i).getQuestionId() + "")
-                    .add(entity)
-                    .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                    .collection(classID)
+                    .document(questions.get(i).getQuestionId() + "")
+                    .set(entity)
+                    .addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
-                        public void onSuccess(DocumentReference documentReference) {
+                        public void onSuccess(Void aVoid) {
                             Log.d("TAG", "DocumentSnapshot successfully written!");
                             Student.clearData();
                         }
