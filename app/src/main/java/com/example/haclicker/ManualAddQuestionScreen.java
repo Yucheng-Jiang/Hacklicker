@@ -27,9 +27,6 @@ public class ManualAddQuestionScreen extends AppCompatActivity {
     Button addOption, createQuestion;
     private List<String> options;
     private List<EditText> editText;
-    private Intent intent;
-    private boolean isQuickAdd;
-    private final int DEFAUL_OPTION_COUNT = 4;
 
 
     @SuppressLint("SetTextI18n")
@@ -40,28 +37,35 @@ public class ManualAddQuestionScreen extends AppCompatActivity {
         // initialize field
         options = new ArrayList<>();
         editText = new ArrayList<>();
-        intent = getIntent();
-        isQuickAdd = intent.getBooleanExtra("quickAdd", false);
         // set UI component
         questionDescribe = findViewById(R.id.questionDescribe);
+        questionDescribe.setGravity(Gravity.LEFT);
         addOption = findViewById(R.id.addOption);
         createQuestion = findViewById(R.id.createQuestion);
-
-        if (isQuickAdd) {
-            questionDescribe.setText("Question " + (Teacher.getClassroom().getQuestions().size() + 1));
-            questionDescribe.setGravity(Gravity.CENTER);
-            // add a new option editText
-           for (int i = 0; i < DEFAUL_OPTION_COUNT; i++) {
-               char index = (char) ((int) 'A' + i);
-               addOption("Option " + Character.toString(index));
-           }
-        }
 
         // add option button clicked
         addOption.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                addOption(null);
+                // remove all existing options
+                LinearLayout optionList = findViewById(R.id.optionList);
+                optionList.removeAllViews();
+                // re-populate all editText views
+                for (final EditText et : editText) {
+                    View optionChunk = getLayoutInflater().inflate(R.layout.chunk_option,
+                            optionList, false);
+                    EditText optionTxt = optionChunk.findViewById(R.id.optionTxt);
+                    optionTxt.setText(et.getText().toString());
+                    optionList.addView(optionChunk);
+                }
+                // add a new option editText
+                View optionChunk = getLayoutInflater().inflate(R.layout.chunk_option,
+                        optionList, false);
+                EditText optionTxt = optionChunk.findViewById(R.id.optionTxt);
+                optionTxt.setHint("add option description here");
+                optionTxt.setGravity(Gravity.LEFT);
+                optionList.addView(optionChunk);
+                editText.add(optionTxt);
             }
         });
 
@@ -88,30 +92,5 @@ public class ManualAddQuestionScreen extends AppCompatActivity {
         Intent intent = new Intent(getApplicationContext(), AddQuestionScreen.class);
         startActivity(intent);
         finish();
-    }
-    private void addOption(String optionDescription) {
-        // remove all existing options
-        LinearLayout optionList = findViewById(R.id.optionList);
-        optionList.removeAllViews();
-        // re-populate all editText views
-        for (final EditText et : editText) {
-            View optionChunk = getLayoutInflater().inflate(R.layout.chunk_option,
-                    optionList, false);
-            EditText optionTxt = optionChunk.findViewById(R.id.optionTxt);
-            optionTxt.setText(et.getText().toString());
-            optionList.addView(optionChunk);
-        }
-        // add a new option editText
-        View optionChunk = getLayoutInflater().inflate(R.layout.chunk_option,
-                optionList, false);
-        EditText optionTxt = optionChunk.findViewById(R.id.optionTxt);
-        if (optionDescription != null) {
-            optionTxt.setText(optionDescription);
-            optionTxt.setGravity(Gravity.CENTER);
-        } else {
-            optionTxt.setHint("add option description here");
-        }
-        optionList.addView(optionChunk);
-        editText.add(optionTxt);
     }
 }

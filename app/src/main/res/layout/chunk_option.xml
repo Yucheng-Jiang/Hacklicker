@@ -27,6 +27,7 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_weight="70"
                 android:color="#ffc38d"
+                android:gravity="center"
                 android:hint="Option Description"
                 tools:ignore="MissingConstraints"
                 tools:layout_editor_absoluteX="69dp"
