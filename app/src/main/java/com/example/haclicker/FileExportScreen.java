@@ -350,7 +350,6 @@ public class FileExportScreen extends AppCompatActivity {
                     @Override
                     public void onSuccess(Void aVoid) {
                         Log.d("TAG", "DocumentSnapshot successfully written!");
-                        Student.clearData();
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {

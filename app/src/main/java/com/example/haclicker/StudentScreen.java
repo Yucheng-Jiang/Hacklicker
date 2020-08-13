@@ -41,6 +41,10 @@ public class StudentScreen extends AppCompatActivity {
         emptyReminder = findViewById(R.id.emptyReminder);
         // get class ID
         classID = getIntent().getStringExtra("ClassID");
+        if (Student.lastId != null && classID != null && !classID.equals(Student.lastId)) {
+            Student.clearData();
+        }
+        Student.lastId = classID;
         if (classID == null) {
             Toast.makeText(this, "Class Ended", Toast.LENGTH_SHORT).show();
             finish();

@@ -81,7 +81,6 @@ public class MainScreen extends AppCompatActivity {
         joinRoom.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Student.clearData();
                 Intent intent = new Intent(getApplicationContext(), JoinRoomScreen.class);
                 startActivity(intent);
                 finish();

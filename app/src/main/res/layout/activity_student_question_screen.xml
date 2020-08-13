@@ -31,16 +31,6 @@
             android:orientation="vertical"
             android:weightSum="100">
 
-            <ImageButton
-                android:id="@+id/banBtn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center|right"
-                android:background="@null"
-                android:src="@drawable/ban"
-                android:visibility="visible"
-                tools:visibility="visible" />
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
@@ -65,6 +55,16 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="10" />
+
+                <ImageButton
+                    android:id="@+id/banBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center|right"
+                    android:background="@null"
+                    android:src="@drawable/ban"
+                    android:visibility="visible"
+                    tools:visibility="visible" />
             </LinearLayout>
 
 
