@@ -184,7 +184,6 @@ public class FileExportScreen extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-                List<FireStoreHistoryEntity> historyEntityArrayList = new ArrayList<>();
                 List<StudentResponse> studentResponseList = new ArrayList<>();
                 //~ClassRooms/classID/StudentResponse/questionID
                 for (DataSnapshot singleQuestion : snapshot.getChildren()) {
@@ -204,12 +203,11 @@ public class FileExportScreen extends AppCompatActivity {
                         studentResponseList.add(new StudentResponse(stuName, stuEmail, answers, questionID, timeStamp));
                     }
                 }
-                historyEntityArrayList.add(new FireStoreHistoryEntity(classID,
-                        Teacher.getClassroom().getQuestions(), studentResponseList));
 
                 //Add to fire store server
                 FirebaseFirestore store = FirebaseFirestore.getInstance();
-                store.collection(classID).add(historyEntityArrayList)
+                store.collection(classID).add(new FireStoreHistoryEntity(classID,
+                        Teacher.getClassroom().getQuestions(), studentResponseList))
                         .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                             @Override
                             public void onSuccess(DocumentReference documentReference) {
@@ -339,20 +337,17 @@ public class FileExportScreen extends AppCompatActivity {
 
         final List<Question> questions = Student.getQuestionList();
         List<StudentResponse> studentResponseList = new ArrayList<>();
-        List<FireStoreHistoryEntity> storeHistoryEntityList = new ArrayList<>();
         for (int i = 0; i < questions.size(); i++) {
             //get student answers
             int id = questions.get(i).getQuestionId();
             List<String> answer = Student.getMyAnswerHistory(id);
-
             studentResponseList.add(new StudentResponse(userName, email, answer, id, 0));
         }
-        storeHistoryEntityList.add(new FireStoreHistoryEntity(classID, questions, studentResponseList));
 
         //upload to fire store server
         FirebaseFirestore store = FirebaseFirestore.getInstance();
         store.collection(email)
-                .add(studentResponseList)
+                .add(new FireStoreHistoryEntity(classID, questions, studentResponseList))
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override
                     public void onSuccess(DocumentReference documentReference) {

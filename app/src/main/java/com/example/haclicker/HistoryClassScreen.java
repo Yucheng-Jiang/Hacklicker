@@ -14,11 +14,13 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.haclicker.DataStructure.FireStoreHistoryEntity;
 import com.example.haclicker.DataStructure.Question;
 import com.example.haclicker.DataStructure.Student;
 import com.example.haclicker.DataStructure.StudentHistoryEntity;
 import com.example.haclicker.DataStructure.Teacher;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -94,7 +96,6 @@ public class HistoryClassScreen extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        // TODO: clear stored data
         Intent intent = new Intent(getApplicationContext(), HostScreen.class);;
 
         startActivity(intent);
@@ -103,110 +104,24 @@ public class HistoryClassScreen extends AppCompatActivity {
 
     private void fetchStudentHistory() {
 
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        String email = user.getEmail();
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection("Student").get()
+        db.collection(email).get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        List<FireStoreHistoryEntity> fetchedResponseList = new ArrayList<>();
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
-                                if (document.getId().equals(email)) {
-
-                                    List<String> classIDs = new ArrayList<>();
-                                    Map<String, Object> data = document.getData();
-                                    if (data != null) {
-                                        for (Map.Entry<String, Object> entry : data.entrySet()) {
-                                            classIDs.add(entry.getValue().toString());
-                                        }
-                                    }
-
-                                    for (final String id : classIDs) {
-                                        document.getReference().collection(id)
-                                                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                                            @Override
-                                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-
-                                                Map<String, List<StudentHistoryEntity>> studentHistory = new HashMap<>();
-                                                if (task.isSuccessful()) {
-                                                    List<StudentHistoryEntity> ans = new ArrayList<>();
-                                                    for (QueryDocumentSnapshot document : task.getResult()) {
-                                                        StudentHistoryEntity entity = document.toObject(StudentHistoryEntity.class);
-                                                        ans.add(entity);
-                                                    }
-                                                    studentHistory.put(id, ans);
-                                                }
-                                            }
-                                        });
-                                    }
-                                }
-                                //Log.d("TAG", document.getId() + " => " + document.getData());
-
+                                fetchedResponseList.add(document.toObject(FireStoreHistoryEntity.class));
                             }
+                            Log.d("TAG", "Fetch student history succeeded");
                         } else {
-                            Log.d("TAG", "Error getting documents: ", task.getException());
+                            Log.w("TAG", "Error getting documents.", task.getException());
                         }
                     }
-                });
-    }
 
-    private void fetchTeacherHistory() {
-
-        Map<String, List<StudentHistoryEntity>> studentHistory = new HashMap<>();
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection("Host").get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                List<String> hostEmails = new ArrayList<>();
-                                Map<String, Object> data = document.getData();
-                                if (data != null) {
-                                    for (Map.Entry<String, Object> entry : data.entrySet()) {
-                                        hostEmails.add(entry.getValue().toString());
-                                    }
-
-                                    for (String stu : hostEmails) {
-                                        document.getReference().collection(stu)
-                                                .get()
-                                                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                                                    @Override
-                                                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                                                        if (task.isSuccessful()) {
-                                                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                                                List<String> stuEmails = new ArrayList<>();
-                                                                Map<String, Object> stuData = document.getData();
-                                                                for (Map.Entry<String, Object> entry : stuData.entrySet()) {
-                                                                    stuEmails.add(entry.getValue().toString());
-                                                                }
-                                                                for (final String singleStu : stuEmails) {
-                                                                    //get all questions a specific student has answered
-                                                                    document.getReference().collection(singleStu)
-                                                                            .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                                                                        @Override
-                                                                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                                                                            if (task.isSuccessful()) {
-                                                                                Map<String, List<StudentHistoryEntity>> hostHistory = new HashMap<>();
-                                                                                List<StudentHistoryEntity> entities = new ArrayList<>();
-                                                                                for (QueryDocumentSnapshot document : task.getResult()) {
-                                                                                    StudentHistoryEntity entity = document.toObject(StudentHistoryEntity.class);
-                                                                                    entities.add(entity);
-                                                                                }
-                                                                                hostHistory.put(singleStu, entities);
-                                                                            }
-                                                                        }
-                                                                    });
-
-                                                                }
-                                                            }
-                                                        }
-                                                    }
-                                                });
-                                    }
-                                }
-                            }
-                        }
-                    }
                 });
     }
 }
