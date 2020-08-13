@@ -12,16 +12,6 @@
         android:background="#add8e6"
         android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/editTextTextPersonName2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#DAE5ED"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:text="  Chat Room"
-            android:textSize="24sp" />
-
 
         <LinearLayout
             android:layout_width="match_parent"
