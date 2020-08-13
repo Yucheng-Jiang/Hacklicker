@@ -371,6 +371,7 @@ public class FileExportScreen extends AppCompatActivity {
                         @Override
                         public void onSuccess(DocumentReference documentReference) {
                             Log.d("TAG", "DocumentSnapshot successfully written!");
+                            Student.clearData();
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {
@@ -380,7 +381,6 @@ public class FileExportScreen extends AppCompatActivity {
                         }
                     });
         }
-        Student.clearData();
     }
 
     @Override
