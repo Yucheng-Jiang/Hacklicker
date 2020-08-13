@@ -78,7 +78,7 @@ public class Teacher {
     }
 
     public static void setStudentAccessibility(boolean isEnable, int Qid) {
-        classroom.getQuestionById(Qid).setCanAnswer(false);
+        classroom.getQuestionById(Qid).setCanAnswer(isEnable);
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference()
                 .child("ClassRooms")
                 .child(classroom.getClassID())

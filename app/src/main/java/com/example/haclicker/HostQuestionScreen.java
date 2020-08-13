@@ -62,7 +62,8 @@ public class HostQuestionScreen extends AppCompatActivity {
         curQuestionID = intent.getIntExtra("Id", 0);
         // get current question info
         curQuestion = Teacher.getClassroom().getQuestionById(curQuestionID);
-        correctAnswers = curQuestion.getCorrectAns();
+        // set control button
+
         if (curQuestion != null) {
             // display question and choices
             questionTxt.setText("Question Description: \n" + curQuestion.getQuestionDescription());
@@ -125,6 +126,13 @@ public class HostQuestionScreen extends AppCompatActivity {
             controlBtn.setBackgroundColor(Color.GRAY);
         }
         // control button onClickListener
+        correctAnswers = curQuestion.getCorrectAns();
+        if (curQuestion.getCanAnswer()) {
+            controlBtn.setText("Stop");
+        } else {
+            controlBtn.setText("Start");
+        }
+
         controlBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
