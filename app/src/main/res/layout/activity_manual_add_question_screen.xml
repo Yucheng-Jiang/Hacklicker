@@ -36,6 +36,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="70"
                 android:background="@drawable/orangeblue"
+                android:gravity="center"
                 android:hint="Question Description"
                 tools:ignore="MissingConstraints" />
 
