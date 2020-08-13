@@ -148,11 +148,12 @@ public class HostQuestionScreen extends AppCompatActivity {
                         controlBtn.setText("Start");
                         // update firebase
                         Teacher.setStudentAccessibility(false, curQuestionID);
-                        showResult();
+
                     }
                 } else {
                     // if there's already question marked
                     controlBtn.setText("Start");
+                    showResult();
                     Toast.makeText(HostQuestionScreen.this, "Cannot Start Completed Question!", Toast.LENGTH_LONG).show();
                 }
 
@@ -209,18 +210,18 @@ public class HostQuestionScreen extends AppCompatActivity {
     private void showResult() {
         DatabaseReference ref = FirebaseDatabase.getInstance()
                 .getReference("ClassRooms")
-                .child(Teacher.getClassroom().getClassID())
-                .child("StudentResponse").child(curQuestionID + "");
+                .child(Teacher.getClassroom().getClassID());
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 Map<String, Integer> result = new HashMap<>();
-                for (DataSnapshot singleResponse : snapshot.getChildren()) {
+                for (DataSnapshot singleResponse : snapshot.child("StudentResponse")
+                        .child(curQuestionID + "").getChildren()) {
                     for (DataSnapshot singleAnswer : singleResponse.child("answer").getChildren()) {
-                        if (!result.containsKey(singleAnswer.toString())) {
+                        if (!result.containsKey(singleAnswer.getValue().toString())) {
                             result.put(singleAnswer.getValue().toString(), 1);
                         } else {
-                            result.put(singleAnswer.getValue().toString(), result.get(singleAnswer.toString()) + 1);
+                            result.put(singleAnswer.getValue().toString(), result.get(singleAnswer.getValue().toString()) + 1);
                         }
                     }
                 }
@@ -243,8 +244,27 @@ public class HostQuestionScreen extends AppCompatActivity {
                     label = label + entry + ",";
                     i++;
                 }
+
                 BarDataSet barDataSet = new BarDataSet(resultEntries, label);
-                barDataSet.setColors(ColorTemplate.COLORFUL_COLORS);
+                DataSnapshot answerSnapshot = snapshot.child("Questions")
+                        .child(curQuestionID + "")
+                        .child("answer");
+                List<String> correctAns = Teacher.getClassroom().getQuestionById(curQuestionID).getCorrectAns();
+                if ( correctAns != null && correctAns.size() != 0) {
+                    int[] barColor = new int[result.keySet().size()];
+                    for (int j = 0; j < result.keySet().size(); j++) {
+                        barColor[j] = Color.RED;
+                    }
+                    for (int k = 0; k < result.keySet().size(); k++) {
+                        if (correctAns.contains(result.get(k))) {
+                            barColor[k] = Color.GREEN;
+                        }
+                    }
+                    barDataSet.setColors(barColor);
+                } else {
+                    barDataSet.setColors(ColorTemplate.COLORFUL_COLORS);
+                }
+
                 BarData data = new BarData(barDataSet);
                 resultBarChart.setData(data);
                 resultBarChart.animateXY(500, 500);
