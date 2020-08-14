@@ -14,6 +14,16 @@
         android:orientation="vertical"
         android:weightSum="100">
 
+        <TextView
+            android:id="@+id/editTextTextPersonName2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#DAE5ED"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:text="   Question"
+            android:textSize="24sp" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -97,7 +107,7 @@
                     android:layout_weight="40"
                     android:background="@drawable/orangeblue"
                     android:gravity="center|center_horizontal"
-                    android:text="TextView"
+                    android:text="0 Stu Voted"
                     android:textSize="18sp" />
 
                 <Space

@@ -62,7 +62,8 @@ public class HostQuestionScreen extends AppCompatActivity {
         curQuestionID = intent.getIntExtra("Id", 0);
         // get current question info
         curQuestion = Teacher.getClassroom().getQuestionById(curQuestionID);
-        correctAnswers = curQuestion.getCorrectAns();
+        // set control button
+
         if (curQuestion != null) {
             // display question and choices
             questionTxt.setText("Question Description: \n" + curQuestion.getQuestionDescription());
@@ -83,7 +84,7 @@ public class HostQuestionScreen extends AppCompatActivity {
                     if (correctAnswers != null && correctAnswers.size() != 0) {
                         if (correctAnswers.contains(index)) {
                             // make correct answer choices background green
-                            optionTxt.setBackgroundColor(android.graphics.Color.parseColor("#99ff99"));
+                            optionTxt.setBackgroundColor(android.graphics.Color.parseColor("#07C160"));
                         } else {
                             // mark incorrect questions as gray
                             optionTxt.setBackgroundColor(android.graphics.Color.parseColor("#ffc38d"));
@@ -98,7 +99,7 @@ public class HostQuestionScreen extends AppCompatActivity {
                             // if there's no correct questions marked
                             if (controlBtn.getText().equals("Start")) {
                                 if (((ColorDrawable) optionTxt.getBackground()).getColor() ==
-                                        android.graphics.Color.parseColor("#99ff99")) {
+                                        android.graphics.Color.parseColor("#07C160")) {
                                     optionTxt.setBackgroundColor(android.graphics.Color.parseColor("#ffc38d"));
                                     correctAnswers.remove(index); // local history
                                     Teacher.deleteCorrectAnswer(curQuestion, index);
@@ -106,13 +107,14 @@ public class HostQuestionScreen extends AppCompatActivity {
                                         controlBtn.setBackgroundColor(android.graphics.Color.parseColor("#ffc38d"));
                                     }
                                 } else {
-                                    optionTxt.setBackgroundColor(android.graphics.Color.parseColor("#99ff99"));
+                                    optionTxt.setBackgroundColor(android.graphics.Color.parseColor("#07C160"));
                                     Teacher.sendCorrectAnswer(curQuestion, index);
                                     correctAnswers.remove(index);
                                     correctAnswers.add(index); // local history
                                     // set control button to gray
                                     controlBtn.setBackgroundColor(Color.GRAY);
                                 }
+                                showResult();
                             }
                         }
                     });
@@ -125,6 +127,13 @@ public class HostQuestionScreen extends AppCompatActivity {
             controlBtn.setBackgroundColor(Color.GRAY);
         }
         // control button onClickListener
+        correctAnswers = curQuestion.getCorrectAns();
+        if (curQuestion.getCanAnswer()) {
+            controlBtn.setText("Stop");
+        } else {
+            controlBtn.setText("Start");
+        }
+
         controlBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -201,18 +210,18 @@ public class HostQuestionScreen extends AppCompatActivity {
     private void showResult() {
         DatabaseReference ref = FirebaseDatabase.getInstance()
                 .getReference("ClassRooms")
-                .child(Teacher.getClassroom().getClassID())
-                .child("StudentResponse").child(curQuestionID + "");
+                .child(Teacher.getClassroom().getClassID());
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 Map<String, Integer> result = new HashMap<>();
-                for (DataSnapshot singleResponse : snapshot.getChildren()) {
+                for (DataSnapshot singleResponse : snapshot.child("StudentResponse")
+                        .child(curQuestionID + "").getChildren()) {
                     for (DataSnapshot singleAnswer : singleResponse.child("answer").getChildren()) {
-                        if (!result.containsKey(singleAnswer.toString())) {
+                        if (!result.containsKey(singleAnswer.getValue().toString())) {
                             result.put(singleAnswer.getValue().toString(), 1);
                         } else {
-                            result.put(singleAnswer.getValue().toString(), result.get(singleAnswer.toString()) + 1);
+                            result.put(singleAnswer.getValue().toString(), result.get(singleAnswer.getValue().toString()) + 1);
                         }
                     }
                 }
@@ -235,8 +244,25 @@ public class HostQuestionScreen extends AppCompatActivity {
                     label = label + entry + ",";
                     i++;
                 }
+
                 BarDataSet barDataSet = new BarDataSet(resultEntries, label);
-                barDataSet.setColors(ColorTemplate.COLORFUL_COLORS);
+                List<String> correctAns = Teacher.getClassroom().getQuestionById(curQuestionID).getCorrectAns();
+                if ( correctAns != null && correctAns.size() != 0) {
+                    List<Integer> barColor = new ArrayList<>();
+                    int k = 0;
+                    for (String choice : result.keySet()) {
+                        if (correctAns.contains(choice)) {
+                            barColor.add(k, android.graphics.Color.parseColor("#07C160"));
+                        } else {
+                            barColor.add(k, Color.RED);
+                        }
+                        k++;
+                    }
+                    barDataSet.setColors(barColor);
+                } else {
+                    barDataSet.setColors(ColorTemplate.COLORFUL_COLORS);
+                }
+
                 BarData data = new BarData(barDataSet);
                 resultBarChart.setData(data);
                 resultBarChart.animateXY(500, 500);
@@ -268,4 +294,6 @@ public class HostQuestionScreen extends AppCompatActivity {
         startActivity(intent);
         finish();
     }
+
+
 }

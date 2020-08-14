@@ -78,7 +78,7 @@ public class Teacher {
     }
 
     public static void setStudentAccessibility(boolean isEnable, int Qid) {
-        classroom.getQuestionById(Qid).setCanAnswer(false);
+        classroom.getQuestionById(Qid).setCanAnswer(isEnable);
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference()
                 .child("ClassRooms")
                 .child(classroom.getClassID())
@@ -278,7 +278,6 @@ public class Teacher {
      * delete classroom from the database.
      */
     public static void clearData() {
-
         DatabaseReference ref = FirebaseDatabase.getInstance()
                 .getReference("ClassRooms").child(classroom.getClassID());
         ref.removeValue();

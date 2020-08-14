@@ -13,6 +13,22 @@
         android:gravity="center|center_horizontal"
         android:orientation="vertical">
 
+        <TextView
+            android:id="@+id/editTextTextPersonName2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#DAE5ED"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:text="   Add Question"
+            android:textSize="24sp" />
+
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_weight="10" />
+
         <Button
             android:id="@+id/quickAddbtn"
             android:layout_width="217dp"
@@ -22,10 +38,11 @@
             android:textAllCaps="false"
             tools:ignore="MissingConstraints" />
 
+
         <Space
             android:layout_width="1dp"
-            android:layout_height="100dp" />
-
+            android:layout_height="100dp"
+            android:layout_weight="3" />
 
         <Button
             android:id="@+id/manualAddBtn"
@@ -35,6 +52,11 @@
             android:text="Add manually"
             android:textAllCaps="false"
             tools:ignore="MissingConstraints" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_weight="12" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

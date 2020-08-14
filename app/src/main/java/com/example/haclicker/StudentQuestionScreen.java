@@ -164,7 +164,7 @@ public class StudentQuestionScreen extends AppCompatActivity {
                         // if there are correct answers, show student's result
                         if (correctAnswer.contains(index)) {
                             // make correct answer choices background green
-                            choiceTxt.setTextColor(android.graphics.Color.parseColor("#99ff99"));
+                            choiceTxt.setTextColor(android.graphics.Color.parseColor("#07C160"));
                         } else {
                             if (curChoice.contains(index)) {
                                 // if student selected, mark the text as red
@@ -213,6 +213,7 @@ public class StudentQuestionScreen extends AppCompatActivity {
                             "Room closed by host", Toast.LENGTH_LONG).show();
                     Intent intent = new Intent(getApplicationContext(), FileExportScreen.class);
                     intent.putExtra("canBack", false);
+                    intent.putExtra("classID", classID);
                     intent.putExtra("role", "student");
                     startActivity(intent);
                     finish();

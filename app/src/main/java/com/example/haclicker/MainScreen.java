@@ -2,6 +2,7 @@ package com.example.haclicker;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 
@@ -10,28 +11,30 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.haclicker.DataStructure.Chat;
 import com.example.haclicker.DataStructure.ClassRoom;
+import com.example.haclicker.DataStructure.FireStoreHistoryEntity;
+import com.example.haclicker.DataStructure.Student;
 import com.example.haclicker.DataStructure.Teacher;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Random;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Main screen activity, allowing user to create and join room
  */
 public class MainScreen extends AppCompatActivity {
-    ImageButton settings, createRoom, joinRoom;
+    ImageButton settings, createRoom, joinRoom, history;
     String username, userEmail;
+    final public static Map<String, FireStoreHistoryEntity> historyEntityMap = new HashMap<>();
     // set room ID length, set default to 10 digits ID number
-    public static final int ID_LENGTH = 10;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +44,7 @@ public class MainScreen extends AppCompatActivity {
         settings = findViewById(R.id.exportBtn);
         createRoom = findViewById(R.id.create_room);
         joinRoom = findViewById(R.id.join_room);
+        history = findViewById(R.id.historyBtn);
         // get user name name and email
         GoogleSignInAccount signInAccount = GoogleSignIn.getLastSignedInAccount(this);
         if (signInAccount != null) {
@@ -82,6 +86,12 @@ public class MainScreen extends AppCompatActivity {
                 finish();
             }
         });
+        history.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                fetchHistory();
+            }
+        });
     }
 
     /**
@@ -91,43 +101,39 @@ public class MainScreen extends AppCompatActivity {
     private ClassRoom generateClassroom() {
 
         String id = System.currentTimeMillis() + "";
-        return new ClassRoom(id.toString(), id.toString(), username, null);
-//        // get all existing room IDs
-//        List<String> allRoomIDs = getAllRooms();
-//        // generate a random 10 digits number while avoiding collision
-//        Random random = new Random();
-//        while (true) {
-//            StringBuilder id = new StringBuilder();
-//            for (int i = 0; i < ID_LENGTH; i++) {
-//                id.append(random.nextInt(10));
-//            }
-//            if (!allRoomIDs.contains(id.toString())) {
-//                return new ClassRoom(id.toString(), id.toString(), username, null);
-//            }
-//        }
+        return new ClassRoom(id, id, username, null);
     }
 
-    /**
-     * Check data base for all roomIDs to prevent duplicate ID.
-     * @return all roomIDs
-     */
-    private List<String> getAllRooms() {
-        final List<String> allRoomIDS = new ArrayList<>();
-        // create a new database reference
-        DatabaseReference reference = FirebaseDatabase.getInstance()
-                .getReference("ClassRooms");
-        reference.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot ID : snapshot.getChildren()) {
-                    allRoomIDS.add(ID.child("classID").getValue().toString());
-                }
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
+    private void fetchHistory() {
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        String email = user.getEmail();
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection(email).get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                FireStoreHistoryEntity fireStoreHistoryEntity = document.toObject(FireStoreHistoryEntity.class);
+                                historyEntityMap.put(fireStoreHistoryEntity.getClassID(), fireStoreHistoryEntity);
+                            }
+                            Log.d("TAG", "Fetch student history succeeded");
+                            Intent intent = new Intent(getApplicationContext(), HistoryClassScreen.class);
+                            startActivity(intent);
+                            finish();
 
-            }
-        });
-        return allRoomIDS;
+                        } else {
+                            Log.w("TAG", "Error getting documents.", task.getException());
+                        }
+                    }
+
+                });
+    }
+
+    public static FireStoreHistoryEntity getFireStoreHistoryByID(String classID) {
+        if (historyEntityMap.containsKey(classID)) {
+            return historyEntityMap.get(classID);
+        }
+        return null;
     }
 }

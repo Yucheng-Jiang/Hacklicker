@@ -13,6 +13,17 @@
         android:orientation="vertical"
         android:weightSum="100">
 
+        <TextView
+            android:id="@+id/editTextTextPersonName2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#DAE5ED"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:text="   Chat "
+            android:textSize="24sp" />
+
+
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -39,20 +50,45 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
-                android:layout_weight="95"
+                android:layout_weight="83"
                 android:ems="10"
                 android:inputType="text" />
 
-            <Button
-                android:id="@+id/chatSendBtn"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="15"
+                android:orientation="vertical"
+                android:weightSum="100">
+
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="70" />
+
+                <Button
+                    android:id="@+id/chatSendBtn"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_gravity="bottom"
+                    android:layout_weight="26"
+                    android:background="#07C160"
+                    android:text="Send"
+                    android:textColor="#FFFFFF"
+                    android:textColorHighlight="#FFFFFF" />
+
+                <Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="10" />
+
+            </LinearLayout>
+
+            <Space
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_gravity="bottom"
-                android:layout_weight="5"
-                android:background="#07C160"
-                android:text="Send"
-                android:textColor="#FFFFFF"
-                android:textColorHighlight="#FFFFFF" />
+                android:layout_weight="2" />
+
         </LinearLayout>
 
     </LinearLayout>

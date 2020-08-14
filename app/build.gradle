@@ -2,12 +2,16 @@ apply plugin: 'com.android.application'
 apply plugin: 'com.google.gms.google-services'
 
 android {
+    signingConfigs {
+        release {
+            storeFile file('D:\\android-studio-key.jks')
+            storePassword 'Aegis098'
+            keyAlias 'android-studio-key'
+            keyPassword 'Aegis098'
+        }
+    }
     compileSdkVersion 30
     buildToolsVersion "30.0.1"
-
-    packagingOptions {
-        pickFirst  'META-INF/*'
-    }
 
     defaultConfig {
         multiDexEnabled true
@@ -24,6 +28,16 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    packagingOptions {
+        exclude 'project.properties'
+        exclude 'META-INF/DEPENDENCIES'
+    }
+    configurations {
+        all {
+            exclude module: 'httpclient'
         }
     }
 }

@@ -4,15 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".StudentScreen"
+    tools:context=".HistoryQuestionScreen"
     android:background="#add8e6">
+
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:weightSum="100">
-
         <TextView
             android:id="@+id/editTextTextPersonName2"
             android:layout_width="match_parent"
@@ -20,8 +20,9 @@
             android:background="#DAE5ED"
             android:ems="10"
             android:inputType="textPersonName"
-            android:text="   Room"
+            android:text="   Question Bank"
             android:textSize="24sp" />
+
 
         <Space
             android:layout_width="match_parent"
@@ -43,7 +44,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="No Questions Available"
+                android:text="No Question Added"
                 android:textSize="14sp" />
 
             <Space
@@ -56,7 +57,7 @@
             android:id="@+id/scrollView2"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="86">
+            android:layout_weight="90">
 
             <LinearLayout
                 android:id="@+id/question_list"
@@ -65,68 +66,11 @@
                 android:orientation="vertical" />
         </ScrollView>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="7"
-            android:foregroundGravity="bottom"
-            android:gravity="bottom"
-            android:orientation="horizontal"
-            android:weightSum="100">
-
-            <Space
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="5" />
-
-            <ImageButton
-                android:id="@+id/shareRoom"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom"
-                android:layout_weight="26"
-                android:background="@null"
-                app:srcCompat="@drawable/share" />
-
-            <Space
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="5" />
-
-            <ImageButton
-                android:id="@+id/studentChatBtn"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom"
-                android:layout_weight="26"
-                android:background="@null"
-                app:srcCompat="@drawable/chat" />
-
-            <Space
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="5" />
-
-            <ImageButton
-                android:id="@+id/leaveRoom"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom|right"
-                android:layout_weight="28"
-                android:background="@null"
-                app:srcCompat="@drawable/signout" />
-
-            <Space
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="5" />
-        </LinearLayout>
 
         <Space
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="2" />
-
+            android:layout_weight="5" />
 
 
     </LinearLayout>

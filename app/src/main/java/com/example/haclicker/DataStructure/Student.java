@@ -22,6 +22,7 @@ public class Student {
     static Map<Integer, List<String>> questionAnswer = new HashMap<>();
     static List<Chat> chatList = new ArrayList<>();
     static List<Integer> voteHistory = new ArrayList<>(); // store voted chat id
+    public static String lastId;
 
     public static void clearData() {
         questionList.clear();
