@@ -17,7 +17,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        <activity android:name=".AddFilePath"></activity>
+        <activity android:name=".AddQuestionsFromLocalScreen"></activity>
         <activity android:name=".HistoryDetailScreen" />
         <activity android:name=".HistoryQuestionScreen" />
         <activity android:name=".HistoryClassScreen" />

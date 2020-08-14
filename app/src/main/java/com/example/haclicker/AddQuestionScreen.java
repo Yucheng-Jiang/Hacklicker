@@ -2,27 +2,18 @@ package com.example.haclicker;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
-import android.speech.RecognizerIntent;
-import android.speech.SpeechRecognizer;
 import android.view.View;
 import android.widget.Button;
 
 import com.example.haclicker.DataStructure.Question;
 import com.example.haclicker.DataStructure.Teacher;
 
-import java.security.Provider;
 import java.util.ArrayList;
 import java.util.List;
-
-import static android.Manifest.permission.CAMERA;
-import static android.Manifest.permission.RECORD_AUDIO;
 
 public class AddQuestionScreen extends AppCompatActivity {
     Button manualAddBtn, quickAddbtn, addFromLocal;
@@ -69,13 +60,15 @@ public class AddQuestionScreen extends AppCompatActivity {
         addFromLocal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                openActivity();
             }
         });
     }
 
     public void openActivity() {
-
+        Intent intent = new Intent(this, AddQuestionsFromLocalScreen.class);
+        startActivity(intent);
+        finish();
     }
 
 
