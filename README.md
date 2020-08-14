@@ -17,7 +17,7 @@ To get a copy of our project, clone the repository, open it with Android Studio 
 
 ## Versioning
 
-如果GitHub有发布什么release的话，可以放在这里，可以发布一个apk包。
+Currently in version 1.0 Beta. For more information regarding version, visit the repository's [release](https://github.com/Yucheng-Jiang/Hacklicker/releases) section
 
 ## Authors
 
