@@ -1,5 +1,6 @@
 package com.example.haclicker;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -26,6 +27,7 @@ import static android.Manifest.permission.RECORD_AUDIO;
 public class AddQuestionScreen extends AppCompatActivity {
     Button manualAddBtn, quickAddbtn;
     private final int DEFAULT_OPTION_NUM = 5;
+    private String path;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,9 +47,11 @@ public class AddQuestionScreen extends AppCompatActivity {
         });
 
         quickAddbtn.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onClick(View view) {
-                List<String> options = new ArrayList<>();
+                path = new ImportFile("").getFilePath();
+                List<String> options = ImportQuestonsFromLocal.readFileIntoString(path);
                 int questionID = Teacher.getClassroom().getQuestions().size();
                 for (int i = 0; i < DEFAULT_OPTION_NUM; i++) {
                     char index = (char) ((int) 'A' + i);
