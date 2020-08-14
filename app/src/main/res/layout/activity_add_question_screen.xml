@@ -45,6 +45,17 @@
             android:layout_weight="3" />
 
         <Button
+            android:id="@+id/addFromFile"
+            android:layout_width="217dp"
+            android:layout_height="87dp"
+            android:background="@drawable/orangeblue"
+            android:text="Add From Local" />
+
+        <Space
+            android:layout_width="1dp"
+            android:layout_height="100dp" />
+
+        <Button
             android:id="@+id/manualAddBtn"
             android:layout_width="217dp"
             android:layout_height="87dp"

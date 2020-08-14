@@ -25,7 +25,7 @@ import static android.Manifest.permission.CAMERA;
 import static android.Manifest.permission.RECORD_AUDIO;
 
 public class AddQuestionScreen extends AppCompatActivity {
-    Button manualAddBtn, quickAddbtn;
+    Button manualAddBtn, quickAddbtn, addFromLocal;
     private final int DEFAULT_OPTION_NUM = 5;
     private String path;
 
@@ -36,6 +36,8 @@ public class AddQuestionScreen extends AppCompatActivity {
         // set UI component
         manualAddBtn = findViewById(R.id.manualAddBtn);
         quickAddbtn = findViewById(R.id.quickAddbtn);
+        addFromLocal = findViewById(R.id.addFromFile);
+        Intent intent;
 
         manualAddBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -50,8 +52,7 @@ public class AddQuestionScreen extends AppCompatActivity {
             @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onClick(View view) {
-                path = new ImportFile("").getFilePath();
-                List<String> options = ImportQuestonsFromLocal.readFileIntoString(path);
+                List<String> options = new ArrayList<>();
                 int questionID = Teacher.getClassroom().getQuestions().size();
                 for (int i = 0; i < DEFAULT_OPTION_NUM; i++) {
                     char index = (char) ((int) 'A' + i);
@@ -64,7 +65,19 @@ public class AddQuestionScreen extends AppCompatActivity {
                 finish();
             }
         });
+
+        addFromLocal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
     }
+
+    public void openActivity() {
+
+    }
+
 
     @Override
     public void onBackPressed() {
